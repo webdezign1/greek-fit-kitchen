@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+  <title>Greek Fit Kitchen | Operations &amp; Administration Dashboard</title>
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            greek: {
+              navy: '#101D3A',
+              navyDark: '#0C172E',
+              gold: '#F5C542',
+              goldHover: '#E5B432',
+              lime: '#82B82A'
+            }
+          },
+          fontFamily: {
+            heading: ['Roboto Slab', 'serif'],
+            sans: ['Roboto', 'sans-serif']
+          }
+        }
+      }
+    };
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;500;600;700;800;900&family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/customizer.css" />
+</head>
+<body class="bg-slate-100 text-slate-800 antialiased font-sans min-h-screen flex flex-col">
+
+  <!-- Top Admin Bar -->
+  <header class="bg-greek-navyDark text-white border-b border-white/10 sticky top-0 z-50">
+    <div class="container mx-auto px-4 h-16 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <a href="index.html" class="flex items-center gap-2" title="Go to Greek Fit Kitchen Home">
+          <img src="images/brand/greek-fit-kitchen-logo.png" alt="Greek Fit Kitchen" class="h-9 w-auto" />
+        </a>
+        <span class="text-xs px-2.5 py-1 rounded-full bg-greek-gold/20 text-greek-gold font-bold uppercase tracking-wider">
+          Management Suite
+        </span>
+      </div>
+
+      <!-- Staff Role Selector & Back to Site Link -->
+      <div class="flex items-center gap-4">
+        <div class="flex items-center gap-2 bg-white/10 py-1.5 px-3 rounded-xl border border-white/10 text-xs">
+          <span class="text-white/60">Active Role:</span>
+          <select id="adminRoleSelect" onchange="changeStaffRole(this.value)" class="bg-transparent text-greek-gold font-bold focus:outline-none cursor-pointer">
+            <option value="admin" class="bg-greek-navy text-white">Administrator (Full Access)</option>
+            <option value="kitchen" class="bg-greek-navy text-white">Kitchen Staff (Prep &amp; Tickets)</option>
+            <option value="courier" class="bg-greek-navy text-white">Delivery Courier (Routes &amp; Drops)</option>
+          </select>
+        </div>
+
+        <a href="menu.html" class="py-1.5 px-3.5 rounded-xl bg-greek-gold hover:bg-greek-goldHover text-greek-navyDark font-extrabold text-xs shadow transition">
+          ← View Customer Site
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Admin Main Layout -->
+  <div class="flex-1 flex flex-col md:flex-row">
+    
+    <!-- Sidebar Navigation -->
+    <aside class="w-full md:w-64 bg-white border-r border-gray-200 p-4 space-y-1 flex-shrink-0">
+      <div class="p-3 text-xs font-bold text-gray-400 uppercase tracking-wider">Business Navigation</div>
+      
+      <button onclick="switchAdminPortalTab('dashboard')" id="portalTab-dashboard" class="portal-nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-bold bg-greek-gold text-greek-navyDark shadow-sm">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+        Dashboard &amp; Reports
+      </button>
+
+      <button onclick="switchAdminPortalTab('orders')" id="portalTab-orders" class="portal-nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold text-gray-600 hover:bg-gray-100 hover:text-gray-900 transition">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path></svg>
+        Order Administration
+      </button>
+
+      <button onclick="switchAdminPortalTab('menu')" id="portalTab-menu" class="portal-nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold text-gray-600 hover:bg-gray-100 hover:text-gray-900 transition">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
+        Menu &amp; Dishes
+      </button>
+
+      <button onclick="switchAdminPortalTab('packages')" id="portalTab-packages" class="portal-nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold text-gray-600 hover:bg-gray-100 hover:text-gray-900 transition">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
+        Combo Packages
+      </button>
+
+      <button onclick="switchAdminPortalTab('sides')" id="portalTab-sides" class="portal-nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold text-gray-600 hover:bg-gray-100 hover:text-gray-900 transition">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"></path></svg>
+        Sides &amp; Add-ons
+      </button>
+
+      <button onclick="switchAdminPortalTab('delivery')" id="portalTab-delivery" class="portal-nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold text-gray-600 hover:bg-gray-100 hover:text-gray-900 transition">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path></svg>
+        Delivery &amp; Tax Settings
+      </button>
+
+      <button onclick="switchAdminPortalTab('promotions')" id="portalTab-promotions" class="portal-nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold text-gray-600 hover:bg-gray-100 hover:text-gray-900 transition">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path></svg>
+        Promotions &amp; Coupons
+      </button>
+
+      <button onclick="switchAdminPortalTab('logs')" id="portalTab-logs" class="portal-nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold text-gray-600 hover:bg-gray-100 hover:text-gray-900 transition">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+        Staff Logs &amp; Security
+      </button>
+
+      <div class="pt-6 border-t border-gray-100 mt-6">
+        <div class="p-3 bg-greek-navy/5 rounded-xl border border-greek-navy/10 text-xs">
+          <p class="font-bold text-greek-navy">Commercial Kitchen</p>
+          <p class="text-gray-500 mt-0.5">3575 Lake Shore Blvd W, Etobicoke</p>
+          <p class="text-gray-400 mt-2 font-mono text-[10px]">GFK Engine v2.4 Active</p>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Content Workspace -->
+    <main class="flex-1 p-6 md:p-8 overflow-y-auto max-w-7xl mx-auto w-full" id="adminPortalContainer">
+      <!-- Dynamically filled by switchAdminPortalTab() -->
+    </main>
+
+  </div>
+
+  <!-- Core App JS -->
+  <script src="js/app.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Initialize admin portal view
+      switchAdminPortalTab('dashboard');
+    });
+  </script>
+</body>
+</html>

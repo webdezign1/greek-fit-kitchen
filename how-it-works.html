@@ -1,0 +1,250 @@
+﻿<!DOCTYPE html>
+<html lang="en" class="scroll-smooth dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+  <title>How It Works &amp; FAQ | Greek Fit Kitchen Toronto</title>
+  <meta name="description" content="Learn how Greek Fit Kitchen works: batch ordering, heating instructions, container storage, and Toronto delivery schedule." />
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            greek: {
+              navy: '#101D3A',
+              navyDark: '#0C172E',
+              gold: '#F5C542',
+              goldHover: '#E5B432',
+              lime: '#82B82A'
+            }
+          },
+          fontFamily: {
+            heading: ['Roboto Slab', 'serif'],
+            sans: ['Roboto', 'sans-serif']
+          }
+        }
+      }
+    };
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;500;600;700;800;900&family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/customizer.css" />
+</head>
+<body class="bg-slate-50 text-slate-800 dark:bg-greek-navyDark dark:text-slate-100 antialiased font-sans transition-colors duration-200">
+
+  <!-- TOP ANNOUNCEMENT BAR -->
+  <div class="bg-greek-navy text-white text-xs py-2 px-4 border-b border-greek-gold/20 flex flex-wrap justify-between items-center text-center sm:text-left gap-2 z-50 relative">
+    <div class="container mx-auto flex flex-wrap justify-between items-center">
+      <div class="flex items-center gap-2 mx-auto sm:mx-0">
+        <span class="inline-block w-2 h-2 rounded-full bg-greek-lime animate-ping"></span>
+        <span id="cutoffCountdown" class="font-medium">Loading batch cutoff countdown...</span>
+      </div>
+      <div class="hidden md:flex items-center gap-4 text-white/80">
+        <span>📍 Kitchen: 3575 Lake Shore Blvd W, Etobicoke</span>
+        <span class="text-greek-gold font-bold">10% Volume Discount on 7+ Meals</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- HEADER NAVBAR -->
+  <header class="sticky top-0 z-40 bg-white/90 dark:bg-greek-navy/95 header-glass border-b border-slate-200 dark:border-white/10 transition-colors">
+    <div class="container mx-auto px-4 h-20 flex items-center justify-between">
+      <a href="index.html" class="flex items-center group" aria-label="Greek Fit Kitchen home">
+        <img src="images/brand/greek-fit-kitchen-logo-dark-text.png" alt="Greek Fit Kitchen" width="817" height="221" class="h-12 sm:h-14 w-auto dark:hidden group-hover:scale-105 transition-transform" />
+          <img src="images/brand/greek-fit-kitchen-logo.png" alt="" aria-hidden="true" width="817" height="221" class="h-12 sm:h-14 w-auto hidden dark:block group-hover:scale-105 transition-transform" />
+      </a>
+
+      <nav class="hidden lg:flex items-center gap-7 text-sm font-semibold text-gray-700 dark:text-slate-200">
+        <a href="index.html" class="hover:text-greek-gold transition-colors">Home</a>
+        <a href="menu.html" class="hover:text-greek-gold transition-colors">Menu</a>
+        <a href="meal-plans.html" class="hover:text-greek-gold transition-colors">Weekly Meal Plans</a>
+        <a href="delivery-rates.html" class="hover:text-greek-gold transition-colors">Delivery Rates</a>
+        <a href="about-us.html" class="hover:text-greek-gold transition-colors">About Us</a>
+        <a href="how-it-works.html" class="text-greek-gold transition-colors">How It Works</a>
+      </nav>
+
+      <div class="flex items-center gap-3">
+
+        <button type="button" class="open-cart-btn relative flex items-center gap-2.5 py-2 px-4 rounded-xl bg-greek-gold hover:bg-greek-goldHover text-greek-navyDark font-bold text-sm shadow-md transition-all">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
+          <span class="hidden sm:inline">My Plan</span>
+          <span class="cart-badge bg-greek-navy text-white text-xs px-2 py-0.5 rounded-full font-bold">0</span>
+        </button>
+
+        <button type="button" id="mobileMenuToggleBtn" class="lg:hidden p-2.5 rounded-xl border border-gray-300 dark:border-white/20 text-gray-700 dark:text-white">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="py-14 bg-greek-navy text-white border-b border-white/10">
+    <div class="container mx-auto px-4 text-center max-w-3xl">
+      <span class="text-greek-gold uppercase tracking-widest font-bold text-xs">Seamless Fresh Experience</span>
+      <h1 class="font-heading text-4xl sm:text-5xl font-extrabold text-white mt-2">
+        How Ordering &amp; Prep Works
+      </h1>
+      <p class="mt-4 text-slate-300 text-sm leading-relaxed">
+        From our kitchen flame grills to your microwave or oven. Here is everything you need to know about our twice-weekly batch prep and delivery.
+      </p>
+    </div>
+  </section>
+
+  <!-- STEPS & DETAILS -->
+  <main class="py-16 bg-slate-50 dark:bg-greek-navyDark">
+    <div class="container mx-auto px-4 max-w-5xl">
+      
+      <!-- 3 Steps Visual -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+        <div class="p-8 rounded-3xl bg-white dark:bg-greek-navy border border-gray-200 dark:border-white/10 shadow-sm">
+          <span class="w-12 h-12 rounded-xl bg-greek-gold text-greek-navyDark font-heading font-black text-xl flex items-center justify-center shadow">1</span>
+          <h3 class="font-heading font-bold text-xl text-gray-900 dark:text-white mt-6">Order 6+ Meals</h3>
+          <p class="mt-2 text-xs text-gray-600 dark:text-gray-300 leading-relaxed">
+            Select at least 6 entrees. For every entree, pick your favorite clean starch and vegetable side.
+          </p>
+        </div>
+        <div class="p-8 rounded-3xl bg-white dark:bg-greek-navy border border-gray-200 dark:border-white/10 shadow-sm">
+          <span class="w-12 h-12 rounded-xl bg-greek-lime text-white font-heading font-black text-xl flex items-center justify-center shadow">2</span>
+          <h3 class="font-heading font-bold text-xl text-gray-900 dark:text-white mt-6">Sunday or Wednesday Drop</h3>
+          <p class="mt-2 text-xs text-gray-600 dark:text-gray-300 leading-relaxed">
+            Choose your preferred batch day or free Etobicoke kitchen pickup. Orders arrive chilled in thermal cooler bags with ice packs.
+          </p>
+        </div>
+        <div class="p-8 rounded-3xl bg-white dark:bg-greek-navy border border-gray-200 dark:border-white/10 shadow-sm">
+          <span class="w-12 h-12 rounded-xl bg-greek-gold text-greek-navyDark font-heading font-black text-xl flex items-center justify-center shadow">3</span>
+          <h3 class="font-heading font-bold text-xl text-gray-900 dark:text-white mt-6">Heat &amp; Enjoy</h3>
+          <p class="mt-2 text-xs text-gray-600 dark:text-gray-300 leading-relaxed">
+            Heat 2–3 minutes in the microwave or 10 minutes in the oven. No grocery trips, no cooking, zero pan cleanup.
+          </p>
+        </div>
+      </div>
+
+      <!-- Heating & Storage Guide -->
+      <div class="p-8 sm:p-12 rounded-3xl bg-white dark:bg-greek-navy border border-gray-200 dark:border-white/10 shadow-sm mb-16">
+        <span class="text-greek-gold uppercase tracking-wider font-bold text-xs">Culinary Guidelines</span>
+        <h2 class="font-heading font-extrabold text-2xl sm:text-3xl text-gray-900 dark:text-white mt-1">
+          Heating &amp; Fridge Storage
+        </h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
+          <div class="p-6 rounded-2xl bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-white/10">
+            <h4 class="font-heading font-bold text-lg text-gray-900 dark:text-white flex items-center gap-2">
+              <span>♨️</span> Microwave Instructions
+            </h4>
+            <p class="mt-2 text-xs text-gray-600 dark:text-gray-300 leading-relaxed">
+              1. Remove the clear lid or lift one corner to vent steam.<br />
+              2. Microwave on HIGH for <strong>2 to 3 minutes</strong> (depending on microwave wattage).<br />
+              3. Let rest for 1 minute before removing. Fluff rice or potatoes with a fork and enjoy!
+            </p>
+          </div>
+
+          <div class="p-6 rounded-2xl bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-white/10">
+            <h4 class="font-heading font-bold text-lg text-gray-900 dark:text-white flex items-center gap-2">
+              <span>🔥</span> Oven Reheating
+            </h4>
+            <p class="mt-2 text-xs text-gray-600 dark:text-gray-300 leading-relaxed">
+              1. Preheat oven to <strong>350°F (175°C)</strong>.<br />
+              2. Transfer meal contents to an oven-safe baking dish or tray.<br />
+              3. Cover loosely with aluminum foil and heat for <strong>10 to 12 minutes</strong> until piping hot.
+            </p>
+          </div>
+        </div>
+
+        <div class="mt-6 p-4 rounded-xl bg-greek-gold/10 border border-greek-gold/20 text-xs text-gray-700 dark:text-gray-300">
+          <strong>Fridge Shelf Life:</strong> Meals stay perfectly fresh in your refrigerator for up to <strong>5 to 6 days</strong> from the delivery batch day. You can also freeze meals upon arrival for up to 30 days.
+        </div>
+      </div>
+
+      <!-- Frequently Asked Questions -->
+      <div class="p-8 sm:p-12 rounded-3xl bg-white dark:bg-greek-navy border border-gray-200 dark:border-white/10 shadow-sm">
+        <h2 class="font-heading font-extrabold text-2xl sm:text-3xl text-gray-900 dark:text-white mb-6">
+          Frequently Asked Questions
+        </h2>
+
+        <div class="space-y-4 text-sm text-gray-600 dark:text-gray-300">
+          <div class="p-5 rounded-2xl bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-white/10">
+            <h4 class="font-bold text-gray-900 dark:text-white text-base">Why is there a 6-meal minimum?</h4>
+            <p class="mt-2 text-xs">
+              Batch cooking allows us to source premium Ontario meats, genuine Greek Dodoni feta, and cold-pressed Kalamata olive oil at optimal freshness and volume price points. The 6-meal minimum ensures batch integrity and gives you a structured week of meals starting at just $59.94 CAD.
+            </p>
+          </div>
+
+          <div class="p-5 rounded-2xl bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-white/10">
+            <h4 class="font-bold text-gray-900 dark:text-white text-base">How does the 10% volume discount work?</h4>
+            <p class="mt-2 text-xs">
+              When your cart contains 7 or more meals, our cart engine automatically deducts 10% from the food subtotal. There is no coupon code needed.
+            </p>
+          </div>
+
+          <div class="p-5 rounded-2xl bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-white/10">
+            <h4 class="font-bold text-gray-900 dark:text-white text-base">What if I am not home during delivery?</h4>
+            <p class="mt-2 text-xs">
+              Our courier leaves your order at your front door, concierge, or designated drop spot in insulated thermal cooler bags packed with frozen gel packs. Food stays safe and chilled for up to 6 hours after delivery.
+            </p>
+          </div>
+
+          <div class="p-5 rounded-2xl bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-white/10">
+            <h4 class="font-bold text-gray-900 dark:text-white text-base">Can I pick up my meals for free?</h4>
+            <p class="mt-2 text-xs">
+              Yes! Free kitchen pickup is available at <strong>3575 Lake Shore Blvd W, Etobicoke, ON M8W 1P5</strong> every Sunday and Wednesday between 2:00 PM and 6:00 PM. Simply choose "Kitchen Pickup" at checkout.
+            </p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer id="siteFooter" class="bg-greek-navyDark text-white border-t border-white/10">
+    <div class="container mx-auto px-4 py-16">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
+        <div>
+          <a href="index.html"><img src="images/brand/greek-fit-kitchen-logo.png" alt="Greek Fit Kitchen" width="817" height="221" class="h-14 w-auto" /></a>
+          <p class="mt-4 text-xs text-white/60 leading-relaxed">
+            Authentic Greek fitness meal prep designed for high-protein athletic performance and busy Toronto lifestyles.
+          </p>
+          <div class="mt-4 text-xs text-white/70 space-y-1">
+            <p><strong>Commercial Kitchen:</strong> 3575 Lake Shore Blvd W, Etobicoke, ON M8W 1P5</p>
+          </div>
+        </div>
+        <div>
+          <h4 class="font-heading font-bold text-sm text-greek-gold uppercase tracking-wider mb-4">Quick Navigation</h4>
+          <ul class="space-y-2.5 text-xs text-white/70">
+            <li><a href="menu.html" class="hover:text-white transition-colors">Our 20 Main Dishes</a></li>
+            <li><a href="meal-plans.html" class="hover:text-white transition-colors">Weekly Meal Plans</a></li>
+            <li><a href="delivery-rates.html" class="hover:text-white transition-colors">GTA Delivery Rates</a></li>
+            <li><a href="about-us.html" class="hover:text-white transition-colors">About George the Greek</a></li>
+            <li><a href="how-it-works.html" class="hover:text-white transition-colors">Heating &amp; Storage Guide</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-heading font-bold text-sm text-greek-gold uppercase tracking-wider mb-4">Batch Drops</h4>
+          <div class="space-y-3 text-xs text-white/70">
+            <div><strong class="text-white block">Sunday Batch:</strong> Cutoff Friday 11:59 PM EST</div>
+            <div><strong class="text-white block">Wednesday Batch:</strong> Cutoff Monday 11:59 PM EST</div>
+          </div>
+        </div>
+        <div>
+          <h4 class="font-heading font-bold text-sm text-greek-gold uppercase tracking-wider mb-4">Contact Support</h4>
+          <div class="space-y-2 text-xs text-white/80">
+            <p>📧 orders@greekfitkitchen.ca</p>
+            <p>📞 (416) 555-GREEK</p>
+          </div>
+        </div>
+      </div>
+      <div class="mt-12 pt-8 border-t border-white/10 text-xs text-white/50">
+        <p>&copy; 2026 Greek Fit Kitchen. All rights reserved. Minimum 6 meals per order.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/app.js"></script>
+</body>
+</html>

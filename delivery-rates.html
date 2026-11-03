@@ -1,0 +1,255 @@
+﻿<!DOCTYPE html>
+<html lang="en" class="scroll-smooth dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+  <title>GTA Delivery Rates &amp; Schedule | Greek Fit Kitchen</title>
+  <meta name="description" content="Toronto &amp; GTA distance-based delivery rates. Free up to 2 km, $5.00 flat for 2–5 km, and $1.00/km above 5 km. Twice-weekly batch delivery Sundays &amp; Wednesdays." />
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            greek: {
+              navy: '#101D3A',
+              navyDark: '#0C172E',
+              gold: '#F5C542',
+              goldHover: '#E5B432',
+              lime: '#82B82A'
+            }
+          },
+          fontFamily: {
+            heading: ['Roboto Slab', 'serif'],
+            sans: ['Roboto', 'sans-serif']
+          }
+        }
+      }
+    };
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;500;600;700;800;900&family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/customizer.css" />
+</head>
+<body class="bg-slate-50 text-slate-800 dark:bg-greek-navyDark dark:text-slate-100 antialiased font-sans transition-colors duration-200">
+
+  <!-- TOP ANNOUNCEMENT BAR -->
+  <div class="bg-greek-navy text-white text-xs py-2 px-4 border-b border-greek-gold/20 flex flex-wrap justify-between items-center text-center sm:text-left gap-2 z-50 relative">
+    <div class="container mx-auto flex flex-wrap justify-between items-center">
+      <div class="flex items-center gap-2 mx-auto sm:mx-0">
+        <span class="inline-block w-2 h-2 rounded-full bg-greek-lime animate-ping"></span>
+        <span id="cutoffCountdown" class="font-medium">Loading batch cutoff countdown...</span>
+      </div>
+      <div class="hidden md:flex items-center gap-4 text-white/80">
+        <span>📍 Kitchen: 3575 Lake Shore Blvd W, Etobicoke</span>
+        <span class="text-greek-gold font-bold">10% Volume Discount on 7+ Meals</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- HEADER NAVBAR -->
+  <header class="sticky top-0 z-40 bg-white/90 dark:bg-greek-navy/95 header-glass border-b border-slate-200 dark:border-white/10 transition-colors">
+    <div class="container mx-auto px-4 h-20 flex items-center justify-between">
+      <a href="index.html" class="flex items-center group" aria-label="Greek Fit Kitchen home">
+        <img src="images/brand/greek-fit-kitchen-logo-dark-text.png" alt="Greek Fit Kitchen" width="817" height="221" class="h-12 sm:h-14 w-auto dark:hidden group-hover:scale-105 transition-transform" />
+          <img src="images/brand/greek-fit-kitchen-logo.png" alt="" aria-hidden="true" width="817" height="221" class="h-12 sm:h-14 w-auto hidden dark:block group-hover:scale-105 transition-transform" />
+      </a>
+
+      <nav class="hidden lg:flex items-center gap-7 text-sm font-semibold text-gray-700 dark:text-slate-200">
+        <a href="index.html" class="hover:text-greek-gold transition-colors">Home</a>
+        <a href="menu.html" class="hover:text-greek-gold transition-colors">Menu</a>
+        <a href="meal-plans.html" class="hover:text-greek-gold transition-colors">Weekly Meal Plans</a>
+        <a href="delivery-rates.html" class="text-greek-gold transition-colors">Delivery Rates</a>
+        <a href="about-us.html" class="hover:text-greek-gold transition-colors">About Us</a>
+        <a href="how-it-works.html" class="hover:text-greek-gold transition-colors">How It Works</a>
+      </nav>
+
+      <div class="flex items-center gap-3">
+
+        <button type="button" class="open-cart-btn relative flex items-center gap-2.5 py-2 px-4 rounded-xl bg-greek-gold hover:bg-greek-goldHover text-greek-navyDark font-bold text-sm shadow-md transition-all">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
+          <span class="hidden sm:inline">My Plan</span>
+          <span class="cart-badge bg-greek-navy text-white text-xs px-2 py-0.5 rounded-full font-bold">0</span>
+        </button>
+
+        <button type="button" id="mobileMenuToggleBtn" class="lg:hidden p-2.5 rounded-xl border border-gray-300 dark:border-white/20 text-gray-700 dark:text-white">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO HEADER -->
+  <section class="py-14 bg-greek-navy text-white border-b border-white/10">
+    <div class="container mx-auto px-4 text-center max-w-3xl">
+      <span class="text-greek-gold uppercase tracking-widest font-bold text-xs">Transparent Distance Pricing</span>
+      <h1 class="font-heading text-4xl sm:text-5xl font-extrabold text-white mt-2">
+        GTA Delivery Rates &amp; Schedule
+      </h1>
+      <p class="mt-4 text-slate-300 text-sm leading-relaxed">
+        We deliver twice weekly from our Etobicoke commercial kitchen directly to your doorstep in Toronto, Mississauga, Scarborough, Brampton, Oakville, and Vaughan.
+      </p>
+    </div>
+  </section>
+
+  <!-- CALCULATOR & RATES BREAKDOWN -->
+  <main class="py-16 bg-slate-50 dark:bg-greek-navyDark">
+    <div class="container mx-auto px-4">
+      
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+        
+        <!-- Live Calculator -->
+        <div class="p-8 rounded-3xl bg-white dark:bg-greek-navy border border-gray-200 dark:border-white/10 shadow-xl">
+          <span class="text-greek-gold font-bold text-xs uppercase tracking-wider">Live Distance Lookup</span>
+          <h2 class="font-heading font-extrabold text-2xl sm:text-3xl text-gray-900 dark:text-white mt-1">Calculate Your Rate</h2>
+          <p class="text-xs text-gray-500 dark:text-gray-400 mt-2">
+            Tiered rates: <strong>FREE &le; 2 km &bull; $5.00 Flat (2–5 km) &bull; $1.00/km (&gt; 5 km)</strong> from 3575 Lake Shore Blvd W, Etobicoke.
+          </p>
+
+          <div class="mt-6 space-y-4">
+            <div>
+              <label for="deliveryPostalInput" class="block text-xs font-bold uppercase text-gray-500 dark:text-gray-400 mb-1">
+                Postal Code (e.g. M5V, M8W, L5E) or KM
+              </label>
+              <div class="flex gap-2">
+                <input type="text" id="deliveryPostalInput" placeholder="M5V 2T6" class="flex-1 py-3 px-4 rounded-xl border border-gray-300 dark:border-white/15 bg-slate-50 dark:bg-greek-navyDark text-sm text-gray-900 dark:text-white uppercase font-bold focus:outline-none focus:ring-2 focus:ring-greek-gold" />
+                <button type="button" id="calculateDeliveryBtn" class="py-3 px-6 rounded-xl bg-greek-gold hover:bg-greek-goldHover text-greek-navyDark font-extrabold text-sm shadow transition-all">
+                  Calculate
+                </button>
+              </div>
+            </div>
+
+            <div id="calcResultBox" class="p-5 rounded-2xl bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-white/10">
+              <div class="flex items-center justify-between">
+                <span class="text-sm font-semibold text-gray-600 dark:text-gray-300">Delivery Fee:</span>
+                <span id="calcResultPrice" class="font-heading font-extrabold text-2xl text-greek-lime">$8.00 CAD</span>
+              </div>
+              <p id="calcResultNotes" class="mt-2 text-xs text-gray-500 dark:text-gray-400">
+                Calculated: 8.0 km from our Etobicoke kitchen ($1.00/km full distance above 5 km).
+              </p>
+            </div>
+
+            <div class="p-4 rounded-xl bg-greek-lime/10 border border-greek-lime/20 flex items-center justify-between text-xs">
+              <div>
+                <strong class="text-greek-lime block text-sm">Free Kitchen Pickup</strong>
+                <span class="text-gray-600 dark:text-gray-300">3575 Lake Shore Blvd W, Etobicoke</span>
+              </div>
+              <span class="font-extrabold text-greek-lime text-base">$0.00 CAD</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Twice Weekly Schedule Details -->
+        <div class="space-y-6">
+          
+          <div class="p-8 rounded-3xl bg-white dark:bg-greek-navy border border-gray-200 dark:border-white/10 shadow-sm">
+            <h3 class="font-heading font-bold text-xl text-gray-900 dark:text-white flex items-center gap-2">
+              <span class="w-3 h-3 rounded-full bg-greek-gold"></span> Sunday Batch Drop
+            </h3>
+            <ul class="mt-4 space-y-2 text-sm text-gray-600 dark:text-gray-300">
+              <li><strong>Order Cutoff:</strong> Friday 11:59 PM EST</li>
+              <li><strong>Batch Cooking:</strong> Saturday night &amp; Sunday early morning</li>
+              <li><strong>Delivery Window:</strong> Sunday 1:00 PM – 7:00 PM EST</li>
+              <li><strong>Perfect for:</strong> Fueling Monday–Thursday training sessions</li>
+            </ul>
+          </div>
+
+          <div class="p-8 rounded-3xl bg-white dark:bg-greek-navy border border-gray-200 dark:border-white/10 shadow-sm">
+            <h3 class="font-heading font-bold text-xl text-gray-900 dark:text-white flex items-center gap-2">
+              <span class="w-3 h-3 rounded-full bg-greek-lime"></span> Wednesday Batch Drop
+            </h3>
+            <ul class="mt-4 space-y-2 text-sm text-gray-600 dark:text-gray-300">
+              <li><strong>Order Cutoff:</strong> Monday 11:59 PM EST</li>
+              <li><strong>Batch Cooking:</strong> Tuesday night &amp; Wednesday morning</li>
+              <li><strong>Delivery Window:</strong> Wednesday 1:00 PM – 7:00 PM EST</li>
+              <li><strong>Perfect for:</strong> Weekend prep and high-volume training splits</li>
+            </ul>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- Sample GTA Zones Distance Table -->
+      <div class="mt-16 bg-white dark:bg-greek-navy rounded-3xl p-8 border border-gray-200 dark:border-white/10 shadow-sm">
+        <h3 class="font-heading font-bold text-2xl text-gray-900 dark:text-white">Sample Delivery Estimates Across the GTA</h3>
+        <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Based on exact distance from our Etobicoke kitchen.</p>
+
+        <div class="mt-6 overflow-x-auto">
+          <table class="w-full text-left text-sm text-gray-600 dark:text-gray-300">
+            <thead class="bg-gray-50 dark:bg-white/5 text-xs uppercase font-extrabold text-gray-900 dark:text-white">
+              <tr>
+                <th class="py-3 px-4 rounded-l-xl">GTA Region</th>
+                <th class="py-3 px-4">Sample Postal Code</th>
+                <th class="py-3 px-4">Avg Distance</th>
+                <th class="py-3 px-4 rounded-r-xl">Estimated Rate</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-100 dark:divide-white/5">
+              <tr><td class="py-3 px-4 font-bold text-gray-900 dark:text-white">Etobicoke South (Near Kitchen)</td><td class="py-3 px-4 font-mono">M8W, M8V</td><td class="py-3 px-4">&le; 2.0 km</td><td class="py-3 px-4 text-greek-lime font-bold">FREE ($0.00 CAD)</td></tr>
+              <tr><td class="py-3 px-4 font-bold text-gray-900 dark:text-white">Etobicoke South / Humber</td><td class="py-3 px-4 font-mono">M8X, M8Z</td><td class="py-3 px-4">2–5 km</td><td class="py-3 px-4 text-greek-lime font-bold">$5.00 CAD Flat</td></tr>
+              <tr><td class="py-3 px-4 font-bold text-gray-900 dark:text-white">Mississauga East / Port Credit</td><td class="py-3 px-4 font-mono">L5E, L5G</td><td class="py-3 px-4">5–6 km</td><td class="py-3 px-4 text-greek-lime font-bold">$5.00 – $6.00 CAD</td></tr>
+              <tr><td class="py-3 px-4 font-bold text-gray-900 dark:text-white">High Park / Bloor West</td><td class="py-3 px-4 font-mono">M6S, M6P</td><td class="py-3 px-4">7–9 km</td><td class="py-3 px-4 text-greek-lime font-bold">$7.00 – $9.00 CAD</td></tr>
+              <tr><td class="py-3 px-4 font-bold text-gray-900 dark:text-white">Downtown Toronto / Waterfront</td><td class="py-3 px-4 font-mono">M5V, M5J</td><td class="py-3 px-4">13–15 km</td><td class="py-3 px-4 text-greek-lime font-bold">$13.00 – $15.00 CAD</td></tr>
+              <tr><td class="py-3 px-4 font-bold text-gray-900 dark:text-white">North York</td><td class="py-3 px-4 font-mono">M2N, M3C</td><td class="py-3 px-4">20–23 km</td><td class="py-3 px-4 text-greek-lime font-bold">$20.00 – $23.00 CAD</td></tr>
+              <tr><td class="py-3 px-4 font-bold text-gray-900 dark:text-white">Scarborough</td><td class="py-3 px-4 font-mono">M1P, M1B</td><td class="py-3 px-4">27–35 km</td><td class="py-3 px-4 text-greek-lime font-bold">$27.00 – $35.00 CAD</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer id="siteFooter" class="bg-greek-navyDark text-white border-t border-white/10">
+    <div class="container mx-auto px-4 py-16">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
+        <div>
+          <a href="index.html"><img src="images/brand/greek-fit-kitchen-logo.png" alt="Greek Fit Kitchen" width="817" height="221" class="h-14 w-auto" /></a>
+          <p class="mt-4 text-xs text-white/60 leading-relaxed">
+            Authentic Greek fitness meal prep designed for high-protein athletic performance and busy Toronto lifestyles.
+          </p>
+          <div class="mt-4 text-xs text-white/70 space-y-1">
+            <p><strong>Commercial Kitchen:</strong> 3575 Lake Shore Blvd W, Etobicoke, ON M8W 1P5</p>
+          </div>
+        </div>
+        <div>
+          <h4 class="font-heading font-bold text-sm text-greek-gold uppercase tracking-wider mb-4">Quick Navigation</h4>
+          <ul class="space-y-2.5 text-xs text-white/70">
+            <li><a href="menu.html" class="hover:text-white transition-colors">Our 20 Main Dishes</a></li>
+            <li><a href="meal-plans.html" class="hover:text-white transition-colors">Weekly Meal Plans</a></li>
+            <li><a href="delivery-rates.html" class="hover:text-white transition-colors">GTA Delivery Rates</a></li>
+            <li><a href="about-us.html" class="hover:text-white transition-colors">About George the Greek</a></li>
+            <li><a href="how-it-works.html" class="hover:text-white transition-colors">Heating &amp; Storage Guide</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-heading font-bold text-sm text-greek-gold uppercase tracking-wider mb-4">Batch Drops</h4>
+          <div class="space-y-3 text-xs text-white/70">
+            <div><strong class="text-white block">Sunday Batch:</strong> Cutoff Friday 11:59 PM EST</div>
+            <div><strong class="text-white block">Wednesday Batch:</strong> Cutoff Monday 11:59 PM EST</div>
+          </div>
+        </div>
+        <div>
+          <h4 class="font-heading font-bold text-sm text-greek-gold uppercase tracking-wider mb-4">Contact Support</h4>
+          <div class="space-y-2 text-xs text-white/80">
+            <p>📧 orders@greekfitkitchen.ca</p>
+            <p>📞 (416) 555-GREEK</p>
+          </div>
+        </div>
+      </div>
+      <div class="mt-12 pt-8 border-t border-white/10 text-xs text-white/50">
+        <p>&copy; 2026 Greek Fit Kitchen. All rights reserved. Minimum 6 meals per order.</p>
+      </div>
+    </div>
+
+  </footer>
+
+  <script src="js/app.js"></script>
+</body>
+</html>

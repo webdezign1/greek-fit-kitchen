@@ -1,0 +1,212 @@
+[
+  {
+    "id": "grilled-chicken",
+    "name": "Grilled Chicken",
+    "price": 12.99,
+    "category": "chicken",
+    "image": "images/meals/grilled-chicken.jpg",
+    "description": "Tender herb-marinated chicken breast flame-grilled with Greek oregano, garlic, and extra virgin olive oil.",
+    "dietary": "High Protein, Gluten-Free",
+    "available": true
+  },
+  {
+    "id": "chilly-chicken",
+    "name": "Chilly Chicken",
+    "price": 13.99,
+    "category": "chicken",
+    "image": "images/meals/chilly-chicken.jpg",
+    "description": "Lean chicken breast tossed in a zesty Mediterranean chili and herb glaze for a vibrant metabolic kick.",
+    "dietary": "High Protein, Spicy",
+    "available": true
+  },
+  {
+    "id": "salmon",
+    "name": "Salmon",
+    "price": 14.99,
+    "category": "seafood",
+    "image": "images/meals/salmon.jpg",
+    "description": "Pan-seared Atlantic salmon fillet with sea salt, cracked black pepper, oregano, and fresh lemon essence.",
+    "dietary": "Omega-3, Heart Healthy, Keto Friendly",
+    "available": true
+  },
+  {
+    "id": "spinach-feta",
+    "name": "Spinach & Feta",
+    "price": 14.99,
+    "category": "chicken",
+    "image": "images/meals/spinach-feta-chicken.jpg",
+    "description": "Lean chicken breast stuffed with authentic Greek feta, wilted baby spinach, and roasted garlic cloves.",
+    "dietary": "High Protein, Signature Dish",
+    "available": true
+  },
+  {
+    "id": "stuffed-chicken",
+    "name": "Stuffed Chicken",
+    "price": 14.99,
+    "category": "chicken",
+    "image": "images/meals/stuffed-chicken.jpg",
+    "description": "Tender chicken breast generously stuffed with authentic Greek feta, fresh garden herbs, and roasted garlic, baked to golden perfection.",
+    "dietary": "High Protein, Chef Specialty",
+    "available": true
+  },
+  {
+    "id": "tandoori-chicken",
+    "name": "Tandoori Chicken",
+    "price": 14.99,
+    "category": "chicken",
+    "image": "images/meals/tandoori-chicken.jpg",
+    "description": "Greek-yogurt and aromatic spice-marinated chicken fillet, roasted tender with caramelized edges.",
+    "dietary": "High Protein, Lean",
+    "available": true
+  },
+  {
+    "id": "chicken-mushroom",
+    "name": "Chicken Mushroom Sauce",
+    "price": 13.99,
+    "category": "chicken",
+    "image": "images/meals/chicken-mushroom.jpg",
+    "description": "Succulent chicken breast smothered in a savory, simmered cremini mushroom reduction with Greek herbs.",
+    "dietary": "High Protein",
+    "available": true
+  },
+  {
+    "id": "chicken-fajita",
+    "name": "Chicken Fajita",
+    "price": 12.99,
+    "category": "chicken",
+    "image": "images/meals/chicken-fajita.jpg",
+    "description": "Sliced grilled chicken breast sautéed with sweet bell peppers, red onions, and smoky Mediterranean spices.",
+    "dietary": "High Protein, Nutrient Dense",
+    "available": true
+  },
+  {
+    "id": "beef-fajita",
+    "name": "Beef Fajita",
+    "price": 14.99,
+    "category": "beef",
+    "image": "images/meals/beef-fajita.jpg",
+    "description": "Char-broiled strips of tender Canadian flank beef seared with colorful sweet peppers and charred sweet onions.",
+    "dietary": "High Protein, Iron Rich",
+    "available": true
+  },
+  {
+    "id": "beef-mushroom",
+    "name": "Beef Mushroom Sauce",
+    "price": 14.99,
+    "category": "beef",
+    "image": "images/meals/beef-mushroom.jpg",
+    "description": "Slow-braised lean beef medallions topped with a rich garlic mushroom glaze and garden fresh parsley.",
+    "dietary": "High Protein, Hearty",
+    "available": true
+  },
+  {
+    "id": "smoked-turkey",
+    "name": "Smoked Turkey Breast",
+    "price": 13.99,
+    "category": "chicken",
+    "image": "images/meals/smoked-turkey.jpg",
+    "description": "Naturally hardwood-smoked lean turkey breast carved into tender slices with fragrant rosemary jus.",
+    "dietary": "Ultra Lean, High Protein",
+    "available": true
+  },
+  {
+    "id": "chicken-leg",
+    "name": "Chicken Leg Plate",
+    "price": 10.99,
+    "category": "chicken",
+    "image": "images/meals/chicken-leg.jpg",
+    "description": "Slow-roasted bone-in chicken leg quarters seasoned with aromatic garlic, wild thyme, and fresh lemon.",
+    "dietary": "High Protein, Traditional",
+    "available": true
+  },
+  {
+    "id": "chicken-fillet",
+    "name": "Chicken Fillet",
+    "price": 12.99,
+    "category": "chicken",
+    "image": "images/meals/chicken-fillet.jpg",
+    "description": "Ultra-lean grilled chicken breast fillet prepared simply with Greek lemon, sea salt, and extra virgin olive oil.",
+    "dietary": "Clean Macros, Low Fat",
+    "available": true
+  },
+  {
+    "id": "veggie-souvlaki",
+    "name": "Veggie Souvlaki",
+    "price": 11.99,
+    "category": "vegetarian",
+    "image": "images/meals/veggie-souvlaki.jpg",
+    "description": "Skewered char-grilled zucchini, bell peppers, cremini mushrooms, and red onions with Greek herb marinade.",
+    "dietary": "Vegetarian, Plant Powered",
+    "available": true
+  },
+  {
+    "id": "chicken-souvlaki",
+    "name": "Chicken Souvlaki Plate",
+    "price": 12.99,
+    "category": "chicken",
+    "image": "images/meals/chicken-souvlaki.jpg",
+    "description": "Traditional skewers of cubed chicken breast marinated in lemon, garlic, white wine, and Greek mountain oregano.",
+    "dietary": "Best Seller, High Protein",
+    "available": true
+  },
+  {
+    "id": "beef-souvlaki",
+    "name": "Beef Souvlaki Plate",
+    "price": 13.99,
+    "category": "beef",
+    "image": "images/meals/beef-souvlaki.jpg",
+    "description": "Tender sirloin steak skewers grilled over open flame with extra virgin olive oil and fragrant spices.",
+    "dietary": "Premium Beef, High Protein",
+    "available": true
+  },
+  {
+    "id": "pork-souvlaki",
+    "name": "Pork Souvlaki Plate",
+    "price": 9.99,
+    "category": "pork",
+    "image": "images/meals/pork-souvlaki.jpg",
+    "description": "Authentic Greek street-style marinated pork tenderloin skewers with vibrant lemon and crushed oregano.",
+    "dietary": "Authentic Greek, High Protein",
+    "available": true
+  },
+  {
+    "id": "spinach-pie",
+    "name": "Spinach Pie Dinner",
+    "price": 12.99,
+    "category": "vegetarian",
+    "image": "images/meals/spinach-pie.jpg",
+    "description": "Traditional homemade Spanakopita with flaky phyllo pastry, organic baby spinach, scallions, and sheep feta.",
+    "dietary": "Vegetarian, Handcrafted",
+    "available": true
+  },
+  {
+    "id": "pasta-al-greco",
+    "name": "Pasta al Greco",
+    "price": 9.99,
+    "category": "vegetarian",
+    "image": "images/meals/pasta-al-greco.jpg",
+    "description": "Penne pasta tossed in rich Greek roasted tomato sauce, virgin olive oil, fragrant basil, and crumbled sheep feta.",
+    "dietary": "Vegetarian, Pasta Dish (Sides Excluded)",
+    "available": true
+  },
+  {
+    "id": "smoked-pork-loin",
+    "name": "Smoked Pork Loin",
+    "price": 12.99,
+    "category": "pork",
+    "image": "images/meals/smoked-pork-loin.jpg",
+    "description": "Tender center-cut pork loin, lightly smoked with natural applewood and served with aromatic citrus jus.",
+    "dietary": "High Protein, Lean Cuts",
+    "available": true
+  },
+  {
+    "id": "turkey-souvlaki",
+    "name": "Turkey Souvlaki Plate",
+    "price": 13.99,
+    "category": "chicken",
+    "image": "images/meals/turkey-souvlaki.jpg",
+    "description": "Lean cubed turkey breast skewers flame-broiled with lemon, garlic, Greek sea salt, and extra virgin olive oil.",
+    "dietary": "Ultra Clean, High Protein",
+    "available": true
+  }
+]

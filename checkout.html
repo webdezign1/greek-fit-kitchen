@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+  <title>Checkout &amp; Delivery Scheduling | Greek Fit Kitchen</title>
+  <meta name="description" content="Complete your Greek Fit Kitchen order. Select batch delivery day, GTA address with tiered distance delivery or free pickup, and review volume savings." />
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            greek: {
+              navy: '#101D3A',
+              navyDark: '#0C172E',
+              gold: '#F5C542',
+              goldHover: '#E5B432',
+              lime: '#82B82A'
+            }
+          },
+          fontFamily: {
+            heading: ['Roboto Slab', 'serif'],
+            sans: ['Roboto', 'sans-serif']
+          }
+        }
+      }
+    };
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;500;600;700;800;900&family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/customizer.css" />
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased font-sans transition-colors duration-200">
+
+  <!-- TOP ANNOUNCEMENT BAR -->
+  <div class="bg-greek-navy text-white text-xs py-2 px-4 border-b border-greek-gold/20 flex flex-wrap justify-between items-center text-center sm:text-left gap-2 z-50 relative">
+    <div class="container mx-auto flex flex-wrap justify-between items-center">
+      <div class="flex items-center gap-2 mx-auto sm:mx-0">
+        <span class="inline-block w-2 h-2 rounded-full bg-greek-lime animate-ping"></span>
+        <span id="cutoffCountdown" class="font-medium">Loading batch cutoff countdown...</span>
+      </div>
+      <div class="hidden md:flex items-center gap-4 text-white/80">
+        <span>📍 Kitchen: 3575 Lake Shore Blvd W, Etobicoke</span>
+        <span class="text-greek-gold font-bold">10% Volume Discount on 7+ Meals</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- HEADER NAVBAR -->
+  <header class="sticky top-0 z-40 bg-white/95 header-glass border-b border-slate-200 transition-colors shadow-sm">
+    <div class="container mx-auto px-4 h-20 flex items-center justify-between">
+      <a href="index.html" class="flex items-center group" aria-label="Greek Fit Kitchen home">
+        <img src="images/brand/greek-fit-kitchen-logo-dark-text.png" alt="Greek Fit Kitchen" width="817" height="221" class="h-12 sm:h-14 w-auto group-hover:scale-105 transition-transform" />
+      </a>
+
+      <nav class="hidden lg:flex items-center gap-7 text-sm font-semibold text-gray-700">
+        <a href="index.html" class="hover:text-greek-gold transition-colors">Home</a>
+        <a href="menu.html" class="hover:text-greek-gold transition-colors">Our Menu</a>
+        <a href="meal-plans.html" class="hover:text-greek-gold transition-colors">Meal Plans</a>
+        <a href="delivery-rates.html" class="hover:text-greek-gold transition-colors">Delivery Rates</a>
+        <a href="about-us.html" class="hover:text-greek-gold transition-colors">About Us</a>
+      </nav>
+
+      <div class="flex items-center gap-3">
+        <button type="button" onclick="openOrderTrackingModal()" class="py-2 px-3 rounded-xl bg-gray-100 hover:bg-gray-200 text-gray-800 font-bold text-xs flex items-center gap-1.5 transition">
+          <svg class="w-4 h-4 text-greek-navy" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path></svg>
+          Track Order
+        </button>
+
+        <a href="menu.html" class="py-2 px-4 rounded-xl border border-greek-gold text-greek-navy font-bold text-sm hover:bg-greek-gold transition-colors">
+          Back to Menu
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN CHECKOUT CONTENT -->
+  <main class="py-12 bg-slate-50">
+    <div class="container mx-auto px-4 max-w-5xl">
+      
+      <div class="text-center mb-10">
+        <span class="text-greek-gold uppercase tracking-wider font-bold text-xs bg-greek-navy/10 px-3 py-1 rounded-full">
+          Secure Order Finalization
+        </span>
+        <h1 class="font-heading text-3xl sm:text-4xl font-extrabold text-gray-900 mt-2">
+          Review &amp; Schedule Your Meal Batch
+        </h1>
+        <p class="text-xs text-gray-500 mt-1">Minimum order: 6 meals • Freshly cooked in Etobicoke</p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
+        
+        <!-- Order Form (7 Cols) -->
+        <div class="lg:col-span-7 space-y-8">
+          
+          <!-- 1. Batch Drop Scheduling -->
+          <div class="p-6 sm:p-8 rounded-3xl bg-white border border-gray-200 shadow-sm">
+            <h3 class="font-heading font-bold text-lg text-gray-900 flex items-center gap-2">
+              <span class="w-7 h-7 rounded-full bg-greek-gold text-greek-navyDark font-extrabold flex items-center justify-center text-xs">1</span>
+              Select Batch Delivery Day &amp; Time Slot
+            </h3>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
+              <label class="flex items-start gap-3 p-4 rounded-2xl border-2 border-greek-gold bg-greek-gold/5 cursor-pointer">
+                <input type="radio" name="checkoutBatchDay" value="sunday" checked class="mt-1 text-greek-gold focus:ring-greek-gold" />
+                <div>
+                  <strong class="block text-sm text-gray-900">Next Sunday Batch</strong>
+                  <span class="text-xs text-gray-500">Cutoff Friday 11:59 PM EST</span>
+                </div>
+              </label>
+
+              <label class="flex items-start gap-3 p-4 rounded-2xl border border-gray-200 cursor-pointer hover:bg-gray-50">
+                <input type="radio" name="checkoutBatchDay" value="wednesday" class="mt-1 text-greek-gold focus:ring-greek-gold" />
+                <div>
+                  <strong class="block text-sm text-gray-900">Next Wednesday Batch</strong>
+                  <span class="text-xs text-gray-500">Cutoff Monday 11:59 PM EST</span>
+                </div>
+              </label>
+            </div>
+
+            <!-- Time Slot Selection -->
+            <div class="mt-4 pt-4 border-t border-gray-100">
+              <label class="block text-xs font-bold uppercase text-gray-600 mb-2">Delivery Time Window:</label>
+              <select name="checkoutTimeSlot" class="w-full p-3 rounded-xl border border-gray-300 bg-white text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-greek-gold">
+                <option value="1:00 PM – 4:00 PM">Afternoon Drop (1:00 PM – 4:00 PM EST)</option>
+                <option value="4:00 PM – 7:00 PM">Evening Drop (4:00 PM – 7:00 PM EST)</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- 2. Delivery Method & Tier Pricing Notice -->
+          <div class="p-6 sm:p-8 rounded-3xl bg-white border border-gray-200 shadow-sm">
+            <h3 class="font-heading font-bold text-lg text-gray-900 flex items-center gap-2">
+              <span class="w-7 h-7 rounded-full bg-greek-gold text-greek-navyDark font-extrabold flex items-center justify-center text-xs">2</span>
+              Delivery Method
+            </h3>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
+              <label class="flex items-start gap-3 p-4 rounded-2xl border-2 border-greek-gold bg-greek-gold/5 cursor-pointer">
+                <input type="radio" name="checkoutDeliveryMethod" value="delivery" checked onchange="toggleCheckoutMethod('delivery')" class="mt-1 text-greek-gold focus:ring-greek-gold" />
+                <div>
+                  <strong class="block text-sm text-gray-900">GTA Doorstep Delivery</strong>
+                  <span class="text-xs text-gray-500 block">Free &le;2km; $5 over 2–5km; $1/km &gt;5km</span>
+                </div>
+              </label>
+
+              <label class="flex items-start gap-3 p-4 rounded-2xl border border-gray-200 cursor-pointer hover:bg-gray-50">
+                <input type="radio" name="checkoutDeliveryMethod" value="pickup" onchange="toggleCheckoutMethod('pickup')" class="mt-1 text-greek-gold focus:ring-greek-gold" />
+                <div>
+                  <strong class="block text-sm text-gray-900">Kitchen Pickup (FREE)</strong>
+                  <span class="text-xs text-gray-500">3575 Lake Shore Blvd W, Etobicoke</span>
+                </div>
+              </label>
+            </div>
+          </div>
+
+          <!-- 3. Contact & Address with Google Autofill -->
+          <form id="standaloneCheckoutForm" onsubmit="submitCheckoutOrder(event)" class="p-6 sm:p-8 rounded-3xl bg-white border border-gray-200 shadow-sm space-y-4">
+            <h3 class="font-heading font-bold text-lg text-gray-900 flex items-center gap-2 mb-2">
+              <span class="w-7 h-7 rounded-full bg-greek-gold text-greek-navyDark font-extrabold flex items-center justify-center text-xs">3</span>
+              Contact &amp; Shipping Details
+            </h3>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-xs font-bold uppercase text-gray-500 mb-1">Full Name *</label>
+                <input type="text" name="fullName" required placeholder="Alex Papadopoulos" class="w-full py-2.5 px-3.5 rounded-xl border border-gray-300 bg-slate-50 text-sm text-gray-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-greek-gold" />
+              </div>
+              <div>
+                <label class="block text-xs font-bold uppercase text-gray-500 mb-1">Phone Number (Delivery SMS) *</label>
+                <input type="tel" name="phone" required placeholder="(416) 555-0199" class="w-full py-2.5 px-3.5 rounded-xl border border-gray-300 bg-slate-50 text-sm text-gray-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-greek-gold" />
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-xs font-bold uppercase text-gray-500 mb-1">Email Address (Order Confirmation) *</label>
+              <input type="email" name="email" required placeholder="alex@example.ca" class="w-full py-2.5 px-3.5 rounded-xl border border-gray-300 bg-slate-50 text-sm text-gray-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-greek-gold" />
+            </div>
+
+            <!-- Address fields with Google Autofill simulation -->
+            <div id="shippingFieldsGroup" class="space-y-4 pt-2">
+              <div class="relative">
+                <label class="block text-xs font-bold uppercase text-gray-500 mb-1">
+                  Street Address &amp; Suite (Google Autofill Enabled) *
+                </label>
+                <input 
+                  type="text" 
+                  id="checkoutStreetAddress" 
+                  name="address"
+                  placeholder="Start typing your Toronto / GTA address (e.g. 250 Queens Quay, 3575 Lake Shore...)" 
+                  class="gta-address-autocomplete-input w-full py-3 px-3.5 rounded-xl border border-gray-300 bg-slate-50 text-sm text-gray-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-greek-gold" 
+                  autocomplete="off"
+                />
+                <p id="calcResultNotes" class="text-xs text-greek-navy font-bold mt-1.5">
+                  Calculated: 8.0 km from Etobicoke kitchen ($1.00/km full distance above 5 km).
+                </p>
+              </div>
+
+              <div>
+                <label class="block text-xs font-bold uppercase text-gray-500 mb-1">Buzzer or Delivery Instructions</label>
+                <input type="text" placeholder="e.g. Ring buzzer 810 or leave with concierge" class="w-full py-2.5 px-3.5 rounded-xl border border-gray-300 bg-slate-50 text-sm text-gray-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-greek-gold" />
+              </div>
+            </div>
+
+            <!-- 4. Secure Payment Form -->
+            <div class="pt-6 border-t border-gray-200 space-y-4">
+              <div class="flex items-center justify-between">
+                <h3 class="font-heading font-bold text-lg text-gray-900 flex items-center gap-2">
+                  <span class="w-7 h-7 rounded-full bg-greek-gold text-greek-navyDark font-extrabold flex items-center justify-center text-xs">4</span>
+                  Secure Online Payment
+                </h3>
+                <span class="text-xs text-green-700 font-bold flex items-center gap-1">
+                  🔒 256-Bit SSL Encrypted
+                </span>
+              </div>
+
+              <div class="p-4 rounded-2xl bg-gray-50 border border-gray-200 space-y-3">
+                <div>
+                  <label class="block text-xs font-bold text-gray-700 mb-1">Cardholder Name *</label>
+                  <input type="text" required placeholder="Alex Papadopoulos" class="w-full p-2.5 rounded-xl border border-gray-300 text-sm bg-white" />
+                </div>
+
+                <div>
+                  <label class="block text-xs font-bold text-gray-700 mb-1">Credit / Debit Card Number *</label>
+                  <div class="relative">
+                    <input type="text" required placeholder="4500 •••• •••• 4242" class="w-full p-2.5 pl-10 rounded-xl border border-gray-300 text-sm font-mono bg-white" />
+                    <span class="absolute left-3 top-2.5 text-sm">💳</span>
+                  </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                  <div>
+                    <label class="block text-xs font-bold text-gray-700 mb-1">Expiry Date *</label>
+                    <input type="text" required placeholder="MM/YY" maxlength="5" class="w-full p-2.5 rounded-xl border border-gray-300 text-sm text-center bg-white" />
+                  </div>
+                  <div>
+                    <label class="block text-xs font-bold text-gray-700 mb-1">CVC Code *</label>
+                    <input type="text" required placeholder="CVC" maxlength="4" class="w-full p-2.5 rounded-xl border border-gray-300 text-sm text-center bg-white" />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="pt-4">
+              <button type="submit" id="checkoutSubmitBtn" class="w-full py-4 rounded-xl bg-greek-gold hover:bg-greek-goldHover text-greek-navyDark font-extrabold text-base shadow-xl transition-all">
+                Pay &amp; Confirm Order
+              </button>
+            </div>
+          </form>
+
+        </div>
+
+        <!-- Order Summary (5 Cols) -->
+        <div class="lg:col-span-5">
+          <div class="sticky top-28 p-6 sm:p-8 rounded-3xl bg-white border border-gray-200 shadow-xl space-y-4">
+            <h3 class="font-heading font-extrabold text-xl text-gray-900 border-b border-gray-100 pb-4">
+              Order Summary
+            </h3>
+
+            <!-- Items list -->
+            <div id="checkoutItemsList" class="space-y-3 max-h-64 overflow-y-auto">
+              <!-- Dynamically mapped from app.js -->
+            </div>
+
+            <!-- Promo Code Input -->
+            <div class="pt-2">
+              <div class="flex gap-2">
+                <input type="text" id="checkoutCouponInput" placeholder="Promo code (GREEK10)" class="flex-1 p-2.5 text-xs rounded-xl border border-gray-300 uppercase font-bold" />
+                <button type="button" onclick="applyCouponCode(document.getElementById('checkoutCouponInput').value)" class="px-4 py-2 bg-greek-navy text-white text-xs font-bold rounded-xl hover:bg-greek-navyDark transition">
+                  Apply
+                </button>
+              </div>
+            </div>
+
+            <!-- Pricing Breakdown -->
+            <div class="pt-4 border-t border-gray-100 space-y-2 text-xs sm:text-sm text-gray-600">
+              <div class="flex justify-between">
+                <span>Food Subtotal:</span>
+                <span id="checkoutSummarySubtotal" class="font-bold text-gray-900">$0.00 CAD</span>
+              </div>
+
+              <div id="checkoutDiscountRow" class="flex justify-between text-green-700 font-bold hidden">
+                <span>10% Volume Savings (7+ Meals):</span>
+                <span id="checkoutSummaryDiscount">-$0.00 CAD</span>
+              </div>
+
+              <div id="checkoutCouponRow" class="flex justify-between text-green-700 font-bold hidden">
+                <span id="checkoutCouponLabel">Promo Coupon:</span>
+                <span id="checkoutCouponAmount">-$0.00 CAD</span>
+              </div>
+
+              <div class="flex justify-between">
+                <span>Ontario HST (13%):</span>
+                <span id="checkoutSummaryTax" class="font-bold text-gray-900">$0.00 CAD</span>
+              </div>
+
+              <div class="flex justify-between">
+                <span>Delivery Charge:</span>
+                <span id="checkoutSummaryDelivery" class="font-bold text-gray-900">$8.00 CAD</span>
+              </div>
+
+              <div class="flex justify-between text-base font-extrabold text-gray-900 pt-3 border-t border-gray-200">
+                <span>Grand Total:</span>
+                <span id="checkoutSummaryTotal" class="text-greek-navy font-heading text-xl">$0.00 CAD</span>
+              </div>
+            </div>
+
+            <div class="p-4 rounded-2xl bg-gray-50 border border-gray-200 text-xs text-gray-500 space-y-1">
+              <p>✓ Insulated thermal packaging included</p>
+              <p>✓ Cold-chain temperature safety guaranteed</p>
+              <p>✓ SMS and email status alerts dispatched</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </main>
+
+  <!-- CONFIRMATION MODAL -->
+  <div id="orderConfirmedModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm hidden">
+    <div class="bg-white rounded-3xl max-w-md w-full p-8 border border-gray-200 shadow-2xl text-center">
+      <div class="w-16 h-16 rounded-full bg-green-100 text-green-600 flex items-center justify-center mx-auto mb-4 font-extrabold text-2xl">
+        ✓
+      </div>
+      <h3 class="font-heading font-extrabold text-2xl text-gray-900">Order Placed &amp; Paid!</h3>
+      <p class="text-xs text-gray-500 mt-2">
+        Your fresh Greek meal prep batch has been registered with Chef George's kitchen team.
+      </p>
+
+      <div class="my-6 p-4 rounded-2xl bg-gray-50 border border-gray-200 text-left space-y-2 text-xs">
+        <div class="flex justify-between"><span class="text-gray-400">Order Number:</span><strong id="confirmOrderNumber" class="text-greek-navy font-mono">GFK-892110</strong></div>
+        <div class="flex justify-between"><span class="text-gray-400">Total Paid:</span><strong id="confirmTotalAmount" class="text-green-700 font-bold">$0.00 CAD</strong></div>
+        <div class="flex justify-between"><span class="text-gray-400">Status:</span><span class="text-green-700 font-bold">Received (Kitchen Prep Queued)</span></div>
+      </div>
+
+      <div class="flex gap-2">
+        <button onclick="openOrderTrackingModal(document.getElementById('confirmOrderNumber').innerText)" class="flex-1 py-3 bg-greek-navy hover:bg-greek-navyDark text-white font-bold text-xs rounded-xl shadow transition">
+          Track Live Batch 📍
+        </button>
+        <a href="menu.html" class="flex-1 py-3 bg-greek-gold hover:bg-greek-goldHover text-greek-navyDark font-extrabold text-xs rounded-xl text-center shadow transition">
+          Return to Menu
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Core App JS -->
+  <script src="js/app.js"></script>
+  <script>
+    // Standalone checkout page synchronization
+    window.syncStandaloneCheckoutPage = function(totals) {
+      const itemsContainer = document.getElementById('checkoutItemsList');
+      const subtotalEl = document.getElementById('checkoutSummarySubtotal');
+      const discountRow = document.getElementById('checkoutDiscountRow');
+      const discountEl = document.getElementById('checkoutSummaryDiscount');
+      const couponRow = document.getElementById('checkoutCouponRow');
+      const couponEl = document.getElementById('checkoutCouponAmount');
+      const taxEl = document.getElementById('checkoutSummaryTax');
+      const deliveryEl = document.getElementById('checkoutSummaryDelivery');
+      const totalEl = document.getElementById('checkoutSummaryTotal');
+      const submitBtn = document.getElementById('checkoutSubmitBtn');
+
+      if (itemsContainer && state.cart) {
+        if (state.cart.length === 0) {
+          itemsContainer.innerHTML = '<p class="text-xs text-gray-400 italic">No meals selected yet. <a href="menu.html" class="text-greek-gold font-bold underline">Choose meals</a>.</p>';
+        } else {
+          itemsContainer.innerHTML = state.cart.map(item => `
+            <div class="flex items-center justify-between text-xs py-2 border-b border-gray-100">
+              <div>
+                <strong class="text-gray-900">${item.quantity}x ${item.name}</strong>
+                <span class="block text-[11px] text-gray-500">${item.side1 ? item.side1 + ', ' + item.side2 : 'Pasta Dish'}</span>
+              </div>
+              <span class="font-bold text-gray-900">$${(item.unitPrice * item.quantity).toFixed(2)} CAD</span>
+            </div>
+          `).join('');
+        }
+      }
+
+      if (subtotalEl) subtotalEl.innerText = `$${totals.rawSubtotal.toFixed(2)} CAD`;
+      
+      if (discountRow) {
+        if (totals.hasVolumeDiscount) {
+          discountRow.classList.remove('hidden');
+          if (discountEl) discountEl.innerText = `-$${totals.volumeDiscountAmount.toFixed(2)} CAD`;
+        } else {
+          discountRow.classList.add('hidden');
+        }
+      }
+
+      if (couponRow) {
+        if (totals.couponDiscountAmount > 0) {
+          couponRow.classList.remove('hidden');
+          if (couponEl) couponEl.innerText = `-$${totals.couponDiscountAmount.toFixed(2)} CAD`;
+        } else {
+          couponRow.classList.add('hidden');
+        }
+      }
+
+      if (taxEl) taxEl.innerText = `$${totals.taxAmount.toFixed(2)} CAD`;
+      if (deliveryEl) deliveryEl.innerText = totals.deliveryFee === 0 ? "FREE" : `$${totals.deliveryFee.toFixed(2)} CAD`;
+      if (totalEl) totalEl.innerText = `$${totals.grandTotal.toFixed(2)} CAD`;
+
+      if (submitBtn) {
+        if (totals.totalMeals >= CONFIG.minMeals) {
+          submitBtn.disabled = false;
+          submitBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+          submitBtn.innerText = `Pay & Confirm Order ($${totals.grandTotal.toFixed(2)} CAD)`;
+        } else {
+          submitBtn.disabled = true;
+          submitBtn.classList.add('opacity-50', 'cursor-not-allowed');
+          submitBtn.innerText = `Add 6 Meals to Complete Checkout`;
+        }
+      }
+    };
+
+    document.addEventListener('DOMContentLoaded', () => {
+      updateCartUI();
+    });
+  </script>
+</body>
+</html>

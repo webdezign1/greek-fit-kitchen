@@ -1,0 +1,213 @@
+/* ==========================================================================
+   GREEK FIT KITCHEN - WORDPRESS CUSTOMIZER & STANDALONE CSS
+   Palette:
+   - greek-navy: #101D3A
+   - greek-navyDark: #0C172E
+   - greek-gold: #F5C542
+   - greek-goldHover: #E5B432
+   - greek-lime: #82B82A
+   ========================================================================== */
+
+/* Typography */
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;500;600;700;800;900&family=Roboto:ital,wght@0,300;0,400;0,500;0,700;0,900;1,400&display=swap');
+
+:root {
+  --color-greek-navy: #101D3A;
+  --color-greek-navyDark: #0C172E;
+  --color-greek-gold: #F5C542;
+  --color-greek-goldHover: #E5B432;
+  --color-greek-lime: #82B82A;
+  --font-heading: 'Roboto Slab', serif;
+  --font-body: 'Roboto', sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-family: var(--font-body);
+}
+
+h1, h2, h3, h4, h5, h6, .font-heading {
+  font-family: var(--font-heading);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #0C172E;
+}
+::-webkit-scrollbar-thumb {
+  background: #F5C542;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #E5B432;
+}
+
+/* Glassmorphism Navigation */
+.header-glass {
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* Greek Key / Meander Accent Border */
+.greek-border-bottom {
+  position: relative;
+}
+.greek-border-bottom::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(90deg, #F5C542 0%, #82B82A 50%, #F5C542 100%);
+}
+
+/* Carousel Animation */
+.carousel-slide {
+  transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Meal Card Hover Lift */
+.meal-card {
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.meal-card:hover {
+  transform: translateY(-4px);
+}
+
+/* Custom Checkbox & Radio Styling */
+.custom-radio:checked {
+  background-color: #F5C542;
+  border-color: #F5C542;
+}
+
+/* Pulse animation for discount & cutoff banners */
+@keyframes pulseSubtle {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.92; transform: scale(1.02); }
+}
+.animate-pulse-subtle {
+  animation: pulseSubtle 3s infinite ease-in-out;
+}
+/* 1. Target the absolute badge container positioned over meal card images */
+.meal-card .absolute.top-3.left-3,
+.meal-card .absolute.top-2.left-2,
+.meal-card [class*="top-"][class*="left-"]:has(span),
+
+/* 2. Target any container wrapping badges inside cards */
+.meal-card .badge,
+.meal-card .badge-container,
+.meal-card .dish-badge,
+.meal-card .tags,
+
+/* 3. Attribute fallback: hide any tag containing dietary keywords */
+.meal-card span:is(
+  [class*="bg-black"],
+  [class*="backdrop-blur"],
+  [class*="rounded-full"]
+) {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+}
+/* Fix cart drawer close button disappearance on hover */
+#cartDrawer button:hover,
+#cartDrawer button:hover svg,
+#cartDrawer button:hover span,
+#cartDrawer .close-btn:hover,
+button[aria-label*="close" i]:hover,
+button[aria-label*="Close" i]:hover {
+  color: #101D3A !important;              /* Keep the Greek navy color */
+  fill: currentColor !important;
+  stroke: currentColor !important;
+  opacity: 1 !important;                  /* Prevent accidental fading */
+  visibility: visible !important;
+  background-color: #F1F5F9 !important;   /* Subtle soft gray circular background */
+  border-radius: 9999px !important;
+}
+/* Hide the hero pill badge only on mobile screens (under 768px) */
+@media (max-width: 767px) {
+  /* Targets the hero container holding the badge */
+  section:first-of-type .inline-flex:has(span),
+  section:first-of-type div:has(> span:first-child),
+  .hero-badge,
+  .hero-tag {
+    display: none !important;
+  }
+/* Align slider navigation in-line with the CTA button row */
+@media (min-width: 768px) {
+  /* Position controls on the far right, matching button vertical alignment */
+  .hero-slider-controls,
+  [class*="carousel-controls"],
+  [class*="slider-controls"],
+  .absolute.bottom-4.right-4,
+  .absolute.bottom-6.right-6 {
+    bottom: 2.25rem !important; /* Adjust height to match the button line */
+    right: 2rem !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 0.75rem !important;
+    z-index: 20 !important;
+  }
+}
+
+/* Mobile Alignment: keep them in a single tidy row below the buttons */
+@media (max-width: 767px) {
+  .hero-slider-controls,
+  [class*="carousel-controls"],
+  [class*="slider-controls"],
+  .absolute.bottom-4.right-4,
+  .absolute.bottom-6.right-6 {
+    position: relative !important;
+    bottom: auto !important;
+    right: auto !important;
+    margin-top: 1.25rem !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 0.5rem !important;
+  }
+}
+/* Hide slider prev/next arrow buttons, keep pagination dots visible */
+#heroPrevBtn,
+#heroNextBtn {
+  display: none !important;
+}
+.mt-12.pt-8.border-t.border-white\/10.flex.flex-wrap.justify-between.items-center.text-xs.text-white\/50.gap-4 p{
+    width: 100%; 
+    text-align: center;
+}
+/* Drawer Transitions */
+#cartDrawer, #mobileMenuDrawer {
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Dark mode specific fine-tuning */
+html.dark .bg-surface-card {
+  background-color: #101D3A;
+  border-color: rgba(255, 255, 255, 0.1);
+}
+html:not(.dark) .bg-surface-card {
+  background-color: #FFFFFF;
+  border-color: #E2E8F0;
+}
+
+/* Elementor CSS Compatibility Layer */
+.elementor-widget-container .gfk-heading {
+  font-family: 'Roboto Slab', serif;
+  color: #101D3A;
+}
+html.dark .elementor-widget-container .gfk-heading {
+  color: #FFFFFF;
+}
+
+/* Print Styles */
+@media print {
+  header, footer, #cartDrawer, #cartOverlay, .no-print {
+    display: none !important;
+  }
+}

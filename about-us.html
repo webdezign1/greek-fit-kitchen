@@ -1,0 +1,216 @@
+﻿<!DOCTYPE html>
+<html lang="en" class="scroll-smooth dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+  <title>About Us | George the Greek &amp; Greek Fit Kitchen</title>
+  <meta name="description" content="Learn about George the Greek and Greek Fit Kitchen. Authentic Greek culinary heritage meeting modern athletic sports nutrition in Toronto." />
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            greek: {
+              navy: '#101D3A',
+              navyDark: '#0C172E',
+              gold: '#F5C542',
+              goldHover: '#E5B432',
+              lime: '#82B82A'
+            }
+          },
+          fontFamily: {
+            heading: ['Roboto Slab', 'serif'],
+            sans: ['Roboto', 'sans-serif']
+          }
+        }
+      }
+    };
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@600;700;800;900&amp;family=Roboto:wght@300;400;500;700;900&amp;display=swap" />
+  <link rel="stylesheet" href="css/customizer.css" />
+</head>
+<body class="bg-slate-50 text-slate-800 dark:bg-greek-navyDark dark:text-slate-100 antialiased font-sans transition-colors duration-200">
+
+  <!-- TOP ANNOUNCEMENT BAR -->
+  <div class="bg-greek-navy text-white text-xs py-2 px-4 border-b border-greek-gold/20 flex flex-wrap justify-between items-center text-center sm:text-left gap-2 z-50 relative">
+    <div class="container mx-auto flex flex-wrap justify-between items-center">
+      <div class="flex items-center gap-2 mx-auto sm:mx-0">
+        <span class="inline-block w-2 h-2 rounded-full bg-greek-lime animate-ping"></span>
+        <span id="cutoffCountdown" class="font-medium">Loading batch cutoff countdown...</span>
+      </div>
+      <div class="hidden md:flex items-center gap-4 text-white/80">
+        <span>📍 Kitchen: 3575 Lake Shore Blvd W, Etobicoke</span>
+        <span class="text-greek-gold font-bold">10% Volume Discount on 7+ Meals</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- HEADER NAVBAR -->
+  <header class="sticky top-0 z-40 bg-white/90 dark:bg-greek-navy/95 header-glass border-b border-slate-200 dark:border-white/10 transition-colors">
+    <div class="container mx-auto px-4 h-20 flex items-center justify-between">
+      <a href="index.html" class="flex items-center group" aria-label="Greek Fit Kitchen home">
+        <img src="images/brand/greek-fit-kitchen-logo-dark-text.png" alt="Greek Fit Kitchen" width="817" height="221" class="h-12 sm:h-14 w-auto dark:hidden group-hover:scale-105 transition-transform" />
+          <img src="images/brand/greek-fit-kitchen-logo.png" alt="" aria-hidden="true" width="817" height="221" class="h-12 sm:h-14 w-auto hidden dark:block group-hover:scale-105 transition-transform" />
+      </a>
+
+      <nav class="hidden lg:flex items-center gap-7 text-sm font-semibold text-gray-700 dark:text-slate-200">
+        <a href="index.html" class="hover:text-greek-gold transition-colors">Home</a>
+        <a href="menu.html" class="hover:text-greek-gold transition-colors">Menu</a>
+        <a href="meal-plans.html" class="hover:text-greek-gold transition-colors">Weekly Meal Plans</a>
+        <a href="delivery-rates.html" class="hover:text-greek-gold transition-colors">Delivery Rates</a>
+        <a href="about-us.html" class="text-greek-gold transition-colors">About Us</a>
+        <a href="how-it-works.html" class="hover:text-greek-gold transition-colors">How It Works</a>
+      </nav>
+
+      <div class="flex items-center gap-3">
+
+        <button type="button" class="open-cart-btn relative flex items-center gap-2.5 py-2 px-4 rounded-xl bg-greek-gold hover:bg-greek-goldHover text-greek-navyDark font-bold text-sm shadow-md transition-all">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
+          <span class="hidden sm:inline">My Plan</span>
+          <span class="cart-badge bg-greek-navy text-white text-xs px-2 py-0.5 rounded-full font-bold">0</span>
+        </button>
+
+        <button type="button" id="mobileMenuToggleBtn" class="lg:hidden p-2.5 rounded-xl border border-gray-300 dark:border-white/20 text-gray-700 dark:text-white">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="py-14 bg-greek-navy text-white border-b border-white/10">
+    <div class="container mx-auto px-4 text-center max-w-3xl">
+      <span class="text-greek-gold uppercase tracking-widest font-bold text-xs">Authentic Mediterranean Fuel</span>
+      <h1 class="font-heading text-4xl sm:text-5xl font-extrabold text-white mt-2">
+        About Greek Fit Kitchen
+      </h1>
+      <p class="mt-4 text-slate-300 text-sm leading-relaxed">
+        Why sacrifice flavor to stay in peak shape? Meet George the Greek and discover how our Etobicoke kitchen is redefining athletic meal prep in Ontario.
+      </p>
+    </div>
+  </section>
+
+  <!-- STORY CONTENT -->
+  <main class="py-16 bg-slate-50 dark:bg-greek-navyDark">
+    <div class="container mx-auto px-4 max-w-4xl">
+      
+      <div class="rounded-3xl overflow-hidden shadow-2xl border border-gray-200 dark:border-white/10 aspect-[16/9] mb-12">
+        <img src="https://fit.georgethegreeks.com/images/meals/about-greek-fit.jpg" alt="Chef George and Kitchen Team" class="w-full h-full object-cover" onerror="this.src='https://pixel-force.github.io/Greek-Fit-Kitchen/public/images/meals/meal-prep-showcase.jpg'" />
+      </div>
+
+      <div class="bg-white dark:bg-greek-navy rounded-3xl p-8 sm:p-12 border border-gray-200 dark:border-white/10 shadow-sm space-y-6 text-gray-700 dark:text-gray-300 leading-relaxed">
+        
+        <h2 class="font-heading font-extrabold text-3xl text-gray-900 dark:text-white">
+          "Greek Food is Nature's Original Fitness Diet"
+        </h2>
+
+        <p>
+          Growing up in a traditional Greek family, every single meal was built around three non-negotiables: fresh lean proteins, cold-pressed extra virgin olive oil from ancient olive groves, and wild mountain herbs hand-picked under the Mediterranean sun.
+        </p>
+
+        <p>
+          When founder <strong>George the Greek</strong> became dedicated to fitness and athletic training in Toronto, he experienced the same frustration so many athletes and busy professionals face: conventional fitness meal prep was dry, bland, repetitive, and cooked with cheap seed oils that caused systemic inflammation.
+        </p>
+
+        <p>
+          In partnership with our state-of-the-art Etobicoke commercial kitchen facility (3575 Lake Shore Blvd W), Greek Fit Kitchen was created to bring culinary excitement back to performance eating.
+        </p>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-6 border-t border-gray-100 dark:border-white/10 text-center">
+          <div class="p-4 rounded-2xl bg-gray-50 dark:bg-white/5">
+            <span class="font-heading font-extrabold text-2xl text-greek-gold">100%</span>
+            <span class="block text-xs text-gray-500 dark:text-gray-400 mt-1">Extra Virgin Olive Oil (Zero Seed Oils)</span>
+          </div>
+          <div class="p-4 rounded-2xl bg-gray-50 dark:bg-white/5">
+            <span class="font-heading font-extrabold text-2xl text-greek-lime">40g+</span>
+            <span class="block text-xs text-gray-500 dark:text-gray-400 mt-1">Average Protein Per Dish</span>
+          </div>
+          <div class="p-4 rounded-2xl bg-gray-50 dark:bg-white/5">
+            <span class="font-heading font-extrabold text-2xl text-greek-gold">2x</span>
+            <span class="block text-xs text-gray-500 dark:text-gray-400 mt-1">Weekly Fresh Batch Drops</span>
+          </div>
+        </div>
+
+        <h3 class="font-heading font-bold text-2xl text-gray-900 dark:text-white pt-4">
+          Our Four Kitchen Commitments
+        </h3>
+
+        <ul class="space-y-4 text-sm">
+          <li class="flex items-start gap-3">
+            <span class="p-1.5 rounded-lg bg-greek-gold/20 text-greek-gold font-bold">1</span>
+            <div><strong>Never Frozen:</strong> We batch-cook twice a week (Sundays &amp; Wednesdays). Your meals are never frozen in a commercial freezer or thawed before delivery.</div>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="p-1.5 rounded-lg bg-greek-gold/20 text-greek-gold font-bold">2</span>
+            <div><strong>Local Ontario Poultry &amp; AAA Beef:</strong> We partner with local butchers for lean breast tenderloins, fresh Atlantic salmon fillets, and Canadian AAA sirloin cuts.</div>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="p-1.5 rounded-lg bg-greek-gold/20 text-greek-gold font-bold">3</span>
+            <div><strong>Custom Starches &amp; Veggies:</strong> Every dish comes with 2 sides chosen by you. We never lock you into fixed carb or vegetable ratios.</div>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="p-1.5 rounded-lg bg-greek-gold/20 text-greek-gold font-bold">4</span>
+            <div><strong>Eco-Friendly Recyclable Packaging:</strong> Packed in BPA-free, leak-resistant, microwave-safe and oven-safe recyclable trays.</div>
+          </li>
+        </ul>
+
+      </div>
+
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer id="siteFooter" class="bg-greek-navyDark text-white border-t border-white/10">
+    <div class="container mx-auto px-4 py-16">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
+        <div>
+          <a href="index.html"><img src="images/brand/greek-fit-kitchen-logo.png" alt="Greek Fit Kitchen" width="817" height="221" class="h-14 w-auto" /></a>
+          <p class="mt-4 text-xs text-white/60 leading-relaxed">
+            Authentic Greek fitness meal prep designed for high-protein athletic performance and busy Toronto lifestyles.
+          </p>
+          <div class="mt-4 text-xs text-white/70 space-y-1">
+            <p><strong>Commercial Kitchen:</strong> 3575 Lake Shore Blvd W, Etobicoke, ON M8W 1P5</p>
+          </div>
+        </div>
+        <div>
+          <h4 class="font-heading font-bold text-sm text-greek-gold uppercase tracking-wider mb-4">Quick Navigation</h4>
+          <ul class="space-y-2.5 text-xs text-white/70">
+            <li><a href="menu.html" class="hover:text-white transition-colors">Our 20 Main Dishes</a></li>
+            <li><a href="meal-plans.html" class="hover:text-white transition-colors">Weekly Meal Plans</a></li>
+            <li><a href="delivery-rates.html" class="hover:text-white transition-colors">GTA Delivery Rates</a></li>
+            <li><a href="about-us.html" class="hover:text-white transition-colors">About George the Greek</a></li>
+            <li><a href="how-it-works.html" class="hover:text-white transition-colors">Heating &amp; Storage Guide</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-heading font-bold text-sm text-greek-gold uppercase tracking-wider mb-4">Batch Drops</h4>
+          <div class="space-y-3 text-xs text-white/70">
+            <div><strong class="text-white block">Sunday Batch:</strong> Cutoff Friday 11:59 PM EST</div>
+            <div><strong class="text-white block">Wednesday Batch:</strong> Cutoff Monday 11:59 PM EST</div>
+          </div>
+        </div>
+        <div>
+          <h4 class="font-heading font-bold text-sm text-greek-gold uppercase tracking-wider mb-4">Contact Support</h4>
+          <div class="space-y-2 text-xs text-white/80">
+            <p>📧 orders@greekfitkitchen.ca</p>
+            <p>📞 (416) 555-GREEK</p>
+          </div>
+        </div>
+      </div>
+      <div class="mt-12 pt-8 border-t border-white/10 text-xs text-white/50">
+        <p>&copy; 2026 Greek Fit Kitchen. All rights reserved. Minimum 6 meals per order.</p>
+      </div>
+    </div>
+
+    
+  </footer>
+
+  <script src="js/app.js"></script>
+</body>
+</html>

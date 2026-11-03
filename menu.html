@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+  <title>Our Menu (21 Chef Dishes) | Greek Fit Kitchen Toronto</title>
+  <meta name="description" content="Discover our 21 chef-prepared Greek high-protein dishes. Choose 2 included clean sides, order fresh batch prep, and enjoy big Greek flavor with zero meal prep." />
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            greek: {
+              navy: '#101D3A',
+              navyDark: '#0C172E',
+              gold: '#F5C542',
+              goldHover: '#E5B432',
+              lime: '#82B82A'
+            }
+          },
+          fontFamily: {
+            heading: ['Roboto Slab', 'serif'],
+            sans: ['Roboto', 'sans-serif']
+          }
+        }
+      }
+    };
+  </script>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;500;600;700;800;900&family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/customizer.css" />
+</head>
+<body class="bg-slate-50 text-slate-900 antialiased font-sans transition-colors duration-200">
+
+  <!-- TOP ANNOUNCEMENT BAR (Preserved) -->
+  <div class="bg-greek-navy text-white text-xs py-2 px-4 border-b border-greek-gold/20 flex flex-wrap justify-between items-center text-center sm:text-left gap-2 z-50 relative">
+    <div class="container mx-auto flex flex-wrap justify-between items-center">
+      <div class="flex items-center gap-2 mx-auto sm:mx-0">
+        <span class="inline-block w-2 h-2 rounded-full bg-greek-lime animate-ping"></span>
+        <span id="cutoffCountdown" class="font-medium">Loading batch cutoff countdown...</span>
+      </div>
+      <div class="hidden md:flex items-center gap-4 text-white/80">
+        <span>📍 Kitchen: 3575 Lake Shore Blvd W, Etobicoke</span>
+        <span class="text-greek-gold font-bold">10% Volume Discount on 7+ Meals</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- HEADER NAVBAR (Preserved exactly as existing) -->
+  <header class="sticky top-0 z-40 bg-white/95 header-glass border-b border-slate-200 transition-colors shadow-sm">
+    <div class="container mx-auto px-4 h-20 flex items-center justify-between">
+      <a href="index.html" class="flex items-center group" aria-label="Greek Fit Kitchen home">
+        <img src="images/brand/greek-fit-kitchen-logo-dark-text.png" alt="Greek Fit Kitchen" width="817" height="221" class="h-12 sm:h-14 w-auto group-hover:scale-105 transition-transform" onerror="this.src='images/brand/greek-fit-kitchen-logo.png'" />
+      </a>
+
+      <nav class="hidden lg:flex items-center gap-7 text-sm font-semibold text-gray-700">
+        <a href="index.html" class="hover:text-greek-gold transition-colors">Home</a>
+        <a href="menu.html" class="text-greek-gold font-bold transition-colors">Menu</a>
+        <a href="meal-plans.html" class="hover:text-greek-gold transition-colors">Weekly Meal Plans</a>
+        <a href="delivery-rates.html" class="hover:text-greek-gold transition-colors">Delivery Rates</a>
+        <a href="about-us.html" class="hover:text-greek-gold transition-colors">About Us</a>
+        <a href="how-it-works.html" class="hover:text-greek-gold transition-colors">How It Works</a>
+        <a href="admin.html" class="text-xs px-2.5 py-1 rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold transition-colors">Admin Portal</a>
+      </nav>
+
+      <div class="flex items-center gap-3">
+        <button type="button" onclick="openOrderTrackingModal()" class="hidden sm:flex items-center gap-1.5 py-2 px-3 rounded-xl border border-gray-300 hover:border-greek-gold text-gray-700 font-bold text-xs transition-all">
+          <svg class="w-4 h-4 text-greek-navy" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path></svg>
+          Track Order
+        </button>
+
+        <button type="button" class="open-cart-btn relative flex items-center gap-2.5 py-2.5 px-4 rounded-xl bg-greek-gold hover:bg-greek-goldHover text-greek-navyDark font-extrabold text-sm shadow-md transition-all">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
+          <span class="hidden sm:inline">My Order</span>
+          <span class="cart-badge bg-greek-navy text-white text-xs px-2 py-0.5 rounded-full font-bold">0</span>
+        </button>
+
+        <button type="button" id="mobileMenuToggleBtn" class="lg:hidden p-2.5 rounded-xl border border-gray-300 text-gray-700">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MOBILE MENU DRAWER (Preserved) -->
+  <div id="mobileMenuDrawer" class="fixed inset-y-0 left-0 w-80 max-w-[85vw] bg-white border-r border-gray-200 z-50 transform -translate-x-full transition-transform duration-300 p-6 flex flex-col justify-between shadow-2xl">
+    <div>
+      <div class="flex items-center justify-between pb-6 border-b border-gray-200">
+        <div class="flex items-center">
+          <img src="images/brand/greek-fit-kitchen-logo-dark-text.png" alt="Greek Fit Kitchen" width="817" height="221" class="h-10 w-auto" onerror="this.src='images/brand/greek-fit-kitchen-logo.png'" />
+        </div>
+        <button id="mobileMenuCloseBtn" class="p-2 text-gray-500 hover:text-gray-900">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+        </button>
+      </div>
+      <nav class="mt-6 flex flex-col gap-4 text-base font-semibold text-gray-800">
+        <a href="index.html" class="hover:text-greek-gold">Home</a>
+        <a href="menu.html" class="text-greek-gold font-bold">Menu</a>
+        <a href="meal-plans.html" class="hover:text-greek-gold">Weekly Meal Plans</a>
+        <a href="delivery-rates.html" class="hover:text-greek-gold">Delivery Rates</a>
+        <a href="about-us.html" class="hover:text-greek-gold">About Us</a>
+        <a href="how-it-works.html" class="hover:text-greek-gold">How It Works</a>
+      </nav>
+    </div>
+    <div class="pt-6 border-t border-gray-200">
+      <button onclick="openCartDrawer()" class="w-full py-3 bg-greek-gold text-greek-navyDark font-bold rounded-xl text-center shadow">
+        View Order &amp; Plan
+      </button>
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- SECTION 1: MENU HERO                                         -->
+  <!-- ============================================================ -->
+  <section class="relative bg-greek-navy text-white overflow-hidden py-16 sm:py-24 border-b border-white/10">
+    <!-- Premium food background image with dark navy overlay -->
+    <div class="absolute inset-0 z-0">
+      <img src="images/brand/meal-prep-showcase.jpg" alt="Greek Fit Kitchen Menu Background" class="w-full h-full object-cover object-center opacity-25 filter blur-[1px]" onerror="this.src='images/slider/greek-feast.jpg'" />
+      <div class="absolute inset-0 bg-gradient-to-r from-greek-navyDark/95 via-greek-navy/90 to-greek-navyDark/90"></div>
+    </div>
+
+    <div class="container mx-auto px-4 relative z-10 max-w-4xl text-center">
+      <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-greek-gold/15 border border-greek-gold/30 text-greek-gold text-xs sm:text-sm font-extrabold uppercase tracking-widest mb-4">
+        <span>★</span> Fresh Batch Preparation in Etobicoke
+      </div>
+
+      <h1 class="font-heading text-4xl sm:text-6xl font-extrabold text-white tracking-tight uppercase">
+        OUR MENU
+      </h1>
+
+      <p class="font-heading text-xl sm:text-2xl font-bold text-greek-gold mt-2 tracking-wide uppercase">
+        BIG GREEK FLAVOUR. ZERO MEAL PREP.
+      </p>
+
+      <p class="mt-4 text-slate-200 text-sm sm:text-base leading-relaxed max-w-2xl mx-auto font-normal">
+        Discover delicious, freshly prepared meals made for convenient everyday eating. Choose your favourite main dishes, customize your sides, and enjoy great Greek-inspired flavours without the meal preparation.
+      </p>
+
+      <div class="mt-8 flex flex-wrap justify-center gap-4">
+        <a href="#mainMenuSection" class="px-8 py-3.5 bg-greek-gold hover:bg-greek-goldHover text-greek-navyDark font-extrabold text-sm sm:text-base rounded-2xl shadow-xl transition-all transform hover:-translate-y-0.5">
+          Browse Dishes &amp; Customize Sides
+        </a>
+        <a href="#mealPackageSection" class="px-6 py-3.5 bg-white/10 hover:bg-white/20 text-white font-bold text-sm sm:text-base rounded-2xl border border-white/20 transition-all">
+          View 6-Meal Plan Offer
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- SECTION 2: MEAL PACKAGE OFFER                                -->
+  <!-- ============================================================ -->
+  <section id="mealPackageSection" class="py-12 bg-white border-b border-gray-200">
+    <div class="container mx-auto px-4 max-w-5xl">
+      <div class="bg-gradient-to-br from-slate-50 via-white to-gray-50 rounded-3xl p-6 sm:p-10 border border-gray-200 shadow-md flex flex-col md:flex-row items-center justify-between gap-8">
+        
+        <div class="flex-1 space-y-3 text-center md:text-left">
+          <span class="inline-block text-xs font-extrabold uppercase tracking-wider text-greek-navy bg-greek-gold/30 px-3 py-1 rounded-full">
+            Greek Fit Kitchen Value Package
+          </span>
+          
+          <h2 class="font-heading text-2xl sm:text-3xl font-extrabold text-gray-900 tracking-tight">
+            MAKE MEAL TIME EASIER
+          </h2>
+          
+          <div class="flex flex-wrap items-baseline gap-2 justify-center md:justify-start">
+            <span class="font-heading text-xl sm:text-2xl font-extrabold text-greek-navy">6-MEAL PLAN</span>
+            <span class="text-sm text-gray-600 font-medium">Starting from</span>
+            <span class="text-2xl sm:text-3xl font-black text-gray-900">$59.94 CAD</span>
+          </div>
+
+          <div class="flex flex-wrap items-center gap-3 justify-center md:justify-start pt-1">
+            <div class="inline-flex items-center gap-1.5 text-xs font-bold text-gray-700 bg-gray-100 px-3 py-1.5 rounded-lg border border-gray-200">
+              <svg class="w-4 h-4 text-greek-navy" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+              <span>Minimum order: 6 meals.</span>
+            </div>
+
+            <div class="inline-flex items-center gap-1.5 text-xs font-extrabold text-greek-navyDark bg-greek-gold px-3.5 py-1.5 rounded-lg shadow-sm">
+              <span>★ 10% OFF</span>
+              <span class="font-medium text-greek-navyDark/90">Orders of 7 meals or more.</span>
+            </div>
+          </div>
+
+          <p class="text-xs text-gray-500 leading-relaxed pt-1">
+            Build your personalized weekly meal prep: choose any combinations of our 21 chef-crafted dishes. Every plate comes with 2 included sides of your choice (Pasta al Greco excluded).
+          </p>
+        </div>
+
+        <div class="flex flex-col sm:flex-row md:flex-col items-center gap-3 w-full md:w-auto flex-shrink-0">
+          <button type="button" onclick="addStarterSixMealPackage()" class="w-full sm:w-auto px-6 py-3.5 bg-greek-gold hover:bg-greek-goldHover text-greek-navyDark font-extrabold text-sm rounded-2xl shadow-lg transition-all text-center flex items-center justify-center gap-2">
+            <span>⚡ Select 6-Meal Plan ($59.94)</span>
+          </button>
+          <a href="#mainMenuSection" class="w-full sm:w-auto px-6 py-3 border-2 border-greek-navy text-greek-navy hover:bg-greek-navy hover:text-white font-extrabold text-xs sm:text-sm rounded-2xl transition-all text-center">
+            EXPLORE THE MENU
+          </a>
+          <span class="text-xs text-gray-400 text-center font-medium">Minimum order: 6 meals</span>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- SECTION 3: MAIN FOOD MENU (21 Meals Responsive Grid)         -->
+  <!-- ============================================================ -->
+  <main id="mainMenuSection" class="pt-12 pb-16 bg-slate-50">
+    <div class="container mx-auto px-4 max-w-7xl">
+      <div id="menuGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 sm:gap-7">
+        <!-- Rendered dynamically by js/app.js with exact 21 meals and CAD prices -->
+      </div>
+    </div>
+  </main>
+
+  <!-- ============================================================ -->
+  <!-- SECTION 9: SPECIAL REQUESTS AND CATERING                     -->
+  <!-- ============================================================ -->
+  <section class="py-14 bg-white border-t border-b border-gray-200">
+    <div class="container mx-auto px-4 max-w-4xl text-center">
+      <span class="inline-block px-3 py-1 bg-greek-navy/10 text-greek-navy text-xs font-extrabold uppercase rounded-full mb-3">
+        Custom Meal Prep &amp; Event Orders
+      </span>
+
+      <h2 class="font-heading text-2xl sm:text-3xl font-extrabold text-gray-900">
+        CAN'T FIND WHAT YOU'RE LOOKING FOR?
+      </h2>
+
+      <p class="mt-3 text-sm sm:text-base text-gray-600 max-w-xl mx-auto leading-relaxed">
+        Can't find what you're looking for on our menu? Contact us with your special requests.
+      </p>
+
+      <p class="mt-1 text-xs sm:text-sm font-semibold text-greek-navy">
+        For catering orders, contact us.
+      </p>
+
+      <div class="mt-6 flex flex-wrap justify-center gap-4">
+        <a href="about-us.html#specialRequests" class="px-6 py-3 rounded-xl bg-greek-navy hover:bg-greek-navyDark text-white text-xs sm:text-sm font-bold shadow-md transition">
+          SPECIAL REQUESTS
+        </a>
+        <a href="about-us.html#catering" class="px-6 py-3 rounded-xl bg-greek-gold hover:bg-greek-goldHover text-greek-navyDark text-xs sm:text-sm font-extrabold shadow-md transition">
+          CATERING ENQUIRIES
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- FOOTER (Preserved exactly as existing)                      -->
+  <!-- ============================================================ -->
+  <footer id="siteFooter" class="bg-greek-navyDark text-white border-t border-white/10">
+    <div class="container mx-auto px-4 py-16">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
+        <div>
+          <a href="index.html"><img src="images/brand/greek-fit-kitchen-logo.png" alt="Greek Fit Kitchen" width="817" height="221" class="h-14 w-auto" /></a>
+          <p class="mt-4 text-xs text-white/60 leading-relaxed">
+            Authentic Greek fitness meal prep designed for high-protein athletic performance and busy Toronto lifestyles.
+          </p>
+          <div class="mt-4 text-xs text-white/70 space-y-1">
+            <p><strong>Commercial Kitchen:</strong> 3575 Lake Shore Blvd W, Etobicoke, ON M8W 1P5</p>
+          </div>
+        </div>
+        <div>
+          <h4 class="font-heading font-bold text-sm text-greek-gold uppercase tracking-wider mb-4">Quick Navigation</h4>
+          <ul class="space-y-2.5 text-xs text-white/70">
+            <li><a href="menu.html" class="hover:text-white transition-colors">Our 21 Main Dishes</a></li>
+            <li><a href="meal-plans.html" class="hover:text-white transition-colors">Weekly Meal Plans</a></li>
+            <li><a href="delivery-rates.html" class="hover:text-white transition-colors">Delivery Rates</a></li>
+            <li><a href="about-us.html" class="hover:text-white transition-colors">About Us</a></li>
+            <li><a href="how-it-works.html" class="hover:text-white transition-colors">Heating &amp; Storage Guide</a></li>
+            <li><a href="admin.html" class="text-greek-gold font-bold hover:underline transition-colors">Operations &amp; Admin Suite</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-heading font-bold text-sm text-greek-gold uppercase tracking-wider mb-4">Batch Drops</h4>
+          <div class="space-y-3 text-xs text-white/70">
+            <div><strong class="text-white block">Sunday Batch:</strong> Cutoff Friday 11:59 PM EST</div>
+            <div><strong class="text-white block">Wednesday Batch:</strong> Cutoff Monday 11:59 PM EST</div>
+          </div>
+        </div>
+        <div>
+          <h4 class="font-heading font-bold text-sm text-greek-gold uppercase tracking-wider mb-4">Contact Support</h4>
+          <div class="space-y-2 text-xs text-white/80">
+            <p>📧 orders@greekfitkitchen.ca</p>
+            <p>📞 (416) 555-GREEK</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-12 pt-8 border-t border-white/10 flex flex-wrap justify-between items-center text-xs text-white/50 gap-4">
+        <p>&copy; 2026 Greek Fit Kitchen. All rights reserved. Minimum 6 meals per order.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ============================================================ -->
+  <!-- SECTION 4 & 5: MEAL CUSTOMIZATION MODAL (SIDES & EXTRAS)      -->
+  <!-- ============================================================ -->
+  <div id="sideCustomizerModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm hidden">
+    <div class="bg-white rounded-3xl max-w-2xl w-full max-h-[92vh] overflow-y-auto p-6 sm:p-8 border border-gray-200 shadow-2xl relative">
+      <button onclick="closeSideCustomizer()" class="absolute top-5 right-5 text-gray-400 hover:text-gray-900 p-2">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+      </button>
+
+      <!-- Meal Header -->
+      <div class="flex items-center gap-4 border-b border-gray-100 pb-5">
+        <img id="customizerMealImg" src="images/meals/grilled-chicken.jpg" alt="Dish" class="w-20 h-20 rounded-2xl object-cover shadow-sm border border-gray-200" onerror="this.src='images/meals/grilled-chicken.jpg'" />
+        <div>
+          <span class="text-xs font-bold text-greek-navy uppercase tracking-wider">Greek Fit Kitchen Plate Builder</span>
+          <h3 id="customizerMealTitle" class="font-heading font-extrabold text-xl sm:text-2xl text-gray-900 leading-tight">Customize Dish</h3>
+          <span id="customizerBasePrice" class="text-sm font-extrabold text-greek-gold bg-greek-navy px-3 py-0.5 rounded-full inline-block mt-1">$12.99 CAD</span>
+        </div>
+      </div>
+
+      <div class="mt-6 space-y-6">
+
+        <!-- Quantity Selector -->
+        <div class="flex items-center justify-between p-3.5 rounded-2xl bg-gray-50 border border-gray-200">
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-wider text-gray-700">Quantity of Meals</label>
+            <span class="text-xs text-gray-500">Counts toward 6-meal minimum order</span>
+          </div>
+          <div class="flex items-center border border-gray-300 rounded-xl overflow-hidden bg-white shadow-sm">
+            <button type="button" onclick="changeCustomizerQty(-1)" class="px-3 py-1.5 text-gray-700 hover:bg-gray-100 font-bold text-base">-</button>
+            <input type="text" id="customizerQuantityInput" readonly value="1" class="w-12 text-center text-sm font-bold text-gray-900 bg-transparent border-none focus:outline-none" />
+            <button type="button" onclick="changeCustomizerQty(1)" class="px-3 py-1.5 text-gray-700 hover:bg-gray-100 font-bold text-base">+</button>
+          </div>
+        </div>
+
+        <!-- SIDES SECTION (Eligible plates get 2 included sides) -->
+        <div id="customizerSidesSelectionWrapper" class="space-y-4">
+          <div class="bg-blue-50/70 p-4 rounded-2xl border border-blue-100">
+            <div class="flex items-center gap-2 text-xs font-bold text-greek-navy uppercase tracking-wider mb-1">
+              <span>✓ INCLUDED SIDES</span>
+              <span class="text-gray-500 font-normal">(Any plate comes with 2 sides of your choice)</span>
+            </div>
+            <p class="text-xs text-gray-600">Choose your 2 complimentary sides below. No extra charge for included sides.</p>
+          </div>
+
+          <!-- Side 1 Selection -->
+          <div>
+            <label class="block text-xs font-extrabold uppercase text-gray-700 mb-1.5">Side 1 Selection (Included - Free)</label>
+            <select id="customizerSide1Select" onchange="updateCustomizerSide1(this.value)" class="w-full p-3 rounded-xl border border-gray-300 bg-white text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-greek-gold">
+              <!-- Rendered dynamically from SIDES_LIST -->
+            </select>
+          </div>
+
+          <!-- Side 2 Selection -->
+          <div>
+            <label class="block text-xs font-extrabold uppercase text-gray-700 mb-1.5">Side 2 Selection (Included - Free)</label>
+            <select id="customizerSide2Select" onchange="updateCustomizerSide2(this.value)" class="w-full p-3 rounded-xl border border-gray-300 bg-white text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-greek-gold">
+              <!-- Rendered dynamically from SIDES_LIST -->
+            </select>
+          </div>
+        </div>
+
+        <!-- Pasta al Greco Notice (Excluded from sides) -->
+        <div id="customizerPastaNoticeWrapper" class="hidden p-4 rounded-2xl bg-amber-50 border border-amber-200">
+          <p class="text-xs text-amber-900 font-bold">
+            Note: Pasta al Greco is a complete pasta dish and does not include side selections.
+          </p>
+          <p class="text-xs text-amber-800 mt-1">
+            You can still add additional sides below if desired ($4.99 CAD each).
+          </p>
+        </div>
+
+        <!-- ADDITIONAL SIDES SECTION -->
+        <div>
+          <div class="flex justify-between items-baseline mb-2">
+            <label class="block text-xs font-extrabold uppercase text-gray-700">Additional Sides</label>
+            <span class="text-xs font-extrabold text-greek-navy bg-greek-gold px-2.5 py-0.5 rounded-full">
+              EXTRA SIDES: $4.99 EACH (CAD)
+            </span>
+          </div>
+          <p class="text-xs text-gray-500 mb-3">Add any extra sides to your plate. Additional side charges are calculated automatically.</p>
+          <div id="customizerExtraSidesContainer" class="grid grid-cols-1 sm:grid-cols-2 gap-2 max-h-48 overflow-y-auto p-1">
+            <!-- Rendered dynamically from SIDES_LIST -->
+          </div>
+        </div>
+
+        <!-- SPECIAL REQUESTS / INSTRUCTIONS -->
+        <div>
+          <label class="block text-xs font-extrabold uppercase text-gray-700 mb-1.5">
+            SPECIAL REQUESTS / INSTRUCTIONS
+          </label>
+          <textarea id="customizerSpecialInstructions" rows="2" placeholder="Let us know if you have any special requests for this meal." class="w-full p-3 rounded-xl border border-gray-300 bg-white text-xs sm:text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-greek-gold"></textarea>
+          <p class="text-[11px] text-gray-400 mt-1">
+            * Please note: Kitchen cannot guarantee allergen-free preparation without prior confirmation.
+          </p>
+        </div>
+
+        <!-- Price Breakdown -->
+        <div class="p-4 rounded-2xl bg-gray-50 border border-gray-200 space-y-1.5 text-xs text-gray-600">
+          <div class="flex justify-between">
+            <span>Base Meal Price:</span>
+            <span id="customizerBreakdownBase" class="font-bold text-gray-900">$12.99 CAD</span>
+          </div>
+          <div class="flex justify-between">
+            <span>Included 2 Sides:</span>
+            <span id="customizerBreakdownSides" class="font-bold text-green-700">FREE</span>
+          </div>
+          <div class="flex justify-between">
+            <span>Extra Sides:</span>
+            <span id="customizerBreakdownExtraSides" class="font-bold text-gray-900">$0.00 CAD</span>
+          </div>
+          <div class="flex justify-between text-sm font-extrabold text-gray-900 pt-2 border-t border-gray-200">
+            <span>Total Meal Price:</span>
+            <span id="customizerBreakdownTotal" class="text-greek-navy font-heading text-base">$12.99 CAD</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Add to Order Button -->
+      <div class="mt-6 pt-5 border-t border-gray-100">
+        <button onclick="confirmAddCustomMeal()" class="w-full py-4 rounded-xl bg-greek-gold hover:bg-greek-goldHover text-greek-navyDark font-extrabold text-base shadow-lg transition-all flex items-center justify-center gap-2">
+          <span id="customizerAddBtnText">Add to Order — $12.99 CAD</span>
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- SECTION 6 & 7: SHOPPING CART DRAWER & DISCOUNT DISPLAY        -->
+  <!-- ============================================================ -->
+  <div id="cartOverlay" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden"></div>
+  <div id="cartDrawer" class="fixed inset-y-0 right-0 z-50 w-full sm:w-[480px] bg-white border-l border-gray-200 shadow-2xl flex flex-col justify-between transform translate-x-full transition-transform duration-300">
+    
+    <!-- Drawer Header -->
+    <div class="p-6 border-b border-gray-200 flex items-center justify-between bg-slate-50">
+      <div>
+        <h3 class="font-heading font-extrabold text-xl text-gray-900">Your Meal Prep Plan</h3>
+        <p class="text-xs text-gray-500 mt-0.5">Greek Fit Kitchen — Etobicoke Batch Prep</p>
+      </div>
+      <button id="cartCloseBtn" class="p-2 text-gray-400 hover:text-gray-900 rounded-lg">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+      </button>
+    </div>
+
+    <!-- Minimum Order & Progress Tracker -->
+    <div class="bg-white px-6 py-4 border-b border-gray-200">
+      <div class="flex justify-between items-center text-xs mb-1.5">
+        <span id="cartProgressText" class="text-gray-700 font-semibold">Minimum Order: 6 Meals</span>
+      </div>
+      <div class="w-full bg-gray-200 h-2.5 rounded-full overflow-hidden">
+        <div id="cartProgressFill" class="bg-greek-gold h-full rounded-full transition-all duration-300" style="width: 0%;"></div>
+      </div>
+      <div id="cartMinOrderNotice" class="mt-2.5 hidden"></div>
+    </div>
+
+    <!-- Cart Items Scroll Area -->
+    <div class="p-6 flex-1 overflow-y-auto space-y-4">
+      <div id="cartEmptyState" class="text-center py-16 text-gray-400">
+        <svg class="w-12 h-12 mx-auto text-gray-300 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
+        <p class="font-bold text-gray-700 text-sm">Your meal plan is empty</p>
+        <p class="text-xs text-gray-500 mt-1 max-w-xs mx-auto">Select 6 or more delicious Greek meals to start your order.</p>
+        <button onclick="closeCartDrawer()" class="mt-4 px-4 py-2 bg-greek-gold text-greek-navyDark text-xs font-bold rounded-xl shadow">Explore Menu</button>
+      </div>
+      <div id="cartItemsContainer" class="space-y-3"></div>
+    </div>
+
+    <!-- Drawer Footer (Pricing & Checkout) -->
+    <div id="cartDrawerFooter" class="p-6 border-t border-gray-200 bg-slate-50">
+      <div class="space-y-2 text-sm text-gray-600 mb-4">
+        
+        <div class="flex justify-between">
+          <span>Meal Subtotal:</span>
+          <span id="cartSubtotal" class="font-bold text-gray-900">$0.00 CAD</span>
+        </div>
+
+        <div id="cartExtraSidesRow" class="flex justify-between text-xs text-gray-600 hidden">
+          <span>Extra Sides Total:</span>
+          <span id="cartExtraSidesAmount" class="font-bold text-gray-900">+$0.00 CAD</span>
+        </div>
+
+        <!-- Promo Code Input in Cart Drawer -->
+        <div class="pt-1 pb-2">
+          <div class="flex gap-2">
+            <input type="text" id="cartDrawerCouponInput" placeholder="Promo code (e.g. GREEK10)" class="flex-1 p-2 text-xs rounded-xl border border-gray-300 uppercase font-bold focus:outline-none focus:ring-1 focus:ring-greek-gold" />
+            <button type="button" onclick="applyCouponCode(document.getElementById('cartDrawerCouponInput').value)" class="px-3.5 py-2 bg-greek-navy hover:bg-greek-navyDark text-white text-xs font-bold rounded-xl transition">
+              Apply
+            </button>
+          </div>
+        </div>
+
+        <!-- Volume Discount Highlight -->
+        <div id="cartDiscountRow" class="flex justify-between text-green-700 font-extrabold bg-green-50 p-2 rounded-lg border border-green-200 hidden">
+          <span>Volume Discount (10% OFF 7+ Meals):</span>
+          <span id="cartDiscountAmount">-$0.00 CAD</span>
+        </div>
+
+        <!-- Coupon Discount Highlight -->
+        <div id="cartCouponRow" class="flex justify-between text-green-700 font-extrabold bg-green-50 p-2 rounded-lg border border-green-200 hidden">
+          <span>Promo Code Savings:</span>
+          <span id="cartCouponAmount">-$0.00 CAD</span>
+        </div>
+
+        <div class="flex justify-between text-xs">
+          <span>Ontario HST (13%):</span>
+          <span id="cartTaxAmount" class="font-semibold text-gray-700">$0.00 CAD</span>
+        </div>
+
+        <div class="flex justify-between text-xs">
+          <span>Delivery (Tiered GTA):</span>
+          <span id="cartDeliveryFee" class="font-semibold text-gray-700">$8.00 CAD</span>
+        </div>
+
+        <div class="flex justify-between text-base font-extrabold text-gray-900 pt-3 border-t border-gray-200">
+          <span>Final Total:</span>
+          <span id="cartGrandTotal" class="text-greek-navy font-heading text-xl">$0.00 CAD</span>
+        </div>
+
+      </div>
+
+      <button id="cartCheckoutBtn" onclick="openCheckoutModal()" disabled class="w-full py-4 rounded-xl bg-greek-gold text-greek-navyDark font-extrabold text-base shadow-lg opacity-50 cursor-not-allowed transition-all">
+        Add 6 meals to checkout
+      </button>
+    </div>
+
+  </div>
+
+  <!-- CHECKOUT MODAL (For placing orders) -->
+  <div id="checkoutModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-sm hidden">
+    <div class="bg-white rounded-3xl max-w-xl w-full max-h-[92vh] overflow-y-auto p-6 sm:p-8 border border-gray-200 shadow-2xl relative">
+      <button onclick="closeCheckoutModal()" class="absolute top-5 right-5 text-gray-400 hover:text-gray-900 p-2">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+      </button>
+
+      <div class="border-b border-gray-200 pb-4 mb-5">
+        <span class="text-xs font-bold text-greek-navy uppercase tracking-wider">Greek Fit Kitchen Checkout</span>
+        <h3 class="font-heading font-extrabold text-2xl text-gray-900">Review &amp; Confirm Order</h3>
+      </div>
+
+      <div class="space-y-2 text-xs sm:text-sm text-gray-700 bg-gray-50 p-4 rounded-2xl border border-gray-200 mb-6">
+        <div class="flex justify-between"><span>Selected Meals:</span><strong id="checkoutSummaryMeals">0 Chef Meals</strong></div>
+        <div class="flex justify-between"><span>Subtotal:</span><strong id="checkoutSummarySubtotal">$0.00 CAD</strong></div>
+        <div id="checkoutDiscountRow" class="flex justify-between text-green-700 font-bold hidden"><span>Volume Discount:</span><span id="checkoutSummaryDiscount">-$0.00 CAD</span></div>
+        <div class="flex justify-between"><span>Delivery:</span><strong id="checkoutSummaryDelivery">$0.00 CAD</strong></div>
+        <div class="flex justify-between text-sm sm:text-base font-extrabold text-gray-900 pt-2 border-t border-gray-200">
+          <span>Order Grand Total:</span>
+          <span id="checkoutSummaryTotal" class="text-greek-navy font-heading text-lg">$0.00 CAD</span>
+        </div>
+      </div>
+
+      <form id="checkoutForm" onsubmit="submitCheckoutOrder(event)" class="space-y-4">
+        <div>
+          <label class="block text-xs font-bold text-gray-700 mb-1">Full Name *</label>
+          <input type="text" required placeholder="Alex Papadopoulos" class="w-full p-3 rounded-xl border border-gray-300 text-sm focus:outline-none focus:ring-2 focus:ring-greek-gold" />
+        </div>
+        <div>
+          <label class="block text-xs font-bold text-gray-700 mb-1">Phone Number *</label>
+          <input type="tel" required placeholder="(416) 555-0199" class="w-full p-3 rounded-xl border border-gray-300 text-sm focus:outline-none focus:ring-2 focus:ring-greek-gold" />
+        </div>
+        <div>
+          <label class="block text-xs font-bold text-gray-700 mb-1">Email Address *</label>
+          <input type="email" required placeholder="alex@example.ca" class="w-full p-3 rounded-xl border border-gray-300 text-sm focus:outline-none focus:ring-2 focus:ring-greek-gold" />
+        </div>
+        <div>
+          <label class="block text-xs font-bold text-gray-700 mb-1">Delivery Address *</label>
+          <input type="text" required placeholder="123 King St W, Apt 4B, Toronto, ON" class="w-full p-3 rounded-xl border border-gray-300 text-sm focus:outline-none focus:ring-2 focus:ring-greek-gold" />
+        </div>
+        <button type="submit" class="w-full py-4 rounded-xl bg-greek-gold hover:bg-greek-goldHover text-greek-navyDark font-extrabold text-base shadow-lg transition mt-4">
+          Confirm Order
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ORDER CONFIRMED MODAL -->
+  <div id="orderConfirmedModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-sm hidden">
+    <div class="bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 text-center border border-gray-200 shadow-2xl relative">
+      <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4 text-green-600">
+        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+      </div>
+      <h3 class="font-heading font-extrabold text-2xl text-gray-900">Order Placed!</h3>
+      <p class="text-xs text-gray-500 mt-1">Thank you for ordering with Greek Fit Kitchen.</p>
+      
+      <div class="mt-5 p-4 rounded-2xl bg-gray-50 border border-gray-200 text-xs text-gray-700 space-y-1.5 text-left">
+        <div><strong>Order Number:</strong> <span id="confirmOrderNumber" class="font-mono text-greek-navy font-bold">GFK-000000</span></div>
+        <div><strong>Prep Batch:</strong> <span id="confirmBatchDate">Sunday Batch</span></div>
+        <div><strong>Total Paid:</strong> <span id="confirmTotalAmount" class="font-bold text-gray-900">$0.00 CAD</span></div>
+      </div>
+
+      <button onclick="closeConfirmedModal()" class="mt-6 w-full py-3 bg-greek-navy text-white font-bold rounded-xl shadow hover:bg-greek-navyDark transition">
+        Done
+      </button>
+    </div>
+  </div>
+
+  <!-- Core App JS -->
+  <script src="js/app.js"></script>
+</body>
+</html>
