@@ -950,7 +950,7 @@ function renderSidesCheckboxes() {
             class="rounded text-greek-gold focus:ring-greek-gold w-4 h-4 cursor-pointer"
           />
           <span class="flex-1 text-gray-800 font-medium">${side}</span>
-          <span class="text-green-700 font-extrabold text-[10px] bg-green-50 px-2 py-0.5 rounded border border-green-200">INCLUDED</span>
+          ${isChecked ? '<span class="text-green-700 font-extrabold text-[10px] bg-green-50 px-2 py-0.5 rounded border border-green-200">INCLUDED</span>' : ''}
         </label>
       `;
     }).join('');
@@ -970,7 +970,7 @@ function renderSidesCheckboxes() {
             class="rounded text-greek-gold focus:ring-greek-gold w-4 h-4 cursor-pointer"
           />
           <span class="flex-1 text-gray-800 font-medium">${side}</span>
-          <span class="text-green-700 font-extrabold text-[10px] bg-green-50 px-2 py-0.5 rounded border border-green-200">INCLUDED</span>
+          ${isChecked ? '<span class="text-green-700 font-extrabold text-[10px] bg-green-50 px-2 py-0.5 rounded border border-green-200">INCLUDED</span>' : ''}
         </label>
       `;
     }).join('');
