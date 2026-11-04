@@ -548,6 +548,15 @@ let state = {
   staffRole: localStorage.getItem('gfk-staff-role') || 'admin'
 };
 
+// Expose globals for modules (e.g. package builder)
+window.MENU_ITEMS = MENU_ITEMS;
+window.SIDES_LIST = SIDES_LIST;
+window.ADDONS_LIST = ADDONS_LIST;
+window.PACKAGES_LIST = PACKAGES_LIST;
+window.COUPONS_LIST = COUPONS_LIST;
+window.CONFIG = CONFIG;
+window.state = state;
+
 const GTA_FSA_TABLE = {
   "M8W": 1.8, "M8V": 3.2, "M8Z": 4.5, "M8X": 5.8, "M8Y": 5.2,
   "M9A": 6.8, "M9B": 7.4, "M9C": 7.0, "M9P": 11.5, "M9R": 12.8, "M9V": 15.5, "M9W": 14.5,
@@ -1210,7 +1219,10 @@ function updateCartUI() {
           
           <div class="flex-1 min-w-0">
             <div class="flex items-start justify-between gap-1">
-              <h4 class="font-bold text-sm text-gray-900">${item.name}</h4>
+              <div>
+                ${item.packageSlot ? `<span class="inline-block text-[10px] font-extrabold px-2 py-0.5 rounded bg-greek-navy text-greek-gold uppercase tracking-wider mb-1">Meal ${item.packageSlot} of ${item.packageTotalMeals}</span>` : ''}
+                <h4 class="font-bold text-sm text-gray-900">${item.name}</h4>
+              </div>
               <button onclick="removeCartItem('${item.cartItemId}')" class="text-gray-400 hover:text-red-500 transition-colors p-1" title="Remove Meal">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
               </button>
@@ -1382,6 +1394,9 @@ window.closeCartDrawer = closeCartDrawer;
 window.changeCartItemQty = changeCartItemQty;
 window.removeCartItem = removeCartItem;
 window.applyCouponCode = applyCouponCode;
+window.saveCart = saveCart;
+window.updateCartUI = updateCartUI;
+window.calculateCartTotals = calculateCartTotals;
 
 // -------------------------------------------------------------
 // 11. ADDRESS AUTOFILL & DELIVERY VALIDATION (Requirements 8 & 9)

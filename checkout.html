@@ -370,13 +370,19 @@
         if (state.cart.length === 0) {
           itemsContainer.innerHTML = '<p class="text-xs text-gray-400 italic">No meals selected yet. <a href="menu.html" class="text-greek-gold font-bold underline">Choose meals</a>.</p>';
         } else {
-          itemsContainer.innerHTML = state.cart.map(item => `
-            <div class="flex items-center justify-between text-xs py-2 border-b border-gray-100">
-              <div>
-                <strong class="text-gray-900">${item.quantity}x ${item.name}</strong>
-                <span class="block text-[11px] text-gray-500">${item.side1 ? item.side1 + ', ' + item.side2 : 'Pasta Dish'}</span>
+          itemsContainer.innerHTML = state.cart.map((item, idx) => `
+            <div class="flex items-start justify-between text-xs py-2.5 border-b border-gray-100 gap-2">
+              <div class="min-w-0 flex-1">
+                ${item.packageSlot ? `<span class="inline-block text-[10px] font-extrabold px-2 py-0.5 rounded bg-greek-navy text-greek-gold mb-1">Meal ${item.packageSlot} of ${item.packageTotalMeals}</span>` : ''}
+                <strong class="block text-gray-900">${item.quantity > 1 ? item.quantity + 'x ' : ''}${item.name}</strong>
+                <span class="block text-[11px] text-gray-600 mt-0.5">
+                  ${item.side1 ? 'Sides: ' + item.side1 + ' & ' + item.side2 : 'Complete Pasta Dish (No included sides)'}
+                </span>
+                ${item.extraSides && item.extraSides.length > 0 ? `<span class="block text-[10px] text-greek-navy font-semibold">+ Extra Sides: ${item.extraSides.join(', ')}</span>` : ''}
+                ${item.addons && item.addons.length > 0 ? `<span class="block text-[10px] text-amber-800 font-semibold">+ Add-ons: ${item.addons.map(a => a.name).join(', ')}</span>` : ''}
+                ${item.specialInstructions ? `<span class="block text-[10px] text-gray-400 italic">“${item.specialInstructions}”</span>` : ''}
               </div>
-              <span class="font-bold text-gray-900">$${(item.unitPrice * item.quantity).toFixed(2)} CAD</span>
+              <span class="font-bold text-gray-900 flex-shrink-0">$${(item.unitPrice * item.quantity).toFixed(2)} CAD</span>
             </div>
           `).join('');
         }
