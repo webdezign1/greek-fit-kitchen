@@ -1083,14 +1083,8 @@ function updateCustomizerSide2(val) {
 }
 
 function changeCustomizerQty(delta) {
-  if (!state.customizingMeal) return;
-  const newQty = Math.max(1, state.customizingMeal.quantity + delta);
-  state.customizingMeal.quantity = newQty;
-
-  const qtyInput = document.getElementById('customizerQuantityInput');
-  if (qtyInput) qtyInput.value = newQty;
-
-  updateCustomizerPriceBreakdown();
+  // Quantity selector is disabled per requirement (individual meal plate customization)
+  return;
 }
 
 function updateCustomizerPriceBreakdown() {
