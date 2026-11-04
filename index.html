@@ -166,7 +166,7 @@
       <!-- Left: Action Buttons -->
       <div class="flex flex-wrap items-center gap-3">
         <a href="#featuredMeals" class="px-6 py-3.5 bg-greek-gold text-greek-navyDark font-extrabold rounded-xl shadow-lg hover:bg-greek-goldHover transition-all">
-          Explore 20 Dishes
+          Explore 21 Dishes
         </a>
         <button type="button" onclick="addStarterSixMealPackage()" class="px-6 py-3.5 bg-black/40 backdrop-blur-md text-white border border-white/10 rounded-xl hover:bg-black/60 transition-all font-bold">
           Quick-Add 6-Meal Starter ($59.94)
@@ -691,53 +691,127 @@
   </div>
 
   <!-- ========================================================================= -->
-  <!-- 13. SIDE DISH CUSTOMIZER MODAL -->
+  <!-- 13. MEAL CUSTOMIZATION MODAL (SIDES & EXTRAS)                             -->
   <!-- ========================================================================= -->
   <div id="sideCustomizerModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm hidden">
-    <div class="bg-white dark:bg-greek-navy rounded-3xl max-w-xl w-full max-h-[90vh] overflow-y-auto p-6 sm:p-8 border border-gray-200 dark:border-white/10 shadow-2xl relative">
-      
-      <button onclick="closeSideCustomizer()" class="absolute top-5 right-5 text-gray-400 hover:text-gray-900 dark:hover:text-white p-2">
+    <div class="bg-white rounded-3xl max-w-2xl w-full max-h-[92vh] overflow-y-auto p-6 sm:p-8 border border-gray-200 shadow-2xl relative">
+      <button onclick="closeSideCustomizer()" class="absolute top-5 right-5 text-gray-400 hover:text-gray-900 p-2">
         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
       </button>
 
-      <div class="flex items-center gap-4 border-b border-gray-100 dark:border-white/10 pb-5">
-        <img id="customizerMealImg" src="" alt="Meal" class="w-16 h-16 rounded-2xl object-cover shadow" />
+      <!-- Meal Header -->
+      <div class="flex items-center gap-4 border-b border-gray-100 pb-5">
+        <img id="customizerMealImg" src="images/meals/grilled-chicken.jpg" alt="Dish" class="w-20 h-20 rounded-2xl object-cover shadow-sm border border-gray-200" onerror="this.src='images/meals/grilled-chicken.jpg'" />
         <div>
-          <span class="text-xs font-bold text-greek-gold uppercase tracking-wider">Custom Plate Builder</span>
-          <h3 id="customizerMealTitle" class="font-heading font-extrabold text-xl text-gray-900 dark:text-white">Customize Dish</h3>
-          <span id="customizerBasePrice" class="text-xs font-bold text-gray-500 dark:text-gray-400">$12.99 CAD</span>
+          <span class="text-xs font-bold text-greek-navy uppercase tracking-wider">Greek Fit Kitchen Plate Builder</span>
+          <h3 id="customizerMealTitle" class="font-heading font-extrabold text-xl sm:text-2xl text-gray-900 leading-tight">Customize Dish</h3>
+          <span id="customizerBasePrice" class="text-sm font-extrabold text-greek-gold bg-greek-navy px-3 py-0.5 rounded-full inline-block mt-1">$12.99 CAD</span>
         </div>
       </div>
 
       <div class="mt-6 space-y-6">
-        <!-- Side 1 Selector -->
-        <div>
-          <label class="block text-xs font-extrabold uppercase text-gray-500 dark:text-gray-400 mb-2">
-            Side 1: Choice of Clean Starch (Included)
-          </label>
-          <div id="customizerSide1Container" class="space-y-2"></div>
+
+        <!-- Quantity Selector -->
+        <div class="flex items-center justify-between p-3.5 rounded-2xl bg-gray-50 border border-gray-200">
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-wider text-gray-700">Quantity of Meals</label>
+            <span class="text-xs text-gray-500">Counts toward 6-meal minimum order</span>
+          </div>
+          <div class="flex items-center border border-gray-300 rounded-xl overflow-hidden bg-white shadow-sm">
+            <button type="button" onclick="changeCustomizerQty(-1)" class="px-3 py-1.5 text-gray-700 hover:bg-gray-100 font-bold text-base">-</button>
+            <input type="text" id="customizerQuantityInput" readonly value="1" class="w-12 text-center text-sm font-bold text-gray-900 bg-transparent border-none focus:outline-none" />
+            <button type="button" onclick="changeCustomizerQty(1)" class="px-3 py-1.5 text-gray-700 hover:bg-gray-100 font-bold text-base">+</button>
+          </div>
         </div>
 
-        <!-- Side 2 Selector -->
-        <div>
-          <label class="block text-xs font-extrabold uppercase text-gray-500 dark:text-gray-400 mb-2">
-            Side 2: Choice of Fresh Greens / Veggies (Included)
-          </label>
-          <div id="customizerSide2Container" class="space-y-2"></div>
+        <!-- SIDES SECTION (Eligible plates get 2 included sides) -->
+        <div id="customizerSidesSelectionWrapper" class="space-y-4">
+          <div class="bg-blue-50/70 p-4 rounded-2xl border border-blue-100">
+            <div class="flex items-center gap-2 text-xs font-bold text-greek-navy uppercase tracking-wider mb-1">
+              <span>✓ INCLUDED SIDES</span>
+              <span class="text-gray-500 font-normal">(Any plate comes with 2 sides of your choice)</span>
+            </div>
+            <p class="text-xs text-gray-600">Choose your 2 complimentary sides below. No extra charge for included sides.</p>
+          </div>
+
+          <!-- Side 1 Selection -->
+          <div>
+            <label class="block text-xs font-extrabold uppercase text-gray-700 mb-1.5">Side 1 Selection (Included - Free)</label>
+            <select id="customizerSide1Select" onchange="updateCustomizerSide1(this.value)" class="w-full p-3 rounded-xl border border-gray-300 bg-white text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-greek-gold">
+              <!-- Rendered dynamically from SIDES_LIST -->
+            </select>
+          </div>
+
+          <!-- Side 2 Selection -->
+          <div>
+            <label class="block text-xs font-extrabold uppercase text-gray-700 mb-1.5">Side 2 Selection (Included - Free)</label>
+            <select id="customizerSide2Select" onchange="updateCustomizerSide2(this.value)" class="w-full p-3 rounded-xl border border-gray-300 bg-white text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-greek-gold">
+              <!-- Rendered dynamically from SIDES_LIST -->
+            </select>
+          </div>
         </div>
 
-        <!-- Extra Add-ons -->
-        <div>
-          <label class="block text-xs font-extrabold uppercase text-gray-500 dark:text-gray-400 mb-2">
-            Optional Flavor Extras
-          </label>
-          <div id="customizerExtrasContainer" class="space-y-2"></div>
+        <!-- Pasta al Greco Notice (Excluded from sides) -->
+        <div id="customizerPastaNoticeWrapper" class="hidden p-4 rounded-2xl bg-amber-50 border border-amber-200">
+          <p class="text-xs text-amber-900 font-bold">
+            Note: Pasta al Greco is a complete pasta dish and does not include side selections.
+          </p>
+          <p class="text-xs text-amber-800 mt-1">
+            You can still add additional sides below if desired ($4.99 CAD each).
+          </p>
         </div>
+
+        <!-- ADDITIONAL SIDES SECTION -->
+        <div>
+          <div class="flex justify-between items-baseline mb-2">
+            <label class="block text-xs font-extrabold uppercase text-gray-700">Additional Sides</label>
+            <span class="text-xs font-extrabold text-greek-navy bg-greek-gold px-2.5 py-0.5 rounded-full">
+              EXTRA SIDES: $4.99 EACH (CAD)
+            </span>
+          </div>
+          <p class="text-xs text-gray-500 mb-3">Add any extra sides to your plate. Additional side charges are calculated automatically.</p>
+          <div id="customizerExtraSidesContainer" class="grid grid-cols-1 sm:grid-cols-2 gap-2 max-h-48 overflow-y-auto p-1">
+            <!-- Rendered dynamically from SIDES_LIST -->
+          </div>
+        </div>
+
+        <!-- SPECIAL REQUESTS / INSTRUCTIONS -->
+        <div>
+          <label class="block text-xs font-extrabold uppercase text-gray-700 mb-1.5">
+            SPECIAL REQUESTS / INSTRUCTIONS
+          </label>
+          <textarea id="customizerSpecialInstructions" rows="2" placeholder="Let us know if you have any special requests for this meal." class="w-full p-3 rounded-xl border border-gray-300 bg-white text-xs sm:text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-greek-gold"></textarea>
+          <p class="text-[11px] text-gray-400 mt-1">
+            * Please note: Kitchen cannot guarantee allergen-free preparation without prior confirmation.
+          </p>
+        </div>
+
+        <!-- Price Breakdown -->
+        <div class="p-4 rounded-2xl bg-gray-50 border border-gray-200 space-y-1.5 text-xs text-gray-600">
+          <div class="flex justify-between">
+            <span>Base Meal Price:</span>
+            <span id="customizerBreakdownBase" class="font-bold text-gray-900">$12.99 CAD</span>
+          </div>
+          <div class="flex justify-between">
+            <span>Included 2 Sides:</span>
+            <span id="customizerBreakdownSides" class="font-bold text-green-700">FREE</span>
+          </div>
+          <div class="flex justify-between">
+            <span>Extra Sides:</span>
+            <span id="customizerBreakdownExtraSides" class="font-bold text-gray-900">$0.00 CAD</span>
+          </div>
+          <div class="flex justify-between text-sm font-extrabold text-gray-900 pt-2 border-t border-gray-200">
+            <span>Total Meal Price:</span>
+            <span id="customizerBreakdownTotal" class="text-greek-navy font-heading text-base">$12.99 CAD</span>
+          </div>
+        </div>
+
       </div>
 
-      <div class="mt-8 pt-5 border-t border-gray-100 dark:border-white/10">
+      <!-- Add to Order Button -->
+      <div class="mt-6 pt-5 border-t border-gray-100">
         <button onclick="confirmAddCustomMeal()" class="w-full py-4 rounded-xl bg-greek-gold hover:bg-greek-goldHover text-greek-navyDark font-extrabold text-base shadow-lg transition-all flex items-center justify-center gap-2">
-          <span id="customizerAddBtnText">Add to Plan — $12.99 CAD</span>
+          <span id="customizerAddBtnText">Add to Order — $12.99 CAD</span>
         </button>
       </div>
 
@@ -747,65 +821,96 @@
   <!-- ========================================================================= -->
   <!-- 14. SLIDE-OUT CART DRAWER -->
   <!-- ========================================================================= -->
-  <div id="cartOverlay" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden transition-opacity"></div>
-  <div id="cartDrawer" class="fixed inset-y-0 right-0 z-50 w-full sm:w-[460px] bg-white dark:bg-greek-navyDark border-l border-gray-200 dark:border-white/10 shadow-2xl flex flex-col justify-between transform translate-x-full">
+  <div id="cartOverlay" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden"></div>
+  <div id="cartDrawer" class="fixed inset-y-0 right-0 z-50 w-full sm:w-[480px] bg-white border-l border-gray-200 shadow-2xl flex flex-col justify-between transform translate-x-full transition-transform duration-300">
     
     <!-- Drawer Header -->
-    <div class="p-6 border-b border-gray-200 dark:border-white/10 flex items-center justify-between">
+    <div class="p-6 border-b border-gray-200 flex items-center justify-between bg-slate-50">
       <div>
-        <h3 class="font-heading font-extrabold text-xl text-gray-900 dark:text-white">Your Meal Prep Plan</h3>
-        <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">Minimum 6 meals required for batch prep</p>
+        <h3 class="font-heading font-extrabold text-xl text-gray-900">Your Meal Prep Plan</h3>
+        <p class="text-xs text-gray-500 mt-0.5">Greek Fit Kitchen — Etobicoke Batch Prep</p>
       </div>
-      <button id="cartCloseBtn" class="p-2 text-gray-400 hover:text-gray-900 dark:hover:text-white rounded-lg">
+      <button id="cartCloseBtn" class="p-2 text-gray-400 hover:text-gray-900 rounded-lg">
         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
       </button>
     </div>
 
-    <!-- Minimum Meal Progress Bar -->
-    <div class="bg-gray-50 dark:bg-greek-navy px-6 py-4 border-b border-gray-200 dark:border-white/10">
+    <!-- Minimum Order & Progress Tracker -->
+    <div class="bg-white px-6 py-4 border-b border-gray-200">
       <div class="flex justify-between items-center text-xs mb-1.5">
-        <span id="cartProgressText" class="text-gray-700 dark:text-gray-300 font-medium">Add 6 meals to order</span>
+        <span id="cartProgressText" class="text-gray-700 font-semibold">Minimum Order: 6 Meals</span>
       </div>
-      <div class="w-full bg-gray-200 dark:bg-white/10 h-2.5 rounded-full overflow-hidden">
+      <div class="w-full bg-gray-200 h-2.5 rounded-full overflow-hidden">
         <div id="cartProgressFill" class="bg-greek-gold h-full rounded-full transition-all duration-300" style="width: 0%;"></div>
       </div>
+      <div id="cartMinOrderNotice" class="mt-2.5 hidden"></div>
     </div>
 
-    <!-- Cart Items Scrollable List -->
+    <!-- Cart Items Scroll Area -->
     <div class="p-6 flex-1 overflow-y-auto space-y-4">
       <div id="cartEmptyState" class="text-center py-16 text-gray-400">
-        <svg class="w-12 h-12 mx-auto text-gray-300 dark:text-white/20 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
-        <p class="font-bold text-gray-600 dark:text-gray-300">Your meal plan is empty</p>
-        <p class="text-xs text-gray-400 mt-1">Select 6 or more delicious Greek meals to begin.</p>
-        <button onclick="closeCartDrawer(); window.location.href='#featuredMeals';" class="mt-4 px-4 py-2 bg-greek-gold text-greek-navyDark text-xs font-bold rounded-lg shadow">
-          Browse 20 Dishes
-        </button>
+        <svg class="w-12 h-12 mx-auto text-gray-300 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
+        <p class="font-bold text-gray-700 text-sm">Your meal plan is empty</p>
+        <p class="text-xs text-gray-500 mt-1 max-w-xs mx-auto">Select 6 or more delicious Greek meals to start your order.</p>
+        <button onclick="closeCartDrawer(); window.location.href='#featuredMeals';" class="mt-4 px-4 py-2 bg-greek-gold text-greek-navyDark text-xs font-bold rounded-xl shadow">Explore Menu</button>
       </div>
       <div id="cartItemsContainer" class="space-y-3"></div>
     </div>
 
-    <!-- Drawer Summary & Checkout Button -->
-    <div id="cartDrawerFooter" class="p-6 border-t border-gray-200 dark:border-white/10 bg-white dark:bg-greek-navy">
-      <div class="space-y-2 text-sm text-gray-600 dark:text-gray-300 mb-4">
+    <!-- Drawer Footer (Pricing & Checkout) -->
+    <div id="cartDrawerFooter" class="p-6 border-t border-gray-200 bg-slate-50">
+      <div class="space-y-2 text-sm text-gray-600 mb-4">
+        
         <div class="flex justify-between">
           <span>Meal Subtotal:</span>
-          <span id="cartSubtotal" class="font-bold text-gray-900 dark:text-white">$0.00 CAD</span>
+          <span id="cartSubtotal" class="font-bold text-gray-900">$0.00 CAD</span>
         </div>
-        <div id="cartDiscountRow" class="flex justify-between text-greek-lime font-bold hidden">
-          <span>10% Volume Discount:</span>
+
+        <div id="cartExtraSidesRow" class="flex justify-between text-xs text-gray-600 hidden">
+          <span>Extra Sides Total:</span>
+          <span id="cartExtraSidesAmount" class="font-bold text-gray-900">+$0.00 CAD</span>
+        </div>
+
+        <!-- Promo Code Input in Cart Drawer -->
+        <div class="pt-1 pb-2">
+          <div class="flex gap-2">
+            <input type="text" id="cartDrawerCouponInput" placeholder="Promo code (e.g. GREEK10)" class="flex-1 p-2 text-xs rounded-xl border border-gray-300 uppercase font-bold focus:outline-none focus:ring-1 focus:ring-greek-gold" />
+            <button type="button" onclick="applyCouponCode(document.getElementById('cartDrawerCouponInput').value)" class="px-3.5 py-2 bg-greek-navy hover:bg-greek-navyDark text-white text-xs font-bold rounded-xl transition">
+              Apply
+            </button>
+          </div>
+        </div>
+
+        <!-- Volume Discount Highlight -->
+        <div id="cartDiscountRow" class="flex justify-between text-green-700 font-extrabold bg-green-50 p-2 rounded-lg border border-green-200 hidden">
+          <span>Volume Discount (10% OFF 7+ Meals):</span>
           <span id="cartDiscountAmount">-$0.00 CAD</span>
         </div>
-        <div class="flex justify-between">
-          <span>Estimated Delivery:</span>
-          <span id="cartDeliveryFee" class="font-bold text-gray-900 dark:text-white">$13.91 CAD</span>
+
+        <!-- Coupon Discount Highlight -->
+        <div id="cartCouponRow" class="flex justify-between text-green-700 font-extrabold bg-green-50 p-2 rounded-lg border border-green-200 hidden">
+          <span>Promo Code Savings:</span>
+          <span id="cartCouponAmount">-$0.00 CAD</span>
         </div>
-        <div class="flex justify-between text-base font-extrabold text-gray-900 dark:text-white pt-2 border-t border-gray-200 dark:border-white/10">
-          <span>Total:</span>
-          <span id="cartGrandTotal" class="text-greek-gold font-heading text-lg">$0.00 CAD</span>
+
+        <div class="flex justify-between text-xs">
+          <span>Ontario HST (13%):</span>
+          <span id="cartTaxAmount" class="font-semibold text-gray-700">$0.00 CAD</span>
         </div>
+
+        <div class="flex justify-between text-xs">
+          <span>Delivery (Tiered GTA):</span>
+          <span id="cartDeliveryFee" class="font-semibold text-gray-700">$8.00 CAD</span>
+        </div>
+
+        <div class="flex justify-between text-base font-extrabold text-gray-900 pt-3 border-t border-gray-200">
+          <span>Final Total:</span>
+          <span id="cartGrandTotal" class="text-greek-navy font-heading text-xl">$0.00 CAD</span>
+        </div>
+
       </div>
 
-      <button id="cartCheckoutBtn" onclick="openCheckoutModal()" disabled class="w-full py-4 rounded-xl bg-greek-gold hover:bg-greek-goldHover text-greek-navyDark font-extrabold text-base shadow-lg transition-all opacity-50 cursor-not-allowed">
+      <button id="cartCheckoutBtn" onclick="openCheckoutModal()" disabled class="w-full py-4 rounded-xl bg-greek-gold text-greek-navyDark font-extrabold text-base shadow-lg opacity-50 cursor-not-allowed transition-all">
         Add 6 meals to checkout
       </button>
     </div>
