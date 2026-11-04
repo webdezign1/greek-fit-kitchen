@@ -308,8 +308,8 @@
       <div class="flex items-center gap-4 border-b border-gray-100 pb-5">
         <img id="customizerMealImg" src="images/meals/grilled-chicken.jpg" alt="Dish" class="w-20 h-20 rounded-2xl object-cover shadow-sm border border-gray-200" onerror="this.src='images/meals/grilled-chicken.jpg'" />
         <div>
-          <span class="text-xs font-bold text-greek-navy uppercase tracking-wider">Greek Fit Kitchen Plate Builder</span>
-          <h3 id="customizerMealTitle" class="font-heading font-extrabold text-xl sm:text-2xl text-gray-900 leading-tight">Customize Dish</h3>
+          <span class="text-xs font-bold uppercase tracking-wider" style="color: #E5A50A;">Greek Fit Kitchen Plate Builder</span>
+          <h3 id="customizerMealTitle" class="font-heading font-extrabold text-xl sm:text-2xl leading-tight" style="color: #E5A50A;">Customize Dish</h3>
           <span id="customizerBasePrice" class="text-sm font-extrabold text-greek-gold bg-greek-navy px-3 py-0.5 rounded-full inline-block mt-1">$12.99 CAD</span>
         </div>
       </div>
@@ -319,7 +319,7 @@
         <!-- Quantity Selector -->
         <div class="flex items-center justify-between p-3.5 rounded-2xl bg-gray-50 border border-gray-200">
           <div>
-            <label class="block text-xs font-bold uppercase tracking-wider text-gray-700">Quantity of Meals</label>
+            <label class="block text-xs font-bold uppercase tracking-wider" style="color: #E5A50A;">Quantity of Meals</label>
             <span class="text-xs text-gray-500">Counts toward 6-meal minimum order</span>
           </div>
           <div class="flex items-center border border-gray-300 rounded-xl overflow-hidden bg-white shadow-sm">
@@ -331,28 +331,28 @@
 
         <!-- SIDES SECTION (Eligible plates get 2 included sides) -->
         <div id="customizerSidesSelectionWrapper" class="space-y-4">
-          <div class="bg-blue-50/70 p-4 rounded-2xl border border-blue-100">
-            <div class="flex items-center gap-2 text-xs font-bold text-greek-navy uppercase tracking-wider mb-1">
+          <div class="bg-amber-50/50 p-4 rounded-2xl border border-amber-200/60">
+            <div class="flex items-center gap-2 text-xs font-bold uppercase tracking-wider mb-1" style="color: #E5A50A;">
               <span>✓ INCLUDED SIDES</span>
               <span class="text-gray-500 font-normal">(Any plate comes with 2 sides of your choice)</span>
             </div>
-            <p class="text-xs text-gray-600">Choose your 2 complimentary sides below. No extra charge for included sides.</p>
+            <p class="text-xs text-gray-600">Check your 2 complimentary sides below. No extra charge for included sides.</p>
           </div>
 
-          <!-- Side 1 Selection -->
+          <!-- Side 1 Selection (Checkboxes) -->
           <div>
-            <label class="block text-xs font-extrabold uppercase text-gray-700 mb-1.5">Side 1 Selection (Included - Free)</label>
-            <select id="customizerSide1Select" onchange="updateCustomizerSide1(this.value)" class="w-full p-3 rounded-xl border border-gray-300 bg-white text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-greek-gold">
-              <!-- Rendered dynamically from SIDES_LIST -->
-            </select>
+            <label class="block text-xs font-extrabold uppercase mb-1.5" style="color: #E5A50A;">Side 1 Selection (Included - Free)</label>
+            <div id="customizerSide1Container" class="grid grid-cols-1 sm:grid-cols-2 gap-2 max-h-48 overflow-y-auto p-1">
+              <!-- Rendered dynamically as checkboxes from SIDES_LIST -->
+            </div>
           </div>
 
-          <!-- Side 2 Selection -->
+          <!-- Side 2 Selection (Checkboxes) -->
           <div>
-            <label class="block text-xs font-extrabold uppercase text-gray-700 mb-1.5">Side 2 Selection (Included - Free)</label>
-            <select id="customizerSide2Select" onchange="updateCustomizerSide2(this.value)" class="w-full p-3 rounded-xl border border-gray-300 bg-white text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-greek-gold">
-              <!-- Rendered dynamically from SIDES_LIST -->
-            </select>
+            <label class="block text-xs font-extrabold uppercase mb-1.5" style="color: #E5A50A;">Side 2 Selection (Included - Free)</label>
+            <div id="customizerSide2Container" class="grid grid-cols-1 sm:grid-cols-2 gap-2 max-h-48 overflow-y-auto p-1">
+              <!-- Rendered dynamically as checkboxes from SIDES_LIST -->
+            </div>
           </div>
         </div>
 
@@ -369,7 +369,7 @@
         <!-- ADDITIONAL SIDES SECTION -->
         <div>
           <div class="flex justify-between items-baseline mb-2">
-            <label class="block text-xs font-extrabold uppercase text-gray-700">Additional Sides</label>
+            <label class="block text-xs font-extrabold uppercase" style="color: #E5A50A;">Additional Sides</label>
             <span class="text-xs font-extrabold text-greek-navy bg-greek-gold px-2.5 py-0.5 rounded-full">
               EXTRA SIDES: $4.99 EACH (CAD)
             </span>
@@ -382,7 +382,7 @@
 
         <!-- SPECIAL REQUESTS / INSTRUCTIONS -->
         <div>
-          <label class="block text-xs font-extrabold uppercase text-gray-700 mb-1.5">
+          <label class="block text-xs font-extrabold uppercase mb-1.5" style="color: #E5A50A;">
             SPECIAL REQUESTS / INSTRUCTIONS
           </label>
           <textarea id="customizerSpecialInstructions" rows="2" placeholder="Let us know if you have any special requests for this meal." class="w-full p-3 rounded-xl border border-gray-300 bg-white text-xs sm:text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-greek-gold"></textarea>

@@ -902,6 +902,7 @@ function openSideCustomizer(mealId) {
   } else {
     if (sidesWrapper) sidesWrapper.classList.remove('hidden');
     if (pastaNotice) pastaNotice.classList.add('hidden');
+    renderSidesCheckboxes();
     renderSidesDropdowns();
   }
 
@@ -913,6 +914,69 @@ function openSideCustomizer(mealId) {
 
   updateCustomizerPriceBreakdown();
   modal.classList.remove('hidden');
+}
+
+function renderSidesCheckboxes() {
+  const container1 = document.getElementById('customizerSide1Container');
+  const container2 = document.getElementById('customizerSide2Container');
+
+  if (container1) {
+    container1.innerHTML = SIDES_LIST.map((side) => {
+      const isChecked = state.customizingMeal && state.customizingMeal.side1 === side;
+      return `
+        <label class="flex items-center gap-2.5 p-2.5 rounded-xl border ${isChecked ? 'border-amber-400 bg-amber-50/80 ring-1 ring-amber-400 font-bold' : 'border-gray-200 bg-gray-50/50 hover:bg-gray-100'} cursor-pointer text-xs transition">
+          <input 
+            type="checkbox" 
+            name="customizer_side1_box" 
+            value="${side}" 
+            ${isChecked ? 'checked' : ''}
+            onchange="selectIncludedSide1('${side}')"
+            class="rounded text-greek-gold focus:ring-greek-gold w-4 h-4 cursor-pointer"
+          />
+          <span class="flex-1 text-gray-800 font-medium">${side}</span>
+          <span class="text-green-700 font-extrabold text-[10px] bg-green-50 px-2 py-0.5 rounded border border-green-200">INCLUDED</span>
+        </label>
+      `;
+    }).join('');
+  }
+
+  if (container2) {
+    container2.innerHTML = SIDES_LIST.map((side) => {
+      const isChecked = state.customizingMeal && state.customizingMeal.side2 === side;
+      return `
+        <label class="flex items-center gap-2.5 p-2.5 rounded-xl border ${isChecked ? 'border-amber-400 bg-amber-50/80 ring-1 ring-amber-400 font-bold' : 'border-gray-200 bg-gray-50/50 hover:bg-gray-100'} cursor-pointer text-xs transition">
+          <input 
+            type="checkbox" 
+            name="customizer_side2_box" 
+            value="${side}" 
+            ${isChecked ? 'checked' : ''}
+            onchange="selectIncludedSide2('${side}')"
+            class="rounded text-greek-gold focus:ring-greek-gold w-4 h-4 cursor-pointer"
+          />
+          <span class="flex-1 text-gray-800 font-medium">${side}</span>
+          <span class="text-green-700 font-extrabold text-[10px] bg-green-50 px-2 py-0.5 rounded border border-green-200">INCLUDED</span>
+        </label>
+      `;
+    }).join('');
+  }
+}
+
+function selectIncludedSide1(side) {
+  if (!state.customizingMeal) return;
+  state.customizingMeal.side1 = side;
+  renderSidesCheckboxes();
+  const select1 = document.getElementById('customizerSide1Select');
+  if (select1) select1.value = side;
+  updateCustomizerPriceBreakdown();
+}
+
+function selectIncludedSide2(side) {
+  if (!state.customizingMeal) return;
+  state.customizingMeal.side2 = side;
+  renderSidesCheckboxes();
+  const select2 = document.getElementById('customizerSide2Select');
+  if (select2) select2.value = side;
+  updateCustomizerPriceBreakdown();
 }
 
 function renderSidesDropdowns() {
@@ -1093,8 +1157,11 @@ window.closeSideCustomizer = closeSideCustomizer;
 window.changeCustomizerQty = changeCustomizerQty;
 window.toggleExtraSide = toggleExtraSide;
 window.toggleCustomizerAddon = toggleCustomizerAddon;
-window.updateCustomizerSide1 = updateCustomizerSide1;
-window.updateCustomizerSide2 = updateCustomizerSide2;
+window.renderSidesCheckboxes = renderSidesCheckboxes;
+window.selectIncludedSide1 = selectIncludedSide1;
+window.selectIncludedSide2 = selectIncludedSide2;
+window.updateCustomizerSide1 = selectIncludedSide1;
+window.updateCustomizerSide2 = selectIncludedSide2;
 window.confirmAddCustomMeal = confirmAddCustomMeal;
 
 // -------------------------------------------------------------
