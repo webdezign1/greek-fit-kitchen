@@ -888,7 +888,23 @@ function openSideCustomizer(mealId) {
     imgEl.src = meal.image + '?v=20261103_2';
     imgEl.onerror = () => { imgEl.src = 'images/meals/grilled-chicken.jpg'; };
   }
-  if (qtyInput) qtyInput.value = 1;
+  if (qtyInput) {
+    qtyInput.value = 1;
+    qtyInput.disabled = true;
+    qtyInput.readOnly = true;
+    const parentStepper = qtyInput.parentElement;
+    if (parentStepper) {
+      parentStepper.style.pointerEvents = 'none';
+      parentStepper.style.opacity = '0.5';
+      parentStepper.style.cursor = 'not-allowed';
+      parentStepper.querySelectorAll('button').forEach(b => {
+        b.disabled = true;
+        b.setAttribute('disabled', 'disabled');
+        b.style.pointerEvents = 'none';
+        b.style.cursor = 'not-allowed';
+      });
+    }
+  }
   if (specialText) specialText.value = '';
 
   // Render Sides Selection

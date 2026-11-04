@@ -316,16 +316,16 @@
 
       <div class="mt-6 space-y-6">
 
-        <!-- Quantity Selector -->
+        <!-- Quantity Selector (Disabled - 1 Plate per Customization) -->
         <div class="flex items-center justify-between p-3.5 rounded-2xl bg-gray-50 border border-gray-200">
           <div>
             <label class="block text-xs font-bold uppercase tracking-wider" style="color: #E5A50A;">Quantity of Meals</label>
             <span class="text-xs text-gray-500">Counts toward 6-meal minimum order</span>
           </div>
-          <div class="flex items-center border border-gray-200 rounded-xl overflow-hidden bg-gray-100 opacity-60 cursor-not-allowed select-none">
-            <button type="button" disabled class="px-3 py-1.5 text-gray-400 font-bold text-base cursor-not-allowed pointer-events-none select-none">-</button>
-            <input type="text" id="customizerQuantityInput" readonly disabled value="1" tabindex="-1" class="w-12 text-center text-sm font-bold text-gray-500 bg-transparent border-none focus:outline-none cursor-not-allowed select-none pointer-events-none" />
-            <button type="button" disabled class="px-3 py-1.5 text-gray-400 font-bold text-base cursor-not-allowed pointer-events-none select-none">+</button>
+          <div class="flex items-center border border-gray-200 rounded-xl overflow-hidden bg-gray-100 select-none shadow-none" style="pointer-events: none !important; opacity: 0.5 !important; cursor: not-allowed !important;">
+            <button type="button" disabled tabindex="-1" style="pointer-events: none !important; cursor: not-allowed !important;" class="px-3 py-1.5 text-gray-400 font-bold text-base select-none">-</button>
+            <input type="text" id="customizerQuantityInput" readonly disabled value="1" tabindex="-1" style="pointer-events: none !important; cursor: not-allowed !important;" class="w-12 text-center text-sm font-bold text-gray-400 bg-transparent border-none focus:outline-none select-none" />
+            <button type="button" disabled tabindex="-1" style="pointer-events: none !important; cursor: not-allowed !important;" class="px-3 py-1.5 text-gray-400 font-bold text-base select-none">+</button>
           </div>
         </div>
 
@@ -591,6 +591,6 @@
   </div>
 
   <!-- Core App JS -->
-  <script src="js/app.js"></script>
+  <script src="js/app.js?v=20261104_disable_qty"></script>
 </body>
 </html>
