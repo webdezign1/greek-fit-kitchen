@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Elementor Visual Site Builder &amp; CMS | Greek Fit Kitchen</title>
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            elementor: {
+              dark: '#1e2124',
+              panel: '#26292c',
+              border: '#393d41',
+              accent: '#93003c',
+              blue: '#5856d6',
+              gold: '#F5C542',
+              navy: '#101D3A'
+            },
+            greek: {
+              navy: '#101D3A',
+              navyDark: '#0C172E',
+              gold: '#F5C542',
+              goldHover: '#E5B432',
+              lime: '#82B82A'
+            }
+          },
+          fontFamily: {
+            heading: ['Roboto Slab', 'serif'],
+            sans: ['Roboto', 'sans-serif']
+          }
+        }
+      }
+    };
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;500;600;700;800;900&family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet" />
+
+  <style>
+    /* Elementor-style selection borders and badges */
+    .builder-section {
+      position: relative;
+      transition: outline 0.15s ease-in-out;
+    }
+    .builder-section:hover {
+      outline: 2px dashed #F5C542;
+    }
+    .builder-section.active-section {
+      outline: 2px solid #F5C542 !important;
+    }
+    .section-actions {
+      display: none;
+      position: absolute;
+      top: -14px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 40;
+    }
+    .builder-section:hover > .section-actions,
+    .builder-section.active-section > .section-actions {
+      display: flex;
+    }
+
+    .builder-element {
+      position: relative;
+      cursor: pointer;
+      transition: all 0.15s ease-in-out;
+    }
+    .builder-element:hover {
+      outline: 1.5px solid #3b82f6;
+    }
+    .builder-element.active-element {
+      outline: 2px solid #3b82f6 !important;
+      box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.2);
+    }
+    .element-actions {
+      display: none;
+      position: absolute;
+      top: -10px;
+      right: 4px;
+      z-index: 30;
+    }
+    .builder-element:hover > .element-actions,
+    .builder-element.active-element > .element-actions {
+      display: flex;
+    }
+
+    /* Custom scrollbars for Elementor panels */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #1e2124;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #393d41;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #50555a;
+    }
+
+    /* Responsive Viewport Preview */
+    .viewport-desktop {
+      width: 100%;
+      max-width: 100%;
+    }
+    .viewport-tablet {
+      width: 768px !important;
+      max-width: 768px !important;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+      border-radius: 12px;
+      border: 8px solid #26292c;
+    }
+    .viewport-mobile {
+      width: 390px !important;
+      max-width: 390px !important;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+      border-radius: 20px;
+      border: 10px solid #26292c;
+    }
+  </style>
+</head>
+<body class="bg-[#1e2124] text-white font-sans antialiased overflow-hidden h-screen flex flex-col select-none">
+
+  <!-- ========================================================================= -->
+  <!-- 1. CLIENT LOGIN OVERLAY (Shows when not logged in)                         -->
+  <!-- ========================================================================= -->
+  <div id="builderLoginOverlay" class="fixed inset-0 z-50 bg-[#121416] flex items-center justify-center p-4">
+    <div class="bg-[#26292c] border border-[#393d41] rounded-3xl p-8 max-w-md w-full shadow-2xl relative text-center">
+      
+      <!-- Brand Logo & Elementor Badge -->
+      <div class="flex items-center justify-center gap-3 mb-6">
+        <div class="w-12 h-12 rounded-2xl bg-greek-gold text-greek-navyDark flex items-center justify-center font-black text-2xl shadow-lg">
+          E
+        </div>
+        <div class="text-left">
+          <h1 class="font-heading font-extrabold text-xl text-white">Elementor CMS</h1>
+          <p class="text-xs text-greek-gold font-bold">Greek Fit Kitchen Visual Studio</p>
+        </div>
+      </div>
+
+      <div class="bg-white/5 border border-white/10 rounded-2xl p-4 mb-6 text-xs text-left text-slate-300">
+        <p class="font-bold text-white mb-1">🔐 Client Administrator Login</p>
+        <p>Login to edit pages, customize text &amp; images, add/remove sections, and publish blog posts.</p>
+        <div class="mt-2 text-[11px] text-greek-gold font-mono">
+          Demo: <strong>admin</strong> / <strong>admin123</strong> (or PIN <strong>1234</strong>)
+        </div>
+      </div>
+
+      <form onsubmit="handleBuilderLogin(event)" class="space-y-4 text-left">
+        <div>
+          <label class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-1.5">Username or Email</label>
+          <input 
+            type="text" 
+            id="loginUsername" 
+            value="admin" 
+            required 
+            class="w-full px-4 py-3 rounded-xl bg-[#1e2124] border border-[#393d41] text-white text-sm focus:outline-none focus:border-greek-gold transition"
+          />
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-1.5">Password / Admin PIN</label>
+          <input 
+            type="password" 
+            id="loginPassword" 
+            value="admin123" 
+            required 
+            class="w-full px-4 py-3 rounded-xl bg-[#1e2124] border border-[#393d41] text-white text-sm focus:outline-none focus:border-greek-gold transition"
+          />
+        </div>
+
+        <div id="loginErrorMsg" class="hidden text-xs text-red-400 bg-red-900/30 border border-red-800/50 p-2.5 rounded-xl">
+          Invalid username or password. Please try again.
+        </div>
+
+        <button 
+          type="submit" 
+          class="w-full py-3.5 rounded-xl bg-greek-gold hover:bg-greek-goldHover text-greek-navyDark font-extrabold text-sm shadow-lg transition-all"
+        >
+          Open Visual Builder
+        </button>
+      </form>
+
+      <div class="mt-6 pt-4 border-t border-[#393d41] flex items-center justify-between text-xs text-gray-400">
+        <a href="index.html" class="hover:text-white transition">← Return to Website</a>
+        <a href="admin.html" class="text-greek-gold hover:underline">Operations Suite</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- 2. TOP APPLICATION BAR (Elementor Toolbar)                                 -->
+  <!-- ========================================================================= -->
+  <header class="h-14 bg-[#26292c] border-b border-[#393d41] px-4 flex items-center justify-between z-30 flex-shrink-0">
+    
+    <!-- Left: Elementor Hamburger & Page Selector -->
+    <div class="flex items-center gap-3">
+      <button onclick="toggleElementorSidebar()" class="w-8 h-8 rounded-lg bg-[#1e2124] hover:bg-[#393d41] flex items-center justify-center text-gray-300 transition" title="Toggle Widget Panel">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+      </button>
+
+      <div class="flex items-center gap-2">
+        <span class="w-6 h-6 rounded bg-greek-gold text-greek-navyDark font-black text-xs flex items-center justify-center">E</span>
+        <span class="font-heading font-bold text-sm text-white hidden sm:inline">Elementor</span>
+      </div>
+
+      <div class="h-5 w-px bg-[#393d41] mx-1"></div>
+
+      <!-- Active Page Dropdown -->
+      <div class="flex items-center gap-2">
+        <span class="text-xs text-gray-400 hidden md:inline">Editing:</span>
+        <select 
+          id="pageSelector" 
+          onchange="switchActivePage(this.value)" 
+          class="bg-[#1e2124] border border-[#393d41] text-xs font-bold text-greek-gold rounded-lg px-2.5 py-1.5 focus:outline-none focus:border-greek-gold cursor-pointer"
+        >
+          <option value="home">Homepage (index.html)</option>
+          <option value="menu">Meal Plan (menu.html)</option>
+          <option value="about">About Us (about-us.html)</option>
+          <option value="delivery">Delivery Rates (delivery-rates.html)</option>
+          <option value="howitworks">How It Works (how-it-works.html)</option>
+          <option value="blog">Blog Journal (blog.html)</option>
+        </select>
+      </div>
+
+      <!-- Manage Pages Button -->
+      <button onclick="openPagesManagerModal()" class="px-2.5 py-1.5 rounded-lg bg-[#1e2124] hover:bg-[#393d41] text-xs font-semibold text-gray-300 flex items-center gap-1.5 transition">
+        <svg class="w-3.5 h-3.5 text-greek-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+        <span>Manage Pages</span>
+      </button>
+
+      <!-- Manage Blog Posts Button -->
+      <button onclick="openBlogManagerModal()" class="px-2.5 py-1.5 rounded-lg bg-[#1e2124] hover:bg-[#393d41] text-xs font-semibold text-gray-300 flex items-center gap-1.5 transition">
+        <svg class="w-3.5 h-3.5 text-greek-lime" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"></path></svg>
+        <span>Blog Posts CMS</span>
+      </button>
+    </div>
+
+    <!-- Center: Responsive Switcher -->
+    <div class="hidden lg:flex items-center bg-[#1e2124] p-1 rounded-xl border border-[#393d41] gap-1">
+      <button onclick="setResponsiveMode('desktop')" id="respBtn-desktop" class="px-3 py-1 rounded-lg text-xs font-bold bg-[#393d41] text-white transition flex items-center gap-1.5">
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+        Desktop
+      </button>
+      <button onclick="setResponsiveMode('tablet')" id="respBtn-tablet" class="px-3 py-1 rounded-lg text-xs font-medium text-gray-400 hover:text-white transition flex items-center gap-1.5">
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>
+        Tablet
+      </button>
+      <button onclick="setResponsiveMode('mobile')" id="respBtn-mobile" class="px-3 py-1 rounded-lg text-xs font-medium text-gray-400 hover:text-white transition flex items-center gap-1.5">
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>
+        Mobile
+      </button>
+    </div>
+
+    <!-- Right: Publish, Preview, Export, & Profile -->
+    <div class="flex items-center gap-2">
+      <button onclick="previewLivePage()" class="p-2 rounded-lg bg-[#1e2124] hover:bg-[#393d41] text-gray-300 transition" title="View Live Page">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
+      </button>
+
+      <button onclick="exportWebsiteFiles()" class="px-3 py-1.5 rounded-lg bg-[#1e2124] hover:bg-[#393d41] text-xs font-bold text-gray-300 flex items-center gap-1.5 transition" title="Export HTML File">
+        <svg class="w-3.5 h-3.5 text-greek-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+        <span class="hidden sm:inline">Export HTML</span>
+      </button>
+
+      <!-- Elementor Save / Publish Button -->
+      <button 
+        id="publishBtn" 
+        onclick="saveAndPublishChanges()" 
+        class="px-4 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-extrabold text-xs shadow flex items-center gap-1.5 transition"
+      >
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+        <span>UPDATE / PUBLISH</span>
+      </button>
+
+      <!-- Logout -->
+      <button onclick="handleBuilderLogout()" class="p-1.5 rounded-lg hover:bg-red-900/40 text-gray-400 hover:text-red-400 transition" title="Logout">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- ========================================================================= -->
+  <!-- 3. MAIN WORKSPACE (Left Panel + Live Canvas)                               -->
+  <!-- ========================================================================= -->
+  <div class="flex-1 flex overflow-hidden relative">
+    
+    <!-- ============================================================ -->
+    <!-- LEFT ELEMENTOR SIDEBAR                                       -->
+    <!-- ============================================================ -->
+    <aside id="elementorSidebar" class="w-80 bg-[#26292c] border-r border-[#393d41] flex flex-col z-20 flex-shrink-0 transition-all duration-300">
+      
+      <!-- Panel Tabs: Elements | Edit Widget | Page Settings -->
+      <div class="flex border-b border-[#393d41] bg-[#1e2124] text-xs font-bold text-gray-400">
+        <button onclick="switchSidebarTab('widgets')" id="tabBtn-widgets" class="flex-1 py-3 border-b-2 border-greek-gold text-white flex items-center justify-center gap-1.5">
+          <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
+          Widgets
+        </button>
+        <button onclick="switchSidebarTab('editor')" id="tabBtn-editor" class="flex-1 py-3 border-b-2 border-transparent hover:text-white flex items-center justify-center gap-1.5">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
+          Edit Widget
+        </button>
+        <button onclick="switchSidebarTab('pageSettings')" id="tabBtn-pageSettings" class="flex-1 py-3 border-b-2 border-transparent hover:text-white flex items-center justify-center gap-1.5">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+          Settings
+        </button>
+      </div>
+
+      <!-- TAB 1: WIDGETS TRAY -->
+      <div id="sidebarTab-widgets" class="flex-1 overflow-y-auto p-4 space-y-6">
+        
+        <!-- Search Widgets -->
+        <div>
+          <input 
+            type="text" 
+            id="widgetSearchInput" 
+            oninput="filterWidgets(this.value)" 
+            placeholder="Search Widget..." 
+            class="w-full px-3 py-2 rounded-xl bg-[#1e2124] border border-[#393d41] text-xs text-white placeholder-gray-500 focus:outline-none focus:border-greek-gold"
+          />
+        </div>
+
+        <!-- Category: Basic Widgets -->
+        <div>
+          <h4 class="text-[11px] font-bold text-gray-400 uppercase tracking-wider mb-3">Basic Elements</h4>
+          <div class="grid grid-cols-2 gap-2.5">
+            
+            <div onclick="insertWidget('heading')" class="widget-card p-3 rounded-xl bg-[#1e2124] hover:bg-[#32363b] border border-[#393d41] hover:border-greek-gold flex flex-col items-center justify-center text-center cursor-pointer transition">
+              <span class="text-greek-gold font-heading font-black text-xl mb-1">T</span>
+              <span class="text-[11px] text-gray-300 font-medium">Heading</span>
+            </div>
+
+            <div onclick="insertWidget('text')" class="widget-card p-3 rounded-xl bg-[#1e2124] hover:bg-[#32363b] border border-[#393d41] hover:border-greek-gold flex flex-col items-center justify-center text-center cursor-pointer transition">
+              <svg class="w-5 h-5 text-gray-300 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7"></path></svg>
+              <span class="text-[11px] text-gray-300 font-medium">Text Editor</span>
+            </div>
+
+            <div onclick="insertWidget('image')" class="widget-card p-3 rounded-xl bg-[#1e2124] hover:bg-[#32363b] border border-[#393d41] hover:border-greek-gold flex flex-col items-center justify-center text-center cursor-pointer transition">
+              <svg class="w-5 h-5 text-gray-300 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+              <span class="text-[11px] text-gray-300 font-medium">Image</span>
+            </div>
+
+            <div onclick="insertWidget('button')" class="widget-card p-3 rounded-xl bg-[#1e2124] hover:bg-[#32363b] border border-[#393d41] hover:border-greek-gold flex flex-col items-center justify-center text-center cursor-pointer transition">
+              <span class="px-2 py-0.5 rounded bg-greek-gold text-greek-navyDark text-[10px] font-black mb-1">BTN</span>
+              <span class="text-[11px] text-gray-300 font-medium">Button</span>
+            </div>
+
+            <div onclick="insertWidget('divider')" class="widget-card p-3 rounded-xl bg-[#1e2124] hover:bg-[#32363b] border border-[#393d41] hover:border-greek-gold flex flex-col items-center justify-center text-center cursor-pointer transition">
+              <div class="w-8 h-0.5 bg-gray-400 my-2"></div>
+              <span class="text-[11px] text-gray-300 font-medium">Divider</span>
+            </div>
+
+            <div onclick="insertWidget('spacer')" class="widget-card p-3 rounded-xl bg-[#1e2124] hover:bg-[#32363b] border border-[#393d41] hover:border-greek-gold flex flex-col items-center justify-center text-center cursor-pointer transition">
+              <svg class="w-5 h-5 text-gray-300 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l4-4 4 4m0 6l-4 4-4-4"></path></svg>
+              <span class="text-[11px] text-gray-300 font-medium">Spacer</span>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Category: Greek Fit Kitchen Components -->
+        <div>
+          <h4 class="text-[11px] font-bold text-greek-gold uppercase tracking-wider mb-3">Greek Fit Components</h4>
+          <div class="grid grid-cols-2 gap-2.5">
+            
+            <div onclick="insertWidget('mealCard')" class="widget-card p-3 rounded-xl bg-[#1e2124] hover:bg-[#32363b] border border-[#393d41] hover:border-greek-gold flex flex-col items-center justify-center text-center cursor-pointer transition">
+              <span class="text-xl mb-1">🍗</span>
+              <span class="text-[11px] text-gray-300 font-medium">Meal Dish Card</span>
+            </div>
+
+            <div onclick="insertWidget('menuGrid')" class="widget-card p-3 rounded-xl bg-[#1e2124] hover:bg-[#32363b] border border-[#393d41] hover:border-greek-gold flex flex-col items-center justify-center text-center cursor-pointer transition">
+              <span class="text-xl mb-1">🍽️</span>
+              <span class="text-[11px] text-gray-300 font-medium">Full Menu Grid</span>
+            </div>
+
+            <div onclick="insertWidget('pricingTier')" class="widget-card p-3 rounded-xl bg-[#1e2124] hover:bg-[#32363b] border border-[#393d41] hover:border-greek-gold flex flex-col items-center justify-center text-center cursor-pointer transition">
+              <span class="text-xl mb-1">🏷️</span>
+              <span class="text-[11px] text-gray-300 font-medium">Pricing Tier</span>
+            </div>
+
+            <div onclick="insertWidget('cateringBanner')" class="widget-card p-3 rounded-xl bg-[#1e2124] hover:bg-[#32363b] border border-[#393d41] hover:border-greek-gold flex flex-col items-center justify-center text-center cursor-pointer transition">
+              <span class="text-xl mb-1">🎉</span>
+              <span class="text-[11px] text-gray-300 font-medium">Catering Banner</span>
+            </div>
+
+            <div onclick="insertWidget('blogShowcase')" class="widget-card p-3 rounded-xl bg-[#1e2124] hover:bg-[#32363b] border border-[#393d41] hover:border-greek-gold flex flex-col items-center justify-center text-center cursor-pointer transition">
+              <span class="text-xl mb-1">📰</span>
+              <span class="text-[11px] text-gray-300 font-medium">Blog Posts Row</span>
+            </div>
+
+            <div onclick="insertWidget('reviewCard')" class="widget-card p-3 rounded-xl bg-[#1e2124] hover:bg-[#32363b] border border-[#393d41] hover:border-greek-gold flex flex-col items-center justify-center text-center cursor-pointer transition">
+              <span class="text-xl mb-1">⭐</span>
+              <span class="text-[11px] text-gray-300 font-medium">Client Review</span>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Add Section Button -->
+        <div class="pt-4 border-t border-[#393d41]">
+          <button onclick="openSectionStructureModal()" class="w-full py-3 rounded-xl border-2 border-dashed border-greek-gold/40 hover:border-greek-gold text-greek-gold font-bold text-xs flex items-center justify-center gap-2 hover:bg-greek-gold/10 transition">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+            <span>Add New Section</span>
+          </button>
+        </div>
+
+      </div>
+
+      <!-- TAB 2: EDIT WIDGET INSPECTOR -->
+      <div id="sidebarTab-editor" class="flex-1 overflow-y-auto p-4 space-y-5 hidden">
+        <div id="noElementSelectedNotice" class="text-center py-16 text-gray-400">
+          <svg class="w-12 h-12 mx-auto text-gray-600 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
+          <p class="font-bold text-white text-sm">Select an Element</p>
+          <p class="text-xs text-gray-400 mt-1 max-w-xs mx-auto">Click on any section, heading, text, or image on the canvas to inspect and edit its style.</p>
+        </div>
+
+        <div id="elementInspectorForm" class="hidden space-y-4">
+          <div class="flex items-center justify-between pb-3 border-b border-[#393d41]">
+            <div>
+              <span id="inspectorElementTag" class="text-[10px] uppercase font-bold text-greek-gold px-2 py-0.5 rounded bg-greek-navy border border-greek-gold/30">Element</span>
+              <h3 id="inspectorElementName" class="font-bold text-sm text-white mt-1">Heading</h3>
+            </div>
+            <div class="flex items-center gap-1">
+              <button onclick="duplicateActiveElement()" class="p-1.5 rounded hover:bg-[#393d41] text-gray-400 hover:text-white" title="Duplicate">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+              </button>
+              <button onclick="deleteActiveElement()" class="p-1.5 rounded hover:bg-red-900/40 text-gray-400 hover:text-red-400" title="Delete">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- Content Tab Controls -->
+          <div class="space-y-3">
+            <h5 class="text-xs font-bold text-gray-300 uppercase tracking-wider">Content</h5>
+            
+            <div id="inspectorTextControlWrapper">
+              <label class="block text-xs text-gray-400 mb-1">Text / HTML Content</label>
+              <textarea 
+                id="inspectorTextInput" 
+                rows="4" 
+                oninput="updateActiveElementContent(this.value)" 
+                class="w-full p-2.5 rounded-xl bg-[#1e2124] border border-[#393d41] text-xs text-white focus:outline-none focus:border-greek-gold font-mono"
+              ></textarea>
+            </div>
+
+            <div id="inspectorImageControlWrapper" class="hidden">
+              <label class="block text-xs text-gray-400 mb-1">Image Source (URL)</label>
+              <div class="flex gap-2">
+                <input 
+                  type="text" 
+                  id="inspectorImageInput" 
+                  oninput="updateActiveElementImage(this.value)" 
+                  class="flex-1 p-2 rounded-xl bg-[#1e2124] border border-[#393d41] text-xs text-white focus:outline-none focus:border-greek-gold"
+                />
+                <button onclick="openMediaLibraryModal()" class="px-3 py-2 bg-greek-navy text-greek-gold font-bold text-xs rounded-xl border border-greek-gold/40 hover:bg-greek-navyDark">
+                  Browse
+                </button>
+              </div>
+            </div>
+
+            <div id="inspectorLinkControlWrapper">
+              <label class="block text-xs text-gray-400 mb-1">Link URL (href)</label>
+              <input 
+                type="text" 
+                id="inspectorLinkInput" 
+                oninput="updateActiveElementLink(this.value)" 
+                placeholder="# or https://..." 
+                class="w-full p-2 rounded-xl bg-[#1e2124] border border-[#393d41] text-xs text-white focus:outline-none focus:border-greek-gold"
+              />
+            </div>
+          </div>
+
+          <!-- Style Tab Controls -->
+          <div class="space-y-3 pt-3 border-t border-[#393d41]">
+            <h5 class="text-xs font-bold text-gray-300 uppercase tracking-wider">Style &amp; Typography</h5>
+
+            <!-- Alignment -->
+            <div>
+              <label class="block text-xs text-gray-400 mb-1">Alignment</label>
+              <div class="grid grid-cols-4 gap-1 bg-[#1e2124] p-1 rounded-xl border border-[#393d41]">
+                <button onclick="updateActiveElementStyle('textAlign', 'left')" class="py-1 text-xs hover:bg-[#393d41] rounded">Left</button>
+                <button onclick="updateActiveElementStyle('textAlign', 'center')" class="py-1 text-xs hover:bg-[#393d41] rounded">Center</button>
+                <button onclick="updateActiveElementStyle('textAlign', 'right')" class="py-1 text-xs hover:bg-[#393d41] rounded">Right</button>
+                <button onclick="updateActiveElementStyle('textAlign', 'justify')" class="py-1 text-xs hover:bg-[#393d41] rounded">Justify</button>
+              </div>
+            </div>
+
+            <!-- Text Color -->
+            <div>
+              <label class="block text-xs text-gray-400 mb-1">Text Color</label>
+              <div class="flex items-center gap-2">
+                <input 
+                  type="color" 
+                  id="inspectorColorPicker" 
+                  onchange="updateActiveElementStyle('color', this.value)" 
+                  class="w-8 h-8 rounded border-none bg-transparent cursor-pointer"
+                />
+                <input 
+                  type="text" 
+                  id="inspectorColorText" 
+                  oninput="updateActiveElementStyle('color', this.value)" 
+                  class="flex-1 p-1.5 rounded-lg bg-[#1e2124] border border-[#393d41] text-xs text-white uppercase font-mono"
+                />
+              </div>
+            </div>
+
+            <!-- Background Color -->
+            <div>
+              <label class="block text-xs text-gray-400 mb-1">Background Color</label>
+              <div class="flex items-center gap-2">
+                <input 
+                  type="color" 
+                  id="inspectorBgPicker" 
+                  onchange="updateActiveElementStyle('backgroundColor', this.value)" 
+                  class="w-8 h-8 rounded border-none bg-transparent cursor-pointer"
+                />
+                <input 
+                  type="text" 
+                  id="inspectorBgText" 
+                  oninput="updateActiveElementStyle('backgroundColor', this.value)" 
+                  class="flex-1 p-1.5 rounded-lg bg-[#1e2124] border border-[#393d41] text-xs text-white uppercase font-mono"
+                />
+              </div>
+            </div>
+
+            <!-- Font Size -->
+            <div>
+              <div class="flex justify-between text-xs text-gray-400 mb-1">
+                <span>Font Size</span>
+                <span id="inspectorFontSizeVal">16px</span>
+              </div>
+              <input 
+                type="range" 
+                min="10" 
+                max="72" 
+                value="16" 
+                id="inspectorFontSizeSlider" 
+                oninput="updateActiveElementStyle('fontSize', this.value + 'px'); document.getElementById('inspectorFontSizeVal').innerText = this.value + 'px';" 
+                class="w-full accent-greek-gold cursor-pointer"
+              />
+            </div>
+
+            <!-- Padding -->
+            <div>
+              <div class="flex justify-between text-xs text-gray-400 mb-1">
+                <span>Padding</span>
+                <span id="inspectorPaddingVal">0px</span>
+              </div>
+              <input 
+                type="range" 
+                min="0" 
+                max="60" 
+                value="0" 
+                id="inspectorPaddingSlider" 
+                oninput="updateActiveElementStyle('padding', this.value + 'px'); document.getElementById('inspectorPaddingVal').innerText = this.value + 'px';" 
+                class="w-full accent-greek-gold cursor-pointer"
+              />
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+
+      <!-- TAB 3: PAGE SETTINGS -->
+      <div id="sidebarTab-pageSettings" class="flex-1 overflow-y-auto p-4 space-y-4 hidden">
+        <h4 class="text-xs font-bold text-gray-300 uppercase tracking-wider mb-2">Page Properties</h4>
+        
+        <div>
+          <label class="block text-xs text-gray-400 mb-1">Page Title</label>
+          <input 
+            type="text" 
+            id="pageMetaTitle" 
+            value="Greek Fit Kitchen | High Protein Mediterranean Meal Prep" 
+            class="w-full p-2.5 rounded-xl bg-[#1e2124] border border-[#393d41] text-xs text-white focus:outline-none focus:border-greek-gold"
+          />
+        </div>
+
+        <div>
+          <label class="block text-xs text-gray-400 mb-1">Page URL Slug</label>
+          <input 
+            type="text" 
+            id="pageMetaSlug" 
+            value="index.html" 
+            readonly 
+            class="w-full p-2.5 rounded-xl bg-[#1e2124] border border-[#393d41] text-xs text-gray-500 font-mono"
+          />
+        </div>
+
+        <div>
+          <label class="block text-xs text-gray-400 mb-1">Meta Description</label>
+          <textarea 
+            id="pageMetaDesc" 
+            rows="3" 
+            class="w-full p-2.5 rounded-xl bg-[#1e2124] border border-[#393d41] text-xs text-white focus:outline-none focus:border-greek-gold"
+          >Authentic Greek fitness meal prep designed for high-protein athletic performance in Toronto & GTA.</textarea>
+        </div>
+
+        <div>
+          <label class="block text-xs text-gray-400 mb-1">Page Background</label>
+          <div class="flex items-center gap-2">
+            <button onclick="changePageBackground('#ffffff')" class="w-7 h-7 rounded-lg bg-white border border-gray-400" title="White"></button>
+            <button onclick="changePageBackground('#0C172E')" class="w-7 h-7 rounded-lg bg-greek-navyDark border border-gray-600" title="Greek Navy Dark"></button>
+            <button onclick="changePageBackground('#f8fafc')" class="w-7 h-7 rounded-lg bg-slate-50 border border-gray-300" title="Slate 50"></button>
+          </div>
+        </div>
+
+        <div class="pt-4 border-t border-[#393d41]">
+          <button onclick="resetCurrentPageToDefaults()" class="w-full py-2.5 text-xs font-bold text-red-400 hover:text-red-300 border border-red-900/40 hover:bg-red-900/20 rounded-xl transition">
+            Reset Page to Original Defaults
+          </button>
+        </div>
+      </div>
+
+    </aside>
+
+    <!-- ============================================================ -->
+    <!-- RIGHT LIVE VISUAL CANVAS                                     -->
+    <!-- ============================================================ -->
+    <main class="flex-1 bg-[#121416] overflow-y-auto p-4 sm:p-8 flex justify-center relative" id="canvasViewportWrapper">
+      
+      <!-- Responsive Page Frame -->
+      <div 
+        id="livePageContainer" 
+        class="viewport-desktop bg-white text-slate-800 transition-all duration-300 min-h-full rounded-2xl shadow-2xl relative overflow-hidden"
+      >
+        <!-- Dynamic Page Sections rendered here -->
+      </div>
+
+    </main>
+
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- 4. PAGES MANAGER MODAL (Add / Delete / Switch Pages)                      -->
+  <!-- ========================================================================= -->
+  <div id="pagesManagerModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 hidden">
+    <div class="bg-[#26292c] border border-[#393d41] rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl">
+      <div class="flex items-center justify-between pb-4 border-b border-[#393d41]">
+        <div>
+          <h3 class="font-heading font-extrabold text-xl text-white">Pages Management</h3>
+          <p class="text-xs text-gray-400 mt-0.5">Add, edit, or remove website pages</p>
+        </div>
+        <button onclick="closePagesManagerModal()" class="p-2 text-gray-400 hover:text-white rounded-lg">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+        </button>
+      </div>
+
+      <!-- Add New Page Form -->
+      <div class="mt-6 p-4 rounded-2xl bg-[#1e2124] border border-[#393d41]">
+        <h4 class="text-xs font-bold text-greek-gold uppercase tracking-wider mb-3">+ Create New Page</h4>
+        <div class="space-y-3">
+          <div>
+            <label class="block text-xs text-gray-400 mb-1">Page Title</label>
+            <input type="text" id="newPageTitleInput" placeholder="e.g. VIP Catering Packages" class="w-full px-3 py-2 rounded-xl bg-[#26292c] border border-[#393d41] text-xs text-white focus:outline-none focus:border-greek-gold" />
+          </div>
+          <div>
+            <label class="block text-xs text-gray-400 mb-1">File Slug (.html)</label>
+            <input type="text" id="newPageSlugInput" placeholder="e.g. vip-catering.html" class="w-full px-3 py-2 rounded-xl bg-[#26292c] border border-[#393d41] text-xs text-white font-mono focus:outline-none focus:border-greek-gold" />
+          </div>
+          <button onclick="createNewPage()" class="w-full py-2.5 bg-greek-gold hover:bg-greek-goldHover text-greek-navyDark font-extrabold text-xs rounded-xl shadow transition">
+            Create &amp; Edit Page
+          </button>
+        </div>
+      </div>
+
+      <!-- Existing Pages List -->
+      <div class="mt-6">
+        <h4 class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Existing Pages</h4>
+        <div id="pagesListContainer" class="space-y-2 max-h-56 overflow-y-auto pr-1">
+          <!-- Rendered dynamically -->
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- 5. BLOG CMS MANAGER MODAL (Add / Edit / Remove Blog Posts)                 -->
+  <!-- ========================================================================= -->
+  <div id="blogManagerModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 hidden">
+    <div class="bg-[#26292c] border border-[#393d41] rounded-3xl max-w-4xl w-full p-6 sm:p-8 shadow-2xl max-h-[92vh] overflow-y-auto">
+      <div class="flex items-center justify-between pb-4 border-b border-[#393d41]">
+        <div>
+          <span class="text-xs font-bold text-greek-gold uppercase tracking-wider">Content Management System</span>
+          <h3 class="font-heading font-extrabold text-2xl text-white mt-0.5">Blog Articles Manager</h3>
+        </div>
+        <div class="flex items-center gap-3">
+          <button onclick="openNewPostEditor()" class="px-4 py-2 bg-greek-gold hover:bg-greek-goldHover text-greek-navyDark font-extrabold text-xs rounded-xl shadow transition">
+            + Write New Article
+          </button>
+          <button onclick="closeBlogManagerModal()" class="p-2 text-gray-400 hover:text-white rounded-lg">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Blog Editor Form View (Toggled when editing / creating) -->
+      <div id="blogEditFormContainer" class="mt-6 p-6 rounded-2xl bg-[#1e2124] border border-[#393d41] hidden">
+        <h4 id="blogFormTitle" class="text-sm font-bold text-white mb-4">Edit Article</h4>
+        <input type="hidden" id="editPostId" value="" />
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+          <div>
+            <label class="block text-xs text-gray-400 mb-1">Article Title</label>
+            <input type="text" id="postTitleInput" required class="w-full px-3 py-2.5 rounded-xl bg-[#26292c] border border-[#393d41] text-xs text-white focus:outline-none focus:border-greek-gold" />
+          </div>
+          <div>
+            <label class="block text-xs text-gray-400 mb-1">Category</label>
+            <select id="postCategoryInput" class="w-full px-3 py-2.5 rounded-xl bg-[#26292c] border border-[#393d41] text-xs text-white focus:outline-none focus:border-greek-gold">
+              <option value="Nutrition">Nutrition</option>
+              <option value="Fitness">Fitness</option>
+              <option value="Meal Prep">Meal Prep</option>
+              <option value="Recipes">Recipes</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs text-gray-400 mb-1">Author Name</label>
+            <input type="text" id="postAuthorInput" value="George the Greek" class="w-full px-3 py-2.5 rounded-xl bg-[#26292c] border border-[#393d41] text-xs text-white focus:outline-none focus:border-greek-gold" />
+          </div>
+          <div>
+            <label class="block text-xs text-gray-400 mb-1">Featured Image URL</label>
+            <div class="flex gap-2">
+              <input type="text" id="postImageInput" placeholder="images/meals/grilled-chicken.jpg" class="flex-1 px-3 py-2.5 rounded-xl bg-[#26292c] border border-[#393d41] text-xs text-white focus:outline-none focus:border-greek-gold" />
+              <button type="button" onclick="openMediaLibraryForBlog()" class="px-3 py-2 bg-greek-navy text-greek-gold text-xs font-bold rounded-xl border border-greek-gold/40">Browse</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="mb-4">
+          <label class="block text-xs text-gray-400 mb-1">Short Excerpt (Summary)</label>
+          <textarea id="postExcerptInput" rows="2" class="w-full px-3 py-2.5 rounded-xl bg-[#26292c] border border-[#393d41] text-xs text-white focus:outline-none focus:border-greek-gold"></textarea>
+        </div>
+
+        <div class="mb-4">
+          <label class="block text-xs text-gray-400 mb-1">Full Article Content (HTML allowed)</label>
+          <textarea id="postContentInput" rows="6" class="w-full px-3 py-2.5 rounded-xl bg-[#26292c] border border-[#393d41] text-xs text-white focus:outline-none focus:border-greek-gold font-mono"></textarea>
+        </div>
+
+        <div class="flex items-center justify-end gap-3 pt-4 border-t border-[#393d41]">
+          <button type="button" onclick="cancelBlogEdit()" class="px-4 py-2 rounded-xl text-xs font-semibold text-gray-400 hover:text-white">Cancel</button>
+          <button type="button" onclick="saveBlogPost()" class="px-6 py-2 rounded-xl bg-greek-gold text-greek-navyDark font-extrabold text-xs shadow hover:bg-greek-goldHover transition">Save &amp; Publish Article</button>
+        </div>
+      </div>
+
+      <!-- Posts List Table -->
+      <div class="mt-6">
+        <h4 class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-3">Published Articles (<span id="blogPostsCount">0</span>)</h4>
+        <div id="blogManagerPostsList" class="space-y-3">
+          <!-- Injected dynamically -->
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- 6. MEDIA LIBRARY MODAL (Browse & Select Photos)                            -->
+  <!-- ========================================================================= -->
+  <div id="mediaLibraryModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 hidden">
+    <div class="bg-[#26292c] border border-[#393d41] rounded-3xl max-w-4xl w-full p-6 sm:p-8 shadow-2xl max-h-[90vh] overflow-y-auto">
+      <div class="flex items-center justify-between pb-4 border-b border-[#393d41]">
+        <div>
+          <h3 class="font-heading font-extrabold text-xl text-white">Media Image Library</h3>
+          <p class="text-xs text-gray-400 mt-0.5">Select high-resolution Greek Fit Kitchen food or brand photography</p>
+        </div>
+        <button onclick="closeMediaLibraryModal()" class="p-2 text-gray-400 hover:text-white rounded-lg">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+        </button>
+      </div>
+
+      <!-- Upload Custom Image Option -->
+      <div class="mt-5 p-4 rounded-2xl bg-[#1e2124] border border-[#393d41] flex flex-col sm:flex-row items-center justify-between gap-3">
+        <div>
+          <h4 class="text-xs font-bold text-white">Upload Custom Image File</h4>
+          <p class="text-[11px] text-gray-400">Select any image from your computer to use in your section or blog post.</p>
+        </div>
+        <input type="file" id="mediaUploadFileInput" accept="image/*" onchange="handleCustomImageUpload(event)" class="text-xs text-gray-400 file:mr-3 file:py-1.5 file:px-3 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-greek-gold file:text-greek-navyDark hover:file:bg-greek-goldHover cursor-pointer" />
+      </div>
+
+      <!-- Photos Grid -->
+      <div class="mt-6 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4" id="mediaLibraryGrid">
+        <!-- Injected dynamically -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- 7. SECTION STRUCTURE PICKER MODAL                                         -->
+  <!-- ========================================================================= -->
+  <div id="sectionStructureModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 hidden">
+    <div class="bg-[#26292c] border border-[#393d41] rounded-3xl max-w-md w-full p-6 shadow-2xl text-center">
+      <h3 class="font-heading font-extrabold text-lg text-white mb-1">Select Section Structure</h3>
+      <p class="text-xs text-gray-400 mb-6">Choose how many columns your new section should contain:</p>
+
+      <div class="grid grid-cols-3 gap-3 mb-6">
+        <button onclick="confirmAddSection('1col')" class="p-4 rounded-2xl bg-[#1e2124] hover:bg-[#32363b] border border-[#393d41] hover:border-greek-gold flex flex-col items-center gap-2 group transition">
+          <div class="w-full h-12 bg-white/10 group-hover:bg-greek-gold/20 rounded-lg flex items-center justify-center text-xs text-gray-400 group-hover:text-greek-gold font-bold">100%</div>
+          <span class="text-xs text-gray-300 font-semibold">1 Column</span>
+        </button>
+
+        <button onclick="confirmAddSection('2col')" class="p-4 rounded-2xl bg-[#1e2124] hover:bg-[#32363b] border border-[#393d41] hover:border-greek-gold flex flex-col items-center gap-2 group transition">
+          <div class="w-full h-12 flex gap-1">
+            <div class="flex-1 bg-white/10 group-hover:bg-greek-gold/20 rounded-lg"></div>
+            <div class="flex-1 bg-white/10 group-hover:bg-greek-gold/20 rounded-lg"></div>
+          </div>
+          <span class="text-xs text-gray-300 font-semibold">2 Columns</span>
+        </button>
+
+        <button onclick="confirmAddSection('3col')" class="p-4 rounded-2xl bg-[#1e2124] hover:bg-[#32363b] border border-[#393d41] hover:border-greek-gold flex flex-col items-center gap-2 group transition">
+          <div class="w-full h-12 flex gap-1">
+            <div class="flex-1 bg-white/10 group-hover:bg-greek-gold/20 rounded-lg"></div>
+            <div class="flex-1 bg-white/10 group-hover:bg-greek-gold/20 rounded-lg"></div>
+            <div class="flex-1 bg-white/10 group-hover:bg-greek-gold/20 rounded-lg"></div>
+          </div>
+          <span class="text-xs text-gray-300 font-semibold">3 Columns</span>
+        </button>
+      </div>
+
+      <button onclick="closeSectionStructureModal()" class="text-xs text-gray-400 hover:text-white">Cancel</button>
+    </div>
+  </div>
+
+  <!-- Notification Toast -->
+  <div id="builderToast" class="fixed bottom-6 right-6 z-50 px-5 py-3 rounded-2xl bg-emerald-600 text-white font-bold text-xs shadow-2xl flex items-center gap-2 transition-all transform translate-y-24 opacity-0">
+    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+    <span id="builderToastMsg">Changes published successfully!</span>
+  </div>
+
+  <!-- Core Builder Logic Script -->
+  <script src="js/builder.js"></script>
+</body>
+</html>

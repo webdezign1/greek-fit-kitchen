@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+  <title>Blog &amp; Nutrition Insights | Greek Fit Kitchen Toronto</title>
+  <meta name="description" content="Expert Mediterranean diet tips, high-protein recipes, meal prep strategies, and fitness nutrition from George the Greek and the Greek Fit Kitchen team." />
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            greek: {
+              navy: '#101D3A',
+              navyDark: '#0C172E',
+              gold: '#F5C542',
+              goldHover: '#E5B432',
+              lime: '#82B82A'
+            }
+          },
+          fontFamily: {
+            heading: ['Roboto Slab', 'serif'],
+            sans: ['Roboto', 'sans-serif']
+          }
+        }
+      }
+    };
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;500;600;700;800;900&family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/customizer.css" />
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased font-sans flex flex-col min-h-screen">
+
+  <!-- ========================================================================= -->
+  <!-- 1. TOP ANNOUNCEMENT BAR & NAVIGATION                                      -->
+  <!-- ========================================================================= -->
+  <header class="bg-greek-navyDark text-white sticky top-0 z-40 border-b border-white/10 shadow-md">
+    <div class="container mx-auto px-4 h-20 flex items-center justify-between">
+      
+      <!-- Brand Logo -->
+      <a href="index.html" class="flex items-center gap-3">
+        <img src="images/brand/greek-fit-kitchen-logo.png" alt="Greek Fit Kitchen Logo" class="h-10 sm:h-12 w-auto" />
+      </a>
+
+      <!-- Desktop Navigation -->
+      <nav class="hidden md:flex items-center gap-7 text-sm font-semibold">
+        <a href="index.html" class="hover:text-greek-gold transition-colors">Home</a>
+        <a href="menu.html" class="hover:text-greek-gold transition-colors">Meal Plan</a>
+        <a href="delivery-rates.html" class="hover:text-greek-gold transition-colors">Delivery Rates</a>
+        <a href="about-us.html" class="hover:text-greek-gold transition-colors">About Us</a>
+        <a href="how-it-works.html" class="hover:text-greek-gold transition-colors">How It Works</a>
+        <a href="blog.html" class="text-greek-gold font-bold">Blog</a>
+      </nav>
+
+      <!-- Action Buttons -->
+      <div class="flex items-center gap-3">
+        <a href="builder.html" class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold rounded-lg bg-white/10 hover:bg-white/20 text-white transition border border-white/10" title="Launch Elementor Builder">
+          <span class="w-2 h-2 rounded-full bg-greek-gold"></span>
+          Elementor Builder
+        </a>
+        <a href="menu.html" class="py-2.5 px-5 rounded-xl bg-greek-gold hover:bg-greek-goldHover text-greek-navyDark font-extrabold text-xs shadow transition">
+          Order Meals
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ========================================================================= -->
+  <!-- 2. BLOG HERO SECTION                                                     -->
+  <!-- ========================================================================= -->
+  <section class="py-16 bg-greek-navy text-white relative overflow-hidden">
+    <div class="container mx-auto px-4 max-w-4xl text-center relative z-10">
+      <span class="text-xs font-extrabold uppercase tracking-widest text-greek-gold">Greek Fitness &amp; Nutrition Journal</span>
+      <h1 class="font-heading text-4xl sm:text-5xl font-extrabold text-white mt-3">
+        The Mediterranean Fuel Blog
+      </h1>
+      <p class="mt-4 text-slate-300 text-sm sm:text-base leading-relaxed max-w-2xl mx-auto">
+        Science-backed training diets, authentic olive-oil culinary wisdom, and Toronto batch-prep advice to keep you lean, fueled, and energized.
+      </p>
+
+      <!-- Category Filter Pills -->
+      <div class="mt-8 flex flex-wrap justify-center gap-2" id="blogCategoryPills">
+        <button onclick="filterBlogCategory('All')" class="blog-cat-btn px-4 py-1.5 rounded-full text-xs font-bold bg-greek-gold text-greek-navyDark shadow">All Articles</button>
+        <button onclick="filterBlogCategory('Nutrition')" class="blog-cat-btn px-4 py-1.5 rounded-full text-xs font-semibold bg-white/10 hover:bg-white/20 text-white transition">Nutrition</button>
+        <button onclick="filterBlogCategory('Fitness')" class="blog-cat-btn px-4 py-1.5 rounded-full text-xs font-semibold bg-white/10 hover:bg-white/20 text-white transition">Fitness</button>
+        <button onclick="filterBlogCategory('Meal Prep')" class="blog-cat-btn px-4 py-1.5 rounded-full text-xs font-semibold bg-white/10 hover:bg-white/20 text-white transition">Meal Prep</button>
+        <button onclick="filterBlogCategory('Recipes')" class="blog-cat-btn px-4 py-1.5 rounded-full text-xs font-semibold bg-white/10 hover:bg-white/20 text-white transition">Recipes</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================= -->
+  <!-- 3. BLOG POSTS GRID & CMS SYNC CONTAINER                                   -->
+  <!-- ========================================================================= -->
+  <main class="py-16 flex-1 bg-white">
+    <div class="container mx-auto px-4 max-w-7xl">
+      
+      <!-- Search & Controls Bar -->
+      <div class="flex flex-col sm:flex-row items-center justify-between gap-4 pb-8 border-b border-gray-100 mb-10">
+        <div>
+          <h2 class="font-heading font-extrabold text-2xl text-gray-900" id="currentCategoryHeading">All Published Insights</h2>
+          <p class="text-xs text-gray-500 mt-1">Managed live through the Elementor Visual Admin Panel</p>
+        </div>
+
+        <div class="flex items-center gap-3 w-full sm:w-auto">
+          <input 
+            type="text" 
+            id="blogSearchInput" 
+            oninput="handleBlogSearch(this.value)" 
+            placeholder="Search articles by title or topic..." 
+            class="px-4 py-2.5 rounded-xl border border-gray-200 text-xs w-full sm:w-64 focus:outline-none focus:ring-2 focus:ring-greek-gold"
+          />
+          <a href="builder.html#blog" class="px-4 py-2.5 rounded-xl bg-greek-navy text-white text-xs font-bold hover:bg-greek-navyDark flex-shrink-0 transition">
+            + Manage Posts
+          </a>
+        </div>
+      </div>
+
+      <!-- Articles Grid -->
+      <div id="blogPostsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- Rendered dynamically by blog.js / embedded script -->
+      </div>
+
+      <!-- Empty State -->
+      <div id="blogEmptyState" class="hidden text-center py-20">
+        <p class="font-heading font-bold text-xl text-gray-800">No blog posts found matching your search.</p>
+        <p class="text-sm text-gray-500 mt-2">Try searching with different keywords or reset categories.</p>
+        <button onclick="filterBlogCategory('All')" class="mt-4 px-5 py-2.5 rounded-xl bg-greek-gold text-greek-navyDark font-bold text-xs shadow">
+          View All Posts
+        </button>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- ========================================================================= -->
+  <!-- 4. ARTICLE DETAIL MODAL                                                   -->
+  <!-- ========================================================================= -->
+  <div id="articleModal" class="fixed inset-0 z-50 bg-black/75 backdrop-blur-sm flex items-center justify-center p-4 hidden">
+    <div class="bg-white rounded-3xl max-w-3xl w-full max-h-[90vh] overflow-y-auto p-6 sm:p-10 relative border border-gray-100 shadow-2xl">
+      <button onclick="closeArticleModal()" class="absolute top-5 right-5 p-2 text-gray-400 hover:text-gray-900 rounded-full hover:bg-gray-100">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+      </button>
+
+      <div id="articleModalContent">
+        <!-- Injected dynamically -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- 5. SITE FOOTER                                                            -->
+  <!-- ========================================================================= -->
+  <footer id="siteFooter" class="bg-greek-navyDark text-white border-t border-white/10">
+    <div class="container mx-auto px-4 py-16">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+        
+        <div>
+          <img src="images/brand/greek-fit-kitchen-logo.png" alt="Greek Fit Kitchen" class="h-10 w-auto mb-4" />
+          <p class="text-xs text-white/70 leading-relaxed">
+            Authentic Greek fitness meal prep designed for high-protein athletic performance and busy Toronto lifestyles.
+          </p>
+        </div>
+
+        <div>
+          <h4 class="font-heading font-bold text-sm text-greek-gold uppercase tracking-wider mb-4">Quick Navigation</h4>
+          <ul class="space-y-2.5 text-xs text-white/70">
+            <li><a href="index.html" class="hover:text-white transition-colors">Home</a></li>
+            <li><a href="menu.html" class="hover:text-white transition-colors">Meal Plan</a></li>
+            <li><a href="delivery-rates.html" class="hover:text-white transition-colors">Delivery Rates</a></li>
+            <li><a href="about-us.html" class="hover:text-white transition-colors">About Us</a></li>
+            <li><a href="blog.html" class="hover:text-white transition-colors">Fitness &amp; Diet Blog</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="font-heading font-bold text-sm text-greek-gold uppercase tracking-wider mb-4">Batch Drops</h4>
+          <p class="text-xs text-white/70"><strong>Sunday Batch:</strong> Cutoff Friday 11:59 PM EST</p>
+          <p class="text-xs text-white/70 mt-2"><strong>Wednesday Batch:</strong> Cutoff Monday 11:59 PM EST</p>
+        </div>
+
+        <div>
+          <h4 class="font-heading font-bold text-sm text-greek-gold uppercase tracking-wider mb-4">Client Portal</h4>
+          <p class="text-xs text-white/70">Want to edit pages, meals, or write new blog posts?</p>
+          <a href="builder.html" class="mt-3 inline-flex items-center gap-2 px-4 py-2 bg-greek-gold text-greek-navyDark font-extrabold text-xs rounded-xl shadow">
+            Launch Elementor CMS
+          </a>
+        </div>
+
+      </div>
+
+      <!-- Copyright row -->
+      <div class="mt-12 pt-8 border-t border-white/10 text-center text-xs text-white/50">
+        <p>&copy; 2026 Greek Fit Kitchen. All rights reserved. Minimum 6 meals per order.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ========================================================================= -->
+  <!-- BLOG ENGINE SCRIPT                                                        -->
+  <!-- ========================================================================= -->
+  <script>
+    const DEFAULT_BLOG_POSTS = [
+      {
+        id: 'post_1',
+        title: 'Why Mediterranean EVOO is the Ultimate Clean Fat for Athletes',
+        slug: 'mediterranean-evoo-ultimate-clean-fat',
+        category: 'Nutrition',
+        author: 'George the Greek',
+        date: 'November 12, 2026',
+        readTime: '4 min read',
+        image: 'images/brand/fresh-ingredients-showcase.png',
+        excerpt: 'Extra Virgin Olive Oil from Kalamata is packed with polyphenols, oleocanthal, and healthy monounsaturated fats that accelerate muscle recovery.',
+        content: `
+          <p class="text-base text-gray-700 leading-relaxed mb-4">When most gym-goers think of high-protein meal prep, they picture dry chicken and boiled rice. But in Greek athletics, olive oil has fueled warriors and Olympic contenders for thousands of years.</p>
+          <h3 class="font-heading font-bold text-xl text-gray-900 mt-6 mb-3">1. Anti-Inflammatory Oleocanthal</h3>
+          <p class="text-sm text-gray-600 leading-relaxed mb-4">First cold-pressed EVOO contains a compound called oleocanthal, which naturally dampens post-workout systemic soreness in a way similar to low-dose ibuprofen—without any strain on your liver or gut.</p>
+          <h3 class="font-heading font-bold text-xl text-gray-900 mt-6 mb-3">2. Sustained Hormonal Support</h3>
+          <p class="text-sm text-gray-600 leading-relaxed mb-4">Your endocrine system requires high-grade monounsaturated lipids to maintain healthy testosterone and hormone levels under heavy training volume. Greek Fit Kitchen exclusively sautés and dresses with imported Greek EVOO.</p>
+        `
+      },
+      {
+        id: 'post_2',
+        title: 'How to Build a 45g+ Protein Plate Without Feeling Bloated',
+        slug: 'build-45g-protein-plate-without-bloat',
+        category: 'Fitness',
+        author: 'Chef Nikos',
+        date: 'November 8, 2026',
+        readTime: '5 min read',
+        image: 'images/meals/grilled-chicken.jpg',
+        excerpt: 'Hitting your daily protein target does not mean sacrificing gut health. Learn how Greek herbs like oregano, mint, and lemon juice optimize digestion.',
+        content: `
+          <p class="text-base text-gray-700 leading-relaxed mb-4">Consuming 180g to 220g of daily protein can challenge your digestive tract if your meals are loaded with heavy synthetic marinades or dairy fillers.</p>
+          <h3 class="font-heading font-bold text-xl text-gray-900 mt-6 mb-3">The Secret: Wild Mediterranean Oregano & Lemon Juice</h3>
+          <p class="text-sm text-gray-600 leading-relaxed mb-4">Fresh lemon juice activates pepsin production in the stomach, while wild mountain oregano has potent antimicrobial and gut-soothing properties. Every Greek Fit Kitchen entree is seasoned with freshly squeezed lemons and wild oregano.</p>
+          <h3 class="font-heading font-bold text-xl text-gray-900 mt-6 mb-3">Lean Skewers vs. Processed Patties</h3>
+          <p class="text-sm text-gray-600 leading-relaxed mb-4">Whole cut, flame-grilled souvlaki skewers deliver pure whole-food protein with zero seed oils, keeping your energy stable through grueling afternoon workouts.</p>
+        `
+      },
+      {
+        id: 'post_3',
+        title: 'Sunday vs. Wednesday Drops: How Our GTA Batch Prep Guarantees Freshness',
+        slug: 'sunday-vs-wednesday-gta-batch-prep',
+        category: 'Meal Prep',
+        author: 'Operations Team',
+        date: 'November 3, 2026',
+        readTime: '3 min read',
+        image: 'images/brand/about-greek-fit.jpg',
+        excerpt: 'Never eat 6-day-old refrigerated food again. Discover why our twice-weekly batch cadence keeps Toronto athletes at peak performance.',
+        content: `
+          <p class="text-base text-gray-700 leading-relaxed mb-4">Traditional meal prep companies cook your meals on Saturday and expect you to eat them the following Friday. By day five, micronutrients have degraded and flavors turn dull.</p>
+          <h3 class="font-heading font-bold text-xl text-gray-900 mt-6 mb-3">The Greek Fit Cadence</h3>
+          <p class="text-sm text-gray-600 leading-relaxed mb-4">We split your delivery into Sunday (for Monday–Wednesday lunches) and Wednesday (for Thursday–Saturday dinners). Every bite you consume was cooked within 48 hours.</p>
+        `
+      },
+      {
+        id: 'post_4',
+        title: 'Authentic Spanakopita Spinach Pie: Macro Breakdown & Prep',
+        slug: 'authentic-spanakopita-macro-breakdown',
+        category: 'Recipes',
+        author: 'George the Greek',
+        date: 'October 28, 2026',
+        readTime: '4 min read',
+        image: 'images/meals/spinach-pie.jpg',
+        excerpt: 'Crispy flaky phyllo pastry meets mineral-dense wild spinach and creamy Greek feta. Here is why it makes an ideal athletic carbohydrate source.',
+        content: `
+          <p class="text-base text-gray-700 leading-relaxed mb-4">Who says comfort food cannot fit into a lean bulking or maintenance diet? Spanakopita offers a balance of complex carbohydrates, calcium, iron, and slow-digesting dietary fiber.</p>
+        `
+      }
+    ];
+
+    let currentCategory = 'All';
+    let searchQuery = '';
+
+    function getBlogPosts() {
+      const stored = localStorage.getItem('gfk_builder_blog_posts');
+      if (stored) {
+        try {
+          const parsed = JSON.parse(stored);
+          if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+        } catch (e) {
+          console.error('Error loading stored blog posts', e);
+        }
+      }
+      localStorage.setItem('gfk_builder_blog_posts', JSON.stringify(DEFAULT_BLOG_POSTS));
+      return DEFAULT_BLOG_POSTS;
+    }
+
+    function renderBlogPosts() {
+      const posts = getBlogPosts();
+      const grid = document.getElementById('blogPostsGrid');
+      const emptyState = document.getElementById('blogEmptyState');
+      if (!grid) return;
+
+      const filtered = posts.filter(post => {
+        const matchesCat = currentCategory === 'All' || post.category.toLowerCase() === currentCategory.toLowerCase();
+        const matchesQuery = !searchQuery || 
+          post.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
+          (post.excerpt && post.excerpt.toLowerCase().includes(searchQuery.toLowerCase())) ||
+          (post.category && post.category.toLowerCase().includes(searchQuery.toLowerCase()));
+        return matchesCat && matchesQuery;
+      });
+
+      if (filtered.length === 0) {
+        grid.innerHTML = '';
+        if (emptyState) emptyState.classList.remove('hidden');
+        return;
+      }
+
+      if (emptyState) emptyState.classList.add('hidden');
+
+      grid.innerHTML = filtered.map(post => `
+        <article class="bg-white rounded-3xl border border-gray-200 overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col group">
+          <div class="relative h-56 overflow-hidden bg-gray-100">
+            <img 
+              src="${post.image}" 
+              alt="${post.title}" 
+              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+              onerror="this.src='images/brand/fresh-ingredients-showcase.png'"
+            />
+            <span class="absolute top-4 left-4 px-3 py-1 rounded-full text-xs font-extrabold bg-greek-navy text-greek-gold uppercase tracking-wider shadow">
+              ${post.category || 'Article'}
+            </span>
+          </div>
+
+          <div class="p-6 flex-1 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center gap-3 text-xs text-gray-400 mb-2.5">
+                <span>${post.date}</span>
+                <span>•</span>
+                <span>${post.readTime || '4 min read'}</span>
+                <span>•</span>
+                <span class="text-gray-600 font-semibold">${post.author || 'Greek Fit Team'}</span>
+              </div>
+              <h3 class="font-heading font-extrabold text-xl text-gray-900 group-hover:text-greek-gold transition-colors leading-snug">
+                ${post.title}
+              </h3>
+              <p class="mt-3 text-xs text-gray-500 leading-relaxed line-clamp-3">
+                ${post.excerpt || ''}
+              </p>
+            </div>
+
+            <div class="mt-6 pt-4 border-t border-gray-100 flex items-center justify-between">
+              <button onclick="openArticleModal('${post.id}')" class="text-xs font-bold text-greek-navy hover:text-greek-gold transition flex items-center gap-1.5">
+                Read Full Article →
+              </button>
+              <a href="builder.html#blog" class="text-[11px] text-gray-400 hover:text-gray-700 underline" title="Edit in Elementor CMS">
+                Edit
+              </a>
+            </div>
+          </div>
+        </article>
+      `).join('');
+    }
+
+    function filterBlogCategory(cat) {
+      currentCategory = cat;
+      const heading = document.getElementById('currentCategoryHeading');
+      if (heading) heading.innerText = cat === 'All' ? 'All Published Insights' : `${cat} Articles`;
+
+      document.querySelectorAll('.blog-cat-btn').forEach(btn => {
+        if (btn.innerText.toLowerCase() === cat.toLowerCase() || (cat === 'All' && btn.innerText.includes('All'))) {
+          btn.className = 'blog-cat-btn px-4 py-1.5 rounded-full text-xs font-bold bg-greek-gold text-greek-navyDark shadow';
+        } else {
+          btn.className = 'blog-cat-btn px-4 py-1.5 rounded-full text-xs font-semibold bg-white/10 hover:bg-white/20 text-white transition';
+        }
+      });
+
+      renderBlogPosts();
+    }
+
+    function handleBlogSearch(query) {
+      searchQuery = (query || '').trim();
+      renderBlogPosts();
+    }
+
+    function openArticleModal(id) {
+      const posts = getBlogPosts();
+      const post = posts.find(p => p.id === id);
+      if (!post) return;
+
+      const modal = document.getElementById('articleModal');
+      const content = document.getElementById('articleModalContent');
+      if (!modal || !content) return;
+
+      content.innerHTML = `
+        <div class="relative h-64 sm:h-80 -mx-6 sm:-mx-10 -mt-6 sm:-mt-10 mb-6 overflow-hidden bg-gray-100">
+          <img src="${post.image}" alt="${post.title}" class="w-full h-full object-cover" onerror="this.src='images/brand/fresh-ingredients-showcase.png'" />
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+          <div class="absolute bottom-6 left-6 right-6 text-white">
+            <span class="px-3 py-1 rounded-full text-xs font-extrabold bg-greek-gold text-greek-navyDark uppercase tracking-wider">${post.category}</span>
+            <h2 class="font-heading font-extrabold text-2xl sm:text-3xl text-white mt-2 leading-snug">${post.title}</h2>
+            <div class="flex items-center gap-3 text-xs text-slate-300 mt-2">
+              <span>By ${post.author}</span>
+              <span>•</span>
+              <span>${post.date}</span>
+              <span>•</span>
+              <span>${post.readTime}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="prose max-w-none text-gray-700 text-sm leading-relaxed">
+          ${post.content || `<p>${post.excerpt}</p>`}
+        </div>
+
+        <div class="mt-8 pt-6 border-t border-gray-100 flex items-center justify-between">
+          <a href="menu.html" class="px-5 py-2.5 rounded-xl bg-greek-gold text-greek-navyDark font-extrabold text-xs shadow hover:bg-greek-goldHover transition">
+            Explore Greek Fit Menu
+          </a>
+          <button onclick="closeArticleModal()" class="px-4 py-2 border border-gray-200 text-gray-600 rounded-xl text-xs font-bold hover:bg-gray-50 transition">
+            Close
+          </button>
+        </div>
+      `;
+
+      modal.classList.remove('hidden');
+    }
+
+    function closeArticleModal() {
+      const modal = document.getElementById('articleModal');
+      if (modal) modal.classList.add('hidden');
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      renderBlogPosts();
+    });
+  </script>
+</body>
+</html>

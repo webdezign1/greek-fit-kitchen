@@ -2003,6 +2003,29 @@ function renderAdminDashboardTab(container) {
         </div>
       </div>
 
+      <!-- Elementor Visual Builder Studio Banner -->
+      <div class="p-6 bg-gradient-to-r from-greek-navyDark via-greek-navy to-[#1a2c5b] text-white rounded-3xl shadow-xl border border-greek-gold/40 flex flex-col md:flex-row items-center justify-between gap-6">
+        <div class="space-y-1.5 text-center md:text-left">
+          <div class="flex items-center justify-center md:justify-start gap-2">
+            <span class="w-6 h-6 rounded bg-greek-gold text-greek-navyDark font-black text-xs flex items-center justify-center">E</span>
+            <span class="text-xs font-bold text-greek-gold uppercase tracking-wider">Visual Website Studio</span>
+          </div>
+          <h3 class="font-heading font-extrabold text-2xl text-white">Elementor Visual Page Builder &amp; Blog CMS</h3>
+          <p class="text-xs text-slate-300 max-w-xl">
+            Visually edit text and photos directly on the live website, add or remove sections, reorder elements, manage custom pages, and publish blog articles just like Elementor.
+          </p>
+        </div>
+        <div class="flex items-center gap-3 flex-shrink-0">
+          <a href="builder.html" class="px-6 py-3.5 rounded-xl bg-greek-gold hover:bg-greek-goldHover text-greek-navyDark font-extrabold text-xs shadow-lg transition flex items-center gap-2">
+            <span>Launch Elementor Builder</span>
+            <span>→</span>
+          </a>
+          <a href="builder.html#blog" class="px-4 py-3.5 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold text-xs transition border border-white/20">
+            Blog CMS
+          </a>
+        </div>
+      </div>
+
       <!-- Popular Meals & Delivery Breakdown -->
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div class="p-6 bg-white rounded-2xl border border-gray-200 shadow-sm">
