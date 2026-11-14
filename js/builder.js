@@ -1527,17 +1527,17 @@
           <button onclick="duplicateSection('sec_about_story')" class="p-1 hover:bg-[#393d41] rounded text-xs text-gray-300" title="Duplicate">❐</button>
           <button onclick="deleteSection('sec_about_story')" class="p-1 hover:bg-red-900 rounded text-xs text-red-400" title="Delete">🗑</button>
         </div>
-        <div class="max-w-4xl mx-auto bg-slate-50 rounded-3xl p-8 sm:p-12 border border-gray-200 space-y-6 text-gray-700 leading-relaxed text-sm">
-          <h2 class="font-heading font-extrabold text-2xl sm:text-3xl text-gray-900" contenteditable="true">
+        <div class="builder-element max-w-4xl mx-auto bg-slate-50 rounded-3xl p-8 sm:p-12 border border-gray-200 space-y-6 text-gray-700 leading-relaxed text-sm transition" data-element-id="el_ab_story_card">
+          <h2 class="builder-element font-heading font-extrabold text-2xl sm:text-3xl text-gray-900" data-element-id="el_ab_story_h2" contenteditable="true">
             "Greek Food is Nature's Original Fitness Diet"
           </h2>
-          <p contenteditable="true">
+          <p class="builder-element" data-element-id="el_ab_story_p1" contenteditable="true">
             Growing up in a traditional Greek family, every single meal was built around three non-negotiables: fresh lean proteins, cold-pressed extra virgin olive oil from ancient olive groves, and wild mountain herbs hand-picked under the Mediterranean sun.
           </p>
-          <p contenteditable="true">
-            When founder <strong>George the Greek</strong> became dedicated to fitness and athletic training in Toronto, he experienced the same frustration so many athletes and busy professionals face: conventional fitness meal prep was dry, bland, repetitive, and cooked with cheap seed oils that caused systemic inflammation.
+          <p class="builder-element" data-element-id="el_ab_story_p2" contenteditable="true">
+            When founder <strong class="text-gray-900">George the Greek</strong> became dedicated to fitness and athletic training in Toronto, he experienced the same frustration so many athletes and busy professionals face: conventional fitness meal prep was dry, bland, repetitive, and cooked with cheap seed oils that caused systemic inflammation.
           </p>
-          <p contenteditable="true">
+          <p class="builder-element" data-element-id="el_ab_story_p3" contenteditable="true">
             In partnership with our state-of-the-art Etobicoke commercial kitchen facility (3575 Lake Shore Blvd W), Greek Fit Kitchen was created to bring culinary excitement back to performance eating.
           </p>
         </div>
@@ -1552,17 +1552,17 @@
           <button onclick="deleteSection('sec_about_stats')" class="p-1 hover:bg-red-900 rounded text-xs text-red-400" title="Delete">🗑</button>
         </div>
         <div class="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
-          <div class="p-6 rounded-2xl bg-gray-50 border border-gray-100">
-            <span class="font-heading font-extrabold text-3xl text-[#F5C542]">100%</span>
-            <span class="block text-xs text-gray-500 mt-1">Extra Virgin Olive Oil (Zero Seed Oils)</span>
+          <div class="builder-element p-6 rounded-2xl bg-gray-50 border border-gray-100 transition shadow-sm" data-element-id="el_ab_stat1">
+            <span class="builder-element font-heading font-extrabold text-3xl text-[#F5C542] block" data-element-id="el_ab_stat1_num" contenteditable="true">100%</span>
+            <span class="builder-element block text-xs text-gray-500 mt-1" data-element-id="el_ab_stat1_lbl" contenteditable="true">Extra Virgin Olive Oil (Zero Seed Oils)</span>
           </div>
-          <div class="p-6 rounded-2xl bg-gray-50 border border-gray-100">
-            <span class="font-heading font-extrabold text-3xl text-emerald-600">40g+</span>
-            <span class="block text-xs text-gray-500 mt-1">Average Protein Per Dish</span>
+          <div class="builder-element p-6 rounded-2xl bg-gray-50 border border-gray-100 transition shadow-sm" data-element-id="el_ab_stat2">
+            <span class="builder-element font-heading font-extrabold text-3xl text-emerald-600 block" data-element-id="el_ab_stat2_num" contenteditable="true">40g+</span>
+            <span class="builder-element block text-xs text-gray-500 mt-1" data-element-id="el_ab_stat2_lbl" contenteditable="true">Average Protein Per Dish</span>
           </div>
-          <div class="p-6 rounded-2xl bg-gray-50 border border-gray-100">
-            <span class="font-heading font-extrabold text-3xl text-[#101D3A]">2x</span>
-            <span class="block text-xs text-gray-500 mt-1">Weekly Fresh Batch Drops</span>
+          <div class="builder-element p-6 rounded-2xl bg-gray-50 border border-gray-100 transition shadow-sm" data-element-id="el_ab_stat3">
+            <span class="builder-element font-heading font-extrabold text-3xl text-[#101D3A] block" data-element-id="el_ab_stat3_num" contenteditable="true">2x</span>
+            <span class="builder-element block text-xs text-gray-500 mt-1" data-element-id="el_ab_stat3_lbl" contenteditable="true">Weekly Fresh Batch Drops</span>
           </div>
         </div>
       </section>
@@ -1576,25 +1576,37 @@
           <button onclick="deleteSection('sec_about_commitments')" class="p-1 hover:bg-red-900 rounded text-xs text-red-400" title="Delete">🗑</button>
         </div>
         <div class="max-w-4xl mx-auto">
-          <h3 class="font-heading font-bold text-2xl text-gray-900 mb-6" contenteditable="true">
+          <h3 class="builder-element font-heading font-bold text-2xl text-gray-900 mb-6" data-element-id="el_ab_com_title" contenteditable="true">
             Our Four Kitchen Commitments
           </h3>
           <ul class="space-y-4 text-xs text-gray-700">
-            <li class="flex items-start gap-3 p-4 bg-white rounded-xl border border-gray-200">
-              <span class="w-6 h-6 rounded-lg bg-[#F5C542] text-[#0C172E] font-bold flex items-center justify-center flex-shrink-0">1</span>
-              <div><strong class="text-sm text-gray-900 block">Never Frozen:</strong> We batch-cook twice a week (Sundays &amp; Wednesdays). Your meals are never frozen in a commercial freezer or thawed before delivery.</div>
+            <li class="builder-element flex items-start gap-3 p-4 bg-white rounded-xl border border-gray-200 shadow-sm transition" data-element-id="el_ab_com1">
+              <span class="builder-element w-6 h-6 rounded-lg bg-[#F5C542] text-[#0C172E] font-bold flex items-center justify-center flex-shrink-0" data-element-id="el_ab_com1_num" contenteditable="true">1</span>
+              <div class="flex-1">
+                <strong class="builder-element text-sm text-gray-900 block" data-element-id="el_ab_com1_head" contenteditable="true">Never Frozen:</strong>
+                <span class="builder-element block mt-0.5 text-gray-600" data-element-id="el_ab_com1_body" contenteditable="true">We batch-cook twice a week (Sundays &amp; Wednesdays). Your meals are never frozen in a commercial freezer or thawed before delivery.</span>
+              </div>
             </li>
-            <li class="flex items-start gap-3 p-4 bg-white rounded-xl border border-gray-200">
-              <span class="w-6 h-6 rounded-lg bg-[#F5C542] text-[#0C172E] font-bold flex items-center justify-center flex-shrink-0">2</span>
-              <div><strong class="text-sm text-gray-900 block">Local Ontario Poultry &amp; AAA Beef:</strong> We partner with local butchers for lean breast tenderloins, fresh Atlantic salmon fillets, and Canadian AAA sirloin cuts.</div>
+            <li class="builder-element flex items-start gap-3 p-4 bg-white rounded-xl border border-gray-200 shadow-sm transition" data-element-id="el_ab_com2">
+              <span class="builder-element w-6 h-6 rounded-lg bg-[#F5C542] text-[#0C172E] font-bold flex items-center justify-center flex-shrink-0" data-element-id="el_ab_com2_num" contenteditable="true">2</span>
+              <div class="flex-1">
+                <strong class="builder-element text-sm text-gray-900 block" data-element-id="el_ab_com2_head" contenteditable="true">Local Ontario Poultry &amp; AAA Beef:</strong>
+                <span class="builder-element block mt-0.5 text-gray-600" data-element-id="el_ab_com2_body" contenteditable="true">We partner with local butchers for lean breast tenderloins, fresh Atlantic salmon fillets, and Canadian AAA sirloin cuts.</span>
+              </div>
             </li>
-            <li class="flex items-start gap-3 p-4 bg-white rounded-xl border border-gray-200">
-              <span class="w-6 h-6 rounded-lg bg-[#F5C542] text-[#0C172E] font-bold flex items-center justify-center flex-shrink-0">3</span>
-              <div><strong class="text-sm text-gray-900 block">Custom Starches &amp; Veggies:</strong> Every dish comes with 2 sides chosen by you. We never lock you into fixed carb or vegetable ratios.</div>
+            <li class="builder-element flex items-start gap-3 p-4 bg-white rounded-xl border border-gray-200 shadow-sm transition" data-element-id="el_ab_com3">
+              <span class="builder-element w-6 h-6 rounded-lg bg-[#F5C542] text-[#0C172E] font-bold flex items-center justify-center flex-shrink-0" data-element-id="el_ab_com3_num" contenteditable="true">3</span>
+              <div class="flex-1">
+                <strong class="builder-element text-sm text-gray-900 block" data-element-id="el_ab_com3_head" contenteditable="true">Custom Starches &amp; Veggies:</strong>
+                <span class="builder-element block mt-0.5 text-gray-600" data-element-id="el_ab_com3_body" contenteditable="true">Every dish comes with 2 sides chosen by you. We never lock you into fixed carb or vegetable ratios.</span>
+              </div>
             </li>
-            <li class="flex items-start gap-3 p-4 bg-white rounded-xl border border-gray-200">
-              <span class="w-6 h-6 rounded-lg bg-[#F5C542] text-[#0C172E] font-bold flex items-center justify-center flex-shrink-0">4</span>
-              <div><strong class="text-sm text-gray-900 block">Eco-Friendly Recyclable Packaging:</strong> Packed in BPA-free, leak-resistant, microwave-safe and oven-safe recyclable trays.</div>
+            <li class="builder-element flex items-start gap-3 p-4 bg-white rounded-xl border border-gray-200 shadow-sm transition" data-element-id="el_ab_com4">
+              <span class="builder-element w-6 h-6 rounded-lg bg-[#F5C542] text-[#0C172E] font-bold flex items-center justify-center flex-shrink-0" data-element-id="el_ab_com4_num" contenteditable="true">4</span>
+              <div class="flex-1">
+                <strong class="builder-element text-sm text-gray-900 block" data-element-id="el_ab_com4_head" contenteditable="true">Eco-Friendly Recyclable Packaging:</strong>
+                <span class="builder-element block mt-0.5 text-gray-600" data-element-id="el_ab_com4_body" contenteditable="true">Packed in BPA-free, leak-resistant, microwave-safe and oven-safe recyclable trays.</span>
+              </div>
             </li>
           </ul>
         </div>
@@ -1610,9 +1622,9 @@
           <button onclick="duplicateSection('sec_how_hero')" class="p-1 hover:bg-[#393d41] rounded text-xs text-gray-300" title="Duplicate">❐</button>
           <button onclick="deleteSection('sec_how_hero')" class="p-1 hover:bg-red-900 rounded text-xs text-red-400" title="Delete">🗑</button>
         </div>
-        <span class="builder-element text-xs font-extrabold text-[#F5C542] uppercase tracking-widest" contenteditable="true">SIMPLE 3-STEP PROCESS</span>
-        <h1 class="builder-element font-heading text-4xl sm:text-5xl font-black mt-2 mb-3" contenteditable="true">How Greek Fit Works</h1>
-        <p class="builder-element text-slate-300 text-sm max-w-lg mx-auto" contenteditable="true">Freshly cooked twice weekly in Etobicoke. Zero freezing, simple reheating, delicious athletic eating.</p>
+        <span class="builder-element text-xs font-extrabold text-[#F5C542] uppercase tracking-widest" data-element-id="el_how_tag" contenteditable="true">SIMPLE 3-STEP PROCESS</span>
+        <h1 class="builder-element font-heading text-4xl sm:text-5xl font-black mt-2 mb-3" data-element-id="el_how_title" contenteditable="true">How Greek Fit Works</h1>
+        <p class="builder-element text-slate-300 text-sm max-w-lg mx-auto" data-element-id="el_how_sub" contenteditable="true">Freshly cooked twice weekly in Etobicoke. Zero freezing, simple reheating, delicious athletic eating.</p>
       </section>
 
       <!-- Section 2: 3-Step Visual Process -->
@@ -1624,24 +1636,24 @@
           <button onclick="deleteSection('sec_how_steps')" class="p-1 hover:bg-red-900 rounded text-xs text-red-400" title="Delete">🗑</button>
         </div>
         <div class="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div class="p-8 rounded-3xl bg-slate-50 border border-gray-200 text-center">
-            <span class="w-12 h-12 rounded-xl bg-[#F5C542] text-[#0C172E] font-heading font-black text-xl flex items-center justify-center mx-auto mb-4">1</span>
-            <h3 class="font-heading font-bold text-xl text-[#101D3A]" contenteditable="true">Order 6+ Meals</h3>
-            <p class="mt-2 text-xs text-gray-600 leading-relaxed" contenteditable="true">
+          <div class="builder-element p-8 rounded-3xl bg-slate-50 border border-gray-200 text-center transition shadow-sm" data-element-id="el_how_step1">
+            <span class="builder-element w-12 h-12 rounded-xl bg-[#F5C542] text-[#0C172E] font-heading font-black text-xl flex items-center justify-center mx-auto mb-4" data-element-id="el_how_num1" contenteditable="true">1</span>
+            <h3 class="builder-element font-heading font-bold text-xl text-[#101D3A]" data-element-id="el_how_head1" contenteditable="true">Order 6+ Meals</h3>
+            <p class="builder-element mt-2 text-xs text-gray-600 leading-relaxed" data-element-id="el_how_desc1" contenteditable="true">
               Select at least 6 entrees. For every entree, pick your favorite clean starch and vegetable side.
             </p>
           </div>
-          <div class="p-8 rounded-3xl bg-slate-50 border border-gray-200 text-center">
-            <span class="w-12 h-12 rounded-xl bg-emerald-600 text-white font-heading font-black text-xl flex items-center justify-center mx-auto mb-4">2</span>
-            <h3 class="font-heading font-bold text-xl text-[#101D3A]" contenteditable="true">Sunday or Wed Drop</h3>
-            <p class="mt-2 text-xs text-gray-600 leading-relaxed" contenteditable="true">
+          <div class="builder-element p-8 rounded-3xl bg-slate-50 border border-gray-200 text-center transition shadow-sm" data-element-id="el_how_step2">
+            <span class="builder-element w-12 h-12 rounded-xl bg-emerald-600 text-white font-heading font-black text-xl flex items-center justify-center mx-auto mb-4" data-element-id="el_how_num2" contenteditable="true">2</span>
+            <h3 class="builder-element font-heading font-bold text-xl text-[#101D3A]" data-element-id="el_how_head2" contenteditable="true">Sunday or Wed Drop</h3>
+            <p class="builder-element mt-2 text-xs text-gray-600 leading-relaxed" data-element-id="el_how_desc2" contenteditable="true">
               Choose your preferred batch day or free Etobicoke kitchen pickup. Orders arrive chilled in thermal cooler bags with ice packs.
             </p>
           </div>
-          <div class="p-8 rounded-3xl bg-slate-50 border border-gray-200 text-center">
-            <span class="w-12 h-12 rounded-xl bg-[#101D3A] text-white font-heading font-black text-xl flex items-center justify-center mx-auto mb-4">3</span>
-            <h3 class="font-heading font-bold text-xl text-[#101D3A]" contenteditable="true">Heat &amp; Enjoy</h3>
-            <p class="mt-2 text-xs text-gray-600 leading-relaxed" contenteditable="true">
+          <div class="builder-element p-8 rounded-3xl bg-slate-50 border border-gray-200 text-center transition shadow-sm" data-element-id="el_how_step3">
+            <span class="builder-element w-12 h-12 rounded-xl bg-[#101D3A] text-white font-heading font-black text-xl flex items-center justify-center mx-auto mb-4" data-element-id="el_how_num3" contenteditable="true">3</span>
+            <h3 class="builder-element font-heading font-bold text-xl text-[#101D3A]" data-element-id="el_how_head3" contenteditable="true">Heat &amp; Enjoy</h3>
+            <p class="builder-element mt-2 text-xs text-gray-600 leading-relaxed" data-element-id="el_how_desc3" contenteditable="true">
               Heat 2–3 minutes in the microwave or 10 minutes in the oven. No grocery trips, no cooking, zero pan cleanup.
             </p>
           </div>
@@ -1656,34 +1668,34 @@
           <button onclick="duplicateSection('sec_how_heating')" class="p-1 hover:bg-[#393d41] rounded text-xs text-gray-300" title="Duplicate">❐</button>
           <button onclick="deleteSection('sec_how_heating')" class="p-1 hover:bg-red-900 rounded text-xs text-red-400" title="Delete">🗑</button>
         </div>
-        <div class="max-w-4xl mx-auto p-8 rounded-3xl bg-white border border-gray-200 shadow-sm">
-          <span class="text-[#F5C542] uppercase tracking-wider font-bold text-xs">Culinary Guidelines</span>
-          <h2 class="font-heading font-extrabold text-2xl sm:text-3xl text-gray-900 mt-1 mb-6" contenteditable="true">
+        <div class="builder-element max-w-4xl mx-auto p-8 rounded-3xl bg-white border border-gray-200 shadow-sm transition" data-element-id="el_how_heating_card">
+          <span class="builder-element text-[#F5C542] uppercase tracking-wider font-bold text-xs block" data-element-id="el_how_guide_tag" contenteditable="true">Culinary Guidelines</span>
+          <h2 class="builder-element font-heading font-extrabold text-2xl sm:text-3xl text-gray-900 mt-1 mb-6" data-element-id="el_how_guide_title" contenteditable="true">
             Heating &amp; Fridge Storage
           </h2>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div class="p-6 rounded-2xl bg-gray-50 border border-gray-200">
-              <h4 class="font-heading font-bold text-lg text-gray-900 flex items-center gap-2" contenteditable="true">
+            <div class="builder-element p-6 rounded-2xl bg-gray-50 border border-gray-200 transition" data-element-id="el_how_micro_card">
+              <h4 class="builder-element font-heading font-bold text-lg text-gray-900 flex items-center gap-2" data-element-id="el_how_micro_title" contenteditable="true">
                 <span>♨️</span> Microwave Instructions
               </h4>
-              <p class="mt-2 text-xs text-gray-600 leading-relaxed" contenteditable="true">
+              <p class="builder-element mt-2 text-xs text-gray-600 leading-relaxed" data-element-id="el_how_micro_desc" contenteditable="true">
                 1. Remove the clear lid or lift one corner to vent steam.<br />
                 2. Microwave on HIGH for <strong>2 to 3 minutes</strong>.<br />
                 3. Let rest 1 minute before removing. Fluff rice or potatoes and enjoy!
               </p>
             </div>
-            <div class="p-6 rounded-2xl bg-gray-50 border border-gray-200">
-              <h4 class="font-heading font-bold text-lg text-gray-900 flex items-center gap-2" contenteditable="true">
+            <div class="builder-element p-6 rounded-2xl bg-gray-50 border border-gray-200 transition" data-element-id="el_how_oven_card">
+              <h4 class="builder-element font-heading font-bold text-lg text-gray-900 flex items-center gap-2" data-element-id="el_how_oven_title" contenteditable="true">
                 <span>🔥</span> Oven Reheating
               </h4>
-              <p class="mt-2 text-xs text-gray-600 leading-relaxed" contenteditable="true">
+              <p class="builder-element mt-2 text-xs text-gray-600 leading-relaxed" data-element-id="el_how_oven_desc" contenteditable="true">
                 1. Preheat oven to <strong>350°F (175°C)</strong>.<br />
                 2. Transfer meal contents to an oven-safe baking dish.<br />
                 3. Cover loosely with foil and heat for <strong>10 to 12 minutes</strong> until piping hot.
               </p>
             </div>
           </div>
-          <div class="mt-6 p-4 rounded-xl bg-[#F5C542]/10 border border-[#F5C542]/30 text-xs text-gray-700" contenteditable="true">
+          <div class="builder-element mt-6 p-4 rounded-xl bg-[#F5C542]/10 border border-[#F5C542]/30 text-xs text-gray-700" data-element-id="el_how_fridge_note" contenteditable="true">
             <strong>Fridge Shelf Life:</strong> Meals stay perfectly fresh in your refrigerator for up to <strong>5 to 6 days</strong> from the delivery batch day. You can also freeze meals upon arrival for up to 30 days.
           </div>
         </div>
@@ -1698,21 +1710,21 @@
           <button onclick="deleteSection('sec_how_faq')" class="p-1 hover:bg-red-900 rounded text-xs text-red-400" title="Delete">🗑</button>
         </div>
         <div class="max-w-4xl mx-auto">
-          <h2 class="font-heading font-extrabold text-2xl sm:text-3xl text-gray-900 mb-6 text-center" contenteditable="true">
+          <h2 class="builder-element font-heading font-extrabold text-2xl sm:text-3xl text-gray-900 mb-6 text-center" data-element-id="el_how_faq_title" contenteditable="true">
             Frequently Asked Questions
           </h2>
           <div class="space-y-4 text-xs text-gray-600">
-            <div class="p-5 rounded-2xl bg-gray-50 border border-gray-200">
-              <h4 class="font-bold text-gray-900 text-sm mb-1" contenteditable="true">Why is there a 6-meal minimum?</h4>
-              <p contenteditable="true">Batch cooking allows us to source premium Ontario meats, genuine Greek Dodoni feta, and cold-pressed Kalamata olive oil at optimal freshness and volume price points. The 6-meal minimum ensures batch integrity and gives you a structured week of meals starting at just $59.94 CAD.</p>
+            <div class="builder-element p-5 rounded-2xl bg-gray-50 border border-gray-200" data-element-id="el_how_faq_q1">
+              <h4 class="builder-element font-bold text-gray-900 text-sm mb-1" data-element-id="el_how_faq_q1_h" contenteditable="true">Why is there a 6-meal minimum?</h4>
+              <p class="builder-element" data-element-id="el_how_faq_q1_p" contenteditable="true">Batch cooking allows us to source premium Ontario meats, genuine Greek Dodoni feta, and cold-pressed Kalamata olive oil at optimal freshness and volume price points. The 6-meal minimum ensures batch integrity and gives you a structured week of meals starting at just $59.94 CAD.</p>
             </div>
-            <div class="p-5 rounded-2xl bg-gray-50 border border-gray-200">
-              <h4 class="font-bold text-gray-900 text-sm mb-1" contenteditable="true">How does the 10% volume discount work?</h4>
-              <p contenteditable="true">When you customize 7 or more meals, a 10% volume savings discount is automatically applied to your entire order at checkout. No promo code required.</p>
+            <div class="builder-element p-5 rounded-2xl bg-gray-50 border border-gray-200" data-element-id="el_how_faq_q2">
+              <h4 class="builder-element font-bold text-gray-900 text-sm mb-1" data-element-id="el_how_faq_q2_h" contenteditable="true">How does the 10% volume discount work?</h4>
+              <p class="builder-element" data-element-id="el_how_faq_q2_p" contenteditable="true">When you customize 7 or more meals, a 10% volume savings discount is automatically applied to your entire order at checkout. No promo code required.</p>
             </div>
-            <div class="p-5 rounded-2xl bg-gray-50 border border-gray-200">
-              <h4 class="font-bold text-gray-900 text-sm mb-1" contenteditable="true">What are your batch order cutoffs?</h4>
-              <p contenteditable="true">For Sunday batch delivery, order cutoff is Friday 11:59 PM EST. For Wednesday batch delivery, cutoff is Monday 11:59 PM EST.</p>
+            <div class="builder-element p-5 rounded-2xl bg-gray-50 border border-gray-200" data-element-id="el_how_faq_q3">
+              <h4 class="builder-element font-bold text-gray-900 text-sm mb-1" data-element-id="el_how_faq_q3_h" contenteditable="true">What are your batch order cutoffs?</h4>
+              <p class="builder-element" data-element-id="el_how_faq_q3_p" contenteditable="true">For Sunday batch delivery, order cutoff is Friday 11:59 PM EST. For Wednesday batch delivery, cutoff is Monday 11:59 PM EST.</p>
             </div>
           </div>
         </div>
@@ -1910,8 +1922,8 @@
       (pageKey === 'home' && (!saved.includes('featuredMeals') || !saved.includes('howItWorks') || !saved.includes('deliverySection') || !saved.includes('el_batch_card') || !saved.includes('el_rate_card'))) ||
       (pageKey === 'menu' && !saved.includes('sec_menu_grid')) ||
       (pageKey === 'delivery' && !saved.includes('sec_del_calc')) ||
-      (pageKey === 'about' && !saved.includes('sec_about_photo')) ||
-      (pageKey === 'howitworks' && !saved.includes('sec_how_heating')) ||
+      (pageKey === 'about' && (!saved.includes('sec_about_photo') || !saved.includes('el_ab_story_card') || !saved.includes('el_ab_stat1') || !saved.includes('el_ab_com1'))) ||
+      (pageKey === 'howitworks' && (!saved.includes('sec_how_heating') || !saved.includes('el_how_step1') || !saved.includes('el_how_heating_card'))) ||
       (pageKey === 'blog' && !saved.includes('sec_b_pills'))
     );
 
