@@ -427,7 +427,29 @@
   };
 
   // --- Page Management & Switching ---
-  window.switchActivePage = function (pageKey) {
+  const SLUG_MAP = {
+    'home': 'home',
+    'index': 'home',
+    'meal-plans': 'menu',
+    'meal-plan': 'menu',
+    'menu': 'menu',
+    'about': 'about',
+    'about-us': 'about',
+    'delivery': 'delivery',
+    'delivery-rates': 'delivery',
+    'howitworks': 'howitworks',
+    'how-it-works': 'howitworks',
+    'blog': 'blog'
+  };
+
+  function normalizeSlug(slug) {
+    if (!slug) return 'home';
+    const clean = slug.toLowerCase().trim();
+    return SLUG_MAP[clean] || clean;
+  }
+
+  window.switchActivePage = function (rawKey) {
+    const pageKey = normalizeSlug(rawKey);
     activePageKey = pageKey;
     const selector = document.getElementById('pageSelector');
     if (selector) selector.value = pageKey;
@@ -442,7 +464,8 @@
     showToast(`Switched editor to: ${pageKey}`);
   };
 
-  function loadAndRenderPage(pageKey) {
+  function loadAndRenderPage(rawKey) {
+    const pageKey = normalizeSlug(rawKey);
     const container = document.getElementById('livePageContainer');
     if (!container) return;
 
@@ -911,7 +934,7 @@
       }
     });
 
-    container.className = `bg-white text-slate-800 transition-all duration-300 min-h-full rounded-2xl shadow-2xl relative overflow-hidden viewport-${mode}`;
+    container.className = `bg-white text-slate-800 transition-all duration-300 min-h-full h-auto rounded-2xl shadow-2xl relative mb-16 viewport-${mode}`;
     showToast(`Previewing ${mode} layout`);
   };
 
@@ -1346,7 +1369,7 @@
 
       return `
         <div class="p-2 bg-[#1e2124] rounded-lg border border-[#393d41] space-y-1">
-          <div onclick="document.querySelector('[data-section-id=\\'${secId}\\']')?.scrollIntoView({behavior:'smooth'}); selectSection(document.querySelector('[data-section-id=\\'${secId}\\']'));" class="flex items-center gap-1.5 font-bold text-greek-gold cursor-pointer hover:text-white">
+          <div onclick="document.querySelector('[data-section-id=\\'${secId}\\']')?.scrollIntoView({behavior:'smooth', block:'center'}); selectSection(document.querySelector('[data-section-id=\\'${secId}\\']'));" class="flex items-center gap-1.5 font-bold text-greek-gold cursor-pointer hover:text-white">
             <span>📦</span>
             <span class="truncate">${title}</span>
           </div>
@@ -1355,7 +1378,7 @@
               const elId = el.getAttribute('data-element-id') || `el_${eIdx}`;
               const tag = el.tagName.toLowerCase();
               return `
-                <div onclick="selectElement(document.querySelector('[data-element-id=\\'${elId}\\']'))" class="text-[11px] text-gray-300 hover:text-greek-gold cursor-pointer truncate py-0.5">
+                <div onclick="document.querySelector('[data-element-id=\\'${elId}\\']')?.scrollIntoView({behavior:'smooth', block:'center'}); selectElement(document.querySelector('[data-element-id=\\'${elId}\\']'));" class="text-[11px] text-gray-300 hover:text-greek-gold cursor-pointer truncate py-0.5">
                   • &lt;${tag}&gt; ${(el.innerText || '').slice(0, 20)}
                 </div>
               `;
@@ -1507,9 +1530,10 @@
       });
     }
 
-    // Check URL hash for direct page or modal (e.g. builder.html#blog)
-    const hash = window.location.hash.replace('#', '').toLowerCase();
-    if (hash === 'blog') {
+    // Check URL hash for direct page or modal (e.g. builder.html#blog or builder.html#meal-plans)
+    const rawHash = window.location.hash.replace('#', '').toLowerCase();
+    const hash = normalizeSlug(rawHash);
+    if (rawHash === 'blog') {
       switchActivePage('blog');
       setTimeout(() => openBlogManagerModal(), 400);
     } else if (hash && (DEFAULT_PAGE_TEMPLATES[hash] || customPages.some(p => p.slug === hash))) {
