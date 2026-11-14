@@ -839,36 +839,36 @@
           <button onclick="duplicateSection('mealPackageSection')" class="p-1 hover:bg-[#393d41] rounded text-xs text-gray-300" title="Duplicate">❐</button>
           <button onclick="deleteSection('mealPackageSection')" class="p-1 hover:bg-red-900 rounded text-xs text-red-400" title="Delete">🗑</button>
         </div>
-        <div class="max-w-5xl mx-auto bg-gradient-to-br from-slate-50 via-white to-gray-50 rounded-3xl p-6 sm:p-10 border border-gray-200 shadow-md flex flex-col md:flex-row items-center justify-between gap-8">
+        <div class="builder-element max-w-5xl mx-auto bg-gradient-to-br from-slate-50 via-white to-gray-50 rounded-3xl p-6 sm:p-10 border border-gray-200 shadow-md flex flex-col md:flex-row items-center justify-between gap-8 transition" data-element-id="el_m_pkg_card">
           <div class="flex-1 space-y-3 text-center md:text-left">
-            <span class="inline-block text-xs font-extrabold uppercase tracking-wider text-[#101D3A] bg-[#F5C542]/30 px-3 py-1 rounded-full">
+            <span class="builder-element inline-block text-xs font-extrabold uppercase tracking-wider text-[#101D3A] bg-[#F5C542]/30 px-3 py-1 rounded-full" data-element-id="el_m_pkg_tag" contenteditable="true">
               Greek Fit Kitchen Value Package
             </span>
-            <h2 class="font-heading text-2xl sm:text-3xl font-extrabold text-gray-900" contenteditable="true">
+            <h2 class="builder-element font-heading text-2xl sm:text-3xl font-extrabold text-gray-900" data-element-id="el_m_pkg_title" contenteditable="true">
               MAKE MEAL TIME EASIER
             </h2>
             <div class="flex flex-wrap items-baseline gap-2 justify-center md:justify-start">
-              <span class="font-heading text-xl sm:text-2xl font-extrabold text-[#101D3A]">6-MEAL PLAN</span>
-              <span class="text-sm text-gray-600 font-medium">Starting from</span>
-              <span class="text-2xl sm:text-3xl font-black text-gray-900">$59.94 CAD</span>
+              <span class="builder-element font-heading text-xl sm:text-2xl font-extrabold text-[#101D3A]" data-element-id="el_m_pkg_plan" contenteditable="true">6-MEAL PLAN</span>
+              <span class="builder-element text-sm text-gray-600 font-medium" data-element-id="el_m_pkg_from" contenteditable="true">Starting from</span>
+              <span class="builder-element text-2xl sm:text-3xl font-black text-gray-900" data-element-id="el_m_pkg_price" contenteditable="true">$59.94 CAD</span>
             </div>
             <div class="flex flex-wrap items-center gap-3 justify-center md:justify-start pt-1">
-              <div class="inline-flex items-center gap-1.5 text-xs font-bold text-gray-700 bg-gray-100 px-3 py-1.5 rounded-lg border border-gray-200">
+              <div class="builder-element inline-flex items-center gap-1.5 text-xs font-bold text-gray-700 bg-gray-100 px-3 py-1.5 rounded-lg border border-gray-200" data-element-id="el_m_pkg_badge1" contenteditable="true">
                 <span>Minimum order: 6 meals.</span>
               </div>
-              <div class="inline-flex items-center gap-1.5 text-xs font-extrabold text-[#0C172E] bg-[#F5C542] px-3.5 py-1.5 rounded-lg shadow-sm">
+              <div class="builder-element inline-flex items-center gap-1.5 text-xs font-extrabold text-[#0C172E] bg-[#F5C542] px-3.5 py-1.5 rounded-lg shadow-sm" data-element-id="el_m_pkg_badge2" contenteditable="true">
                 <span>★ 10% OFF orders of 7+ meals</span>
               </div>
             </div>
-            <p class="text-xs text-gray-500 leading-relaxed pt-1" contenteditable="true">
+            <p class="builder-element text-xs text-gray-500 leading-relaxed pt-1" data-element-id="el_m_pkg_desc" contenteditable="true">
               Build your personalized weekly meal prep: choose any combinations of our 21 chef-crafted dishes. Every plate comes with 2 included sides of your choice.
             </p>
           </div>
           <div class="flex flex-col gap-3 flex-shrink-0">
-            <a href="#mainMenuSection" class="px-6 py-3.5 bg-[#F5C542] hover:bg-[#E5B432] text-[#0C172E] font-extrabold text-sm rounded-2xl shadow-lg transition text-center">
+            <a href="#mainMenuSection" class="builder-element px-6 py-3.5 bg-[#F5C542] hover:bg-[#E5B432] text-[#0C172E] font-extrabold text-sm rounded-2xl shadow-lg transition text-center" data-element-id="el_m_pkg_btn" contenteditable="true">
               🔥 Build 7+ Meal Package (10% OFF)
             </a>
-            <span class="text-xs text-gray-400 text-center">Independent sides per meal</span>
+            <span class="builder-element text-xs text-gray-400 text-center" data-element-id="el_m_pkg_subbtn" contenteditable="true">Independent sides per meal</span>
           </div>
         </div>
       </section>
@@ -1364,18 +1364,18 @@
           <button onclick="deleteSection('sec_menu_catering')" class="p-1 hover:bg-red-900 rounded text-xs text-red-400" title="Delete">🗑</button>
         </div>
         <div class="max-w-4xl mx-auto">
-          <span class="inline-block px-3 py-1 bg-[#101D3A]/10 text-[#101D3A] text-xs font-extrabold uppercase rounded-full mb-3" contenteditable="true">
+          <span class="builder-element inline-block px-3 py-1 bg-[#101D3A]/10 text-[#101D3A] text-xs font-extrabold uppercase rounded-full mb-3" data-element-id="el_m_cat_tag" contenteditable="true">
             Custom Meal Prep &amp; Event Orders
           </span>
-          <h2 class="font-heading text-2xl sm:text-3xl font-extrabold text-gray-900" contenteditable="true">
+          <h2 class="builder-element font-heading text-2xl sm:text-3xl font-extrabold text-gray-900" data-element-id="el_m_cat_title" contenteditable="true">
             CAN'T FIND WHAT YOU'RE LOOKING FOR?
           </h2>
-          <p class="mt-3 text-sm text-gray-600 max-w-xl mx-auto leading-relaxed" contenteditable="true">
+          <p class="builder-element mt-3 text-sm text-gray-600 max-w-xl mx-auto leading-relaxed" data-element-id="el_m_cat_desc" contenteditable="true">
             Contact us for custom macro allocations, private catering, or specialized corporate wellness programs.
           </p>
           <div class="mt-6 flex flex-wrap justify-center gap-4">
-            <a href="mailto:orders@greekfitkitchen.ca" class="px-6 py-3 rounded-xl bg-[#101D3A] text-white text-xs font-bold shadow transition">SPECIAL REQUESTS</a>
-            <a href="mailto:orders@greekfitkitchen.ca?subject=Catering" class="px-6 py-3 rounded-xl bg-[#F5C542] text-[#0C172E] text-xs font-extrabold shadow transition">CATERING ENQUIRIES</a>
+            <a href="mailto:orders@greekfitkitchen.ca" class="builder-element px-6 py-3 rounded-xl bg-[#101D3A] text-white text-xs font-bold shadow transition" data-element-id="el_m_cat_btn1" contenteditable="true">SPECIAL REQUESTS</a>
+            <a href="mailto:orders@greekfitkitchen.ca?subject=Catering" class="builder-element px-6 py-3 rounded-xl bg-[#F5C542] text-[#0C172E] text-xs font-extrabold shadow transition" data-element-id="el_m_cat_btn2" contenteditable="true">CATERING ENQUIRIES</a>
           </div>
         </div>
       </section>
@@ -1920,8 +1920,8 @@
     const saved = localStorage.getItem(`gfk_builder_page_${pageKey}`);
     const isOldIncomplete = saved && (
       (pageKey === 'home' && (!saved.includes('featuredMeals') || !saved.includes('howItWorks') || !saved.includes('deliverySection') || !saved.includes('el_batch_card') || !saved.includes('el_rate_card'))) ||
-      (pageKey === 'menu' && !saved.includes('sec_menu_grid')) ||
-      (pageKey === 'delivery' && !saved.includes('sec_del_calc')) ||
+      (pageKey === 'menu' && (!saved.includes('sec_menu_grid') || !saved.includes('el_m_pkg_card') || !saved.includes('el_m_cat_title'))) ||
+      (pageKey === 'delivery' && (!saved.includes('sec_del_calc') || !saved.includes('sec_del_batches'))) ||
       (pageKey === 'about' && (!saved.includes('sec_about_photo') || !saved.includes('el_ab_story_card') || !saved.includes('el_ab_stat1') || !saved.includes('el_ab_com1'))) ||
       (pageKey === 'howitworks' && (!saved.includes('sec_how_heating') || !saved.includes('el_how_step1') || !saved.includes('el_how_heating_card'))) ||
       (pageKey === 'blog' && !saved.includes('sec_b_pills'))
