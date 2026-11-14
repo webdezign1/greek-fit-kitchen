@@ -746,33 +746,48 @@
             </p>
           </div>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-            <div class="p-6 bg-white rounded-3xl border border-gray-200 shadow-sm space-y-4">
-              <h3 class="font-heading font-bold text-xl text-[#101D3A]">Batch Drop Schedule</h3>
+            <!-- Box 1: Batch Drop Schedule Card -->
+            <div class="builder-element p-6 bg-white rounded-3xl border border-gray-200 shadow-sm space-y-4 transition" data-element-id="el_batch_card">
+              <h3 class="builder-element font-heading font-bold text-xl text-[#101D3A]" data-element-id="el_batch_title" contenteditable="true">Batch Drop Schedule</h3>
               <div class="space-y-3 text-xs text-gray-600">
-                <div class="p-3 rounded-xl bg-slate-50 border border-gray-100">
-                  <strong class="text-[#101D3A] text-sm block">Sunday Batch Delivery:</strong>
-                  <span>Cutoff Friday 11:59 PM EST &bull; Delivery Sunday 1:00 PM – 7:00 PM</span>
+                <div class="builder-element p-3 rounded-xl bg-slate-50 border border-gray-100" data-element-id="el_batch_sun_box">
+                  <strong class="builder-element text-[#101D3A] text-sm block" data-element-id="el_batch_sun_title" contenteditable="true">Sunday Batch Delivery:</strong>
+                  <span class="builder-element text-xs text-gray-600 block mt-0.5" data-element-id="el_batch_sun_desc" contenteditable="true">Cutoff Friday 11:59 PM EST &bull; Delivery Sunday 1:00 PM – 7:00 PM</span>
                 </div>
-                <div class="p-3 rounded-xl bg-slate-50 border border-gray-100">
-                  <strong class="text-[#101D3A] text-sm block">Wednesday Batch Delivery:</strong>
-                  <span>Cutoff Monday 11:59 PM EST &bull; Delivery Wednesday 1:00 PM – 7:00 PM</span>
+                <div class="builder-element p-3 rounded-xl bg-slate-50 border border-gray-100" data-element-id="el_batch_wed_box">
+                  <strong class="builder-element text-[#101D3A] text-sm block" data-element-id="el_batch_wed_title" contenteditable="true">Wednesday Batch Delivery:</strong>
+                  <span class="builder-element text-xs text-gray-600 block mt-0.5" data-element-id="el_batch_wed_desc" contenteditable="true">Cutoff Monday 11:59 PM EST &bull; Delivery Wednesday 1:00 PM – 7:00 PM</span>
                 </div>
-                <div class="p-3 rounded-xl bg-emerald-50 border border-emerald-100 text-emerald-800">
-                  <strong class="text-sm block">Free Kitchen Pickup Available:</strong>
-                  <span>3575 Lake Shore Blvd W, Etobicoke &bull; Sundays &amp; Wednesdays 2:00 PM – 6:00 PM</span>
+                <div class="builder-element p-3 rounded-xl bg-emerald-50 border border-emerald-100 text-emerald-800" data-element-id="el_batch_pickup_box">
+                  <strong class="builder-element text-sm block text-emerald-800" data-element-id="el_batch_pickup_title" contenteditable="true">Free Kitchen Pickup Available:</strong>
+                  <span class="builder-element text-xs block text-emerald-700 mt-0.5" data-element-id="el_batch_pickup_desc" contenteditable="true">3575 Lake Shore Blvd W, Etobicoke &bull; Sundays &amp; Wednesdays 2:00 PM – 6:00 PM</span>
                 </div>
               </div>
             </div>
-            <div class="p-6 bg-white rounded-3xl border border-gray-200 shadow-sm space-y-4">
-              <h3 class="font-heading font-bold text-xl text-[#101D3A]">Delivery Rate Zones</h3>
+
+            <!-- Box 2: Delivery Rate Zones Card -->
+            <div class="builder-element p-6 bg-white rounded-3xl border border-gray-200 shadow-sm space-y-4 transition" data-element-id="el_rate_card">
+              <h3 class="builder-element font-heading font-bold text-xl text-[#101D3A]" data-element-id="el_rate_title" contenteditable="true">Delivery Rate Zones</h3>
               <ul class="text-xs text-gray-600 space-y-2.5">
-                <li class="flex justify-between pb-2 border-b"><span>Etobicoke South (&le; 2.0 km)</span><strong class="text-emerald-600">FREE ($0.00 CAD)</strong></li>
-                <li class="flex justify-between pb-2 border-b"><span>Local Zone (2 to 5 km)</span><strong class="text-[#101D3A]">$5.00 Flat CAD</strong></li>
-                <li class="flex justify-between pb-2 border-b"><span>Extended GTA (&gt; 5 km)</span><strong class="text-[#101D3A]">$1.00 / km</strong></li>
-                <li class="flex justify-between"><span>Maximum Service Boundary</span><strong class="text-gray-500">35 km radius</strong></li>
+                <li class="builder-element flex justify-between pb-2 border-b border-gray-100" data-element-id="el_rate_row1">
+                  <span class="builder-element" data-element-id="el_rate_row1_name" contenteditable="true">Etobicoke South (&le; 2.0 km)</span>
+                  <strong class="builder-element text-emerald-600 font-bold" data-element-id="el_rate_row1_price" contenteditable="true">FREE ($0.00 CAD)</strong>
+                </li>
+                <li class="builder-element flex justify-between pb-2 border-b border-gray-100" data-element-id="el_rate_row2">
+                  <span class="builder-element" data-element-id="el_rate_row2_name" contenteditable="true">Local Zone (2 to 5 km)</span>
+                  <strong class="builder-element text-[#101D3A] font-bold" data-element-id="el_rate_row2_price" contenteditable="true">$5.00 Flat CAD</strong>
+                </li>
+                <li class="builder-element flex justify-between pb-2 border-b border-gray-100" data-element-id="el_rate_row3">
+                  <span class="builder-element" data-element-id="el_rate_row3_name" contenteditable="true">Extended GTA (&gt; 5 km)</span>
+                  <strong class="builder-element text-[#101D3A] font-bold" data-element-id="el_rate_row3_price" contenteditable="true">$1.00 / km</strong>
+                </li>
+                <li class="builder-element flex justify-between" data-element-id="el_rate_row4">
+                  <span class="builder-element" data-element-id="el_rate_row4_name" contenteditable="true">Maximum Service Boundary</span>
+                  <strong class="builder-element text-gray-500 font-bold" data-element-id="el_rate_row4_price" contenteditable="true">35 km radius</strong>
+                </li>
               </ul>
               <div class="pt-2">
-                <a href="delivery-rates.html" class="block w-full py-2.5 bg-[#101D3A] text-white font-bold text-xs rounded-xl text-center">Calculate Distance &amp; Rates</a>
+                <a href="delivery-rates.html" class="builder-element block w-full py-2.5 bg-[#101D3A] hover:bg-[#0C172E] text-white font-bold text-xs rounded-xl text-center transition" data-element-id="el_rate_btn" contenteditable="true">Calculate Distance &amp; Rates</a>
               </div>
             </div>
           </div>
@@ -1892,7 +1907,7 @@
     // Check localStorage first
     const saved = localStorage.getItem(`gfk_builder_page_${pageKey}`);
     const isOldIncomplete = saved && (
-      (pageKey === 'home' && (!saved.includes('featuredMeals') || !saved.includes('howItWorks') || !saved.includes('deliverySection'))) ||
+      (pageKey === 'home' && (!saved.includes('featuredMeals') || !saved.includes('howItWorks') || !saved.includes('deliverySection') || !saved.includes('el_batch_card') || !saved.includes('el_rate_card'))) ||
       (pageKey === 'menu' && !saved.includes('sec_menu_grid')) ||
       (pageKey === 'delivery' && !saved.includes('sec_del_calc')) ||
       (pageKey === 'about' && !saved.includes('sec_about_photo')) ||
@@ -1955,6 +1970,24 @@
   function attachCanvasEventListeners() {
     const container = document.getElementById('livePageContainer');
     if (!container) return;
+
+    // Automatically make all inner text tags inside sections selectable and editable
+    const textSelectors = 'h1, h2, h3, h4, h5, h6, p, span, strong, em, b, i, small, a, button, li, label';
+    container.querySelectorAll('.builder-section').forEach(sec => {
+      sec.querySelectorAll(textSelectors).forEach(el => {
+        if (!el.closest('.section-actions')) {
+          if (!el.classList.contains('builder-element')) {
+            el.classList.add('builder-element');
+          }
+          if (!el.getAttribute('data-element-id')) {
+            el.setAttribute('data-element-id', 'el_' + Math.random().toString(36).substring(2, 9));
+          }
+          if (!el.getAttribute('contenteditable') && !el.querySelector('img') && !el.querySelector('input')) {
+            el.setAttribute('contenteditable', 'true');
+          }
+        }
+      });
+    });
 
     // Attach click listener for all builder elements
     container.querySelectorAll('.builder-element').forEach(el => {
