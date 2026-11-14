@@ -1748,19 +1748,38 @@
           <h2 class="builder-element font-heading font-extrabold text-2xl sm:text-3xl text-gray-900 mb-6 text-center" data-element-id="el_how_faq_title" contenteditable="true">
             Frequently Asked Questions
           </h2>
-          <div class="space-y-4 text-xs text-gray-600">
-            <div class="builder-element p-5 rounded-2xl bg-gray-50 border border-gray-200" data-element-id="el_how_faq_q1">
-              <h4 class="builder-element font-bold text-gray-900 text-sm mb-1" data-element-id="el_how_faq_q1_h" contenteditable="true">Why is there a 6-meal minimum?</h4>
-              <p class="builder-element" data-element-id="el_how_faq_q1_p" contenteditable="true">Batch cooking allows us to source premium Ontario meats, genuine Greek Dodoni feta, and cold-pressed Kalamata olive oil at optimal freshness and volume price points. The 6-meal minimum ensures batch integrity and gives you a structured week of meals starting at just $59.94 CAD.</p>
+          <div id="faqListContainer" class="space-y-4 text-xs text-gray-600">
+            <div class="builder-element builder-faq-item p-5 rounded-2xl bg-gray-50 border border-gray-200 relative group transition hover:border-gray-300 shadow-sm" data-element-id="el_how_faq_q1">
+              <div class="absolute top-3 right-3 flex items-center gap-1 opacity-80 group-hover:opacity-100 transition">
+                <button onclick="duplicateFaqItem('el_how_faq_q1')" class="p-1 hover:bg-gray-200 rounded text-xs text-gray-500" title="Duplicate Question">❐</button>
+                <button onclick="deleteFaqItem('el_how_faq_q1')" class="p-1 hover:bg-red-100 rounded text-xs text-red-500" title="Delete Question">🗑</button>
+              </div>
+              <h4 class="builder-element font-bold text-gray-900 text-sm mb-1 pr-16" data-element-id="el_how_faq_q1_h" contenteditable="true">Why is there a 6-meal minimum?</h4>
+              <p class="builder-element leading-relaxed" data-element-id="el_how_faq_q1_p" contenteditable="true">Batch cooking allows us to source premium Ontario meats, genuine Greek Dodoni feta, and cold-pressed Kalamata olive oil at optimal freshness and volume price points. The 6-meal minimum ensures batch integrity and gives you a structured week of meals starting at just $59.94 CAD.</p>
             </div>
-            <div class="builder-element p-5 rounded-2xl bg-gray-50 border border-gray-200" data-element-id="el_how_faq_q2">
-              <h4 class="builder-element font-bold text-gray-900 text-sm mb-1" data-element-id="el_how_faq_q2_h" contenteditable="true">How does the 10% volume discount work?</h4>
-              <p class="builder-element" data-element-id="el_how_faq_q2_p" contenteditable="true">When you customize 7 or more meals, a 10% volume savings discount is automatically applied to your entire order at checkout. No promo code required.</p>
+            <div class="builder-element builder-faq-item p-5 rounded-2xl bg-gray-50 border border-gray-200 relative group transition hover:border-gray-300 shadow-sm" data-element-id="el_how_faq_q2">
+              <div class="absolute top-3 right-3 flex items-center gap-1 opacity-80 group-hover:opacity-100 transition">
+                <button onclick="duplicateFaqItem('el_how_faq_q2')" class="p-1 hover:bg-gray-200 rounded text-xs text-gray-500" title="Duplicate Question">❐</button>
+                <button onclick="deleteFaqItem('el_how_faq_q2')" class="p-1 hover:bg-red-100 rounded text-xs text-red-500" title="Delete Question">🗑</button>
+              </div>
+              <h4 class="builder-element font-bold text-gray-900 text-sm mb-1 pr-16" data-element-id="el_how_faq_q2_h" contenteditable="true">How does the 10% volume discount work?</h4>
+              <p class="builder-element leading-relaxed" data-element-id="el_how_faq_q2_p" contenteditable="true">When you customize 7 or more meals, a 10% volume savings discount is automatically applied to your entire order at checkout. No promo code required.</p>
             </div>
-            <div class="builder-element p-5 rounded-2xl bg-gray-50 border border-gray-200" data-element-id="el_how_faq_q3">
-              <h4 class="builder-element font-bold text-gray-900 text-sm mb-1" data-element-id="el_how_faq_q3_h" contenteditable="true">What are your batch order cutoffs?</h4>
-              <p class="builder-element" data-element-id="el_how_faq_q3_p" contenteditable="true">For Sunday batch delivery, order cutoff is Friday 11:59 PM EST. For Wednesday batch delivery, cutoff is Monday 11:59 PM EST.</p>
+            <div class="builder-element builder-faq-item p-5 rounded-2xl bg-gray-50 border border-gray-200 relative group transition hover:border-gray-300 shadow-sm" data-element-id="el_how_faq_q3">
+              <div class="absolute top-3 right-3 flex items-center gap-1 opacity-80 group-hover:opacity-100 transition">
+                <button onclick="duplicateFaqItem('el_how_faq_q3')" class="p-1 hover:bg-gray-200 rounded text-xs text-gray-500" title="Duplicate Question">❐</button>
+                <button onclick="deleteFaqItem('el_how_faq_q3')" class="p-1 hover:bg-red-100 rounded text-xs text-red-500" title="Delete Question">🗑</button>
+              </div>
+              <h4 class="builder-element font-bold text-gray-900 text-sm mb-1 pr-16" data-element-id="el_how_faq_q3_h" contenteditable="true">What are your batch order cutoffs?</h4>
+              <p class="builder-element leading-relaxed" data-element-id="el_how_faq_q3_p" contenteditable="true">For Sunday batch delivery, order cutoff is Friday 11:59 PM EST. For Wednesday batch delivery, cutoff is Monday 11:59 PM EST.</p>
             </div>
+          </div>
+          <!-- Add FAQ Button -->
+          <div class="mt-6 text-center">
+            <button onclick="addNewFaqItem()" class="px-5 py-2.5 rounded-xl bg-[#101D3A] hover:bg-[#0C172E] text-white font-bold text-xs shadow-md transition inline-flex items-center gap-2">
+              <span class="text-base text-[#F5C542] leading-none font-black">+</span>
+              <span>Add New FAQ Question</span>
+            </button>
           </div>
         </div>
       </section>
@@ -1958,7 +1977,7 @@
       (pageKey === 'menu' && (!saved.includes('sec_menu_grid') || !saved.includes('el_m_pkg_card') || !saved.includes('el_m_cat_title'))) ||
       (pageKey === 'delivery' && (!saved.includes('sec_del_calc') || !saved.includes('el_del_calc_card') || !saved.includes('el_del_sun_card') || !saved.includes('el_del_tbl_title'))) ||
       (pageKey === 'about' && (!saved.includes('sec_about_photo') || !saved.includes('el_ab_story_card') || !saved.includes('el_ab_stat1') || !saved.includes('el_ab_com1'))) ||
-      (pageKey === 'howitworks' && (!saved.includes('sec_how_heating') || !saved.includes('el_how_step1') || !saved.includes('el_how_heating_card'))) ||
+      (pageKey === 'howitworks' && (!saved.includes('sec_how_heating') || !saved.includes('el_how_step1') || !saved.includes('el_how_heating_card') || !saved.includes('addNewFaqItem') || !saved.includes('faqListContainer') || !saved.includes('el_how_guide_tag'))) ||
       (pageKey === 'blog' && !saved.includes('sec_b_pills'))
     );
 
@@ -2179,6 +2198,60 @@
     document.getElementById('noElementSelectedNotice').classList.remove('hidden');
     document.getElementById('elementInspectorForm').classList.add('hidden');
     showToast('Element removed.');
+  };
+
+  // --- FAQ Item Management (How It Works & General FAQs) ---
+  window.addNewFaqItem = function () {
+    const faqList = document.getElementById('faqListContainer');
+    if (!faqList) return;
+    const newId = 'faq_' + Date.now();
+    const html = `
+      <div class="builder-element builder-faq-item p-5 rounded-2xl bg-gray-50 border border-gray-200 relative group transition hover:border-gray-300 shadow-sm" data-element-id="${newId}">
+        <div class="absolute top-3 right-3 flex items-center gap-1 opacity-80 group-hover:opacity-100 transition">
+          <button onclick="duplicateFaqItem('${newId}')" class="p-1 hover:bg-gray-200 rounded text-xs text-gray-500" title="Duplicate Question">❐</button>
+          <button onclick="deleteFaqItem('${newId}')" class="p-1 hover:bg-red-100 rounded text-xs text-red-500" title="Delete Question">🗑</button>
+        </div>
+        <h4 class="builder-element font-bold text-gray-900 text-sm mb-1 pr-16" data-element-id="${newId}_h" contenteditable="true">Click here to edit your new FAQ question?</h4>
+        <p class="builder-element leading-relaxed text-xs text-gray-600" data-element-id="${newId}_p" contenteditable="true">Click here to write the answer. You can type directly inline or customize styling in the Elementor inspector.</p>
+      </div>
+    `;
+    faqList.insertAdjacentHTML('beforeend', html);
+    attachCanvasEventListeners();
+    pushHistoryState();
+    const newEl = document.querySelector(`[data-element-id="${newId}"]`);
+    if (newEl) {
+      selectElement(newEl);
+      newEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+    showToast('New FAQ question added!');
+  };
+
+  window.duplicateFaqItem = function (faqId) {
+    const el = document.querySelector(`[data-element-id="${faqId}"]`);
+    if (!el) return;
+    const clone = el.cloneNode(true);
+    const newId = 'faq_' + Date.now();
+    clone.setAttribute('data-element-id', newId);
+    clone.querySelectorAll('[data-element-id]').forEach((child, idx) => {
+      child.setAttribute('data-element-id', `${newId}_${idx}`);
+    });
+    clone.querySelector("button[onclick*='duplicateFaqItem']")?.setAttribute('onclick', `duplicateFaqItem('${newId}')`);
+    clone.querySelector("button[onclick*='deleteFaqItem']")?.setAttribute('onclick', `deleteFaqItem('${newId}')`);
+    el.parentNode.insertBefore(clone, el.nextSibling);
+    attachCanvasEventListeners();
+    pushHistoryState();
+    selectElement(clone);
+    showToast('FAQ question duplicated!');
+  };
+
+  window.deleteFaqItem = function (faqId) {
+    const el = document.querySelector(`[data-element-id="${faqId}"]`);
+    if (!el) return;
+    if (confirm('Delete this FAQ question?')) {
+      el.remove();
+      pushHistoryState();
+      showToast('FAQ question deleted.');
+    }
   };
 
   // --- Section Operations ---
