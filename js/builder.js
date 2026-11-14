@@ -1404,25 +1404,25 @@
           <button onclick="deleteSection('sec_del_calc')" class="p-1 hover:bg-red-900 rounded text-xs text-red-400" title="Delete">🗑</button>
         </div>
         <div class="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-          <div class="p-8 rounded-3xl bg-slate-50 border border-gray-200">
-            <span class="text-[#F5C542] font-bold text-xs uppercase tracking-wider">Live Distance Lookup</span>
-            <h2 class="font-heading font-extrabold text-2xl text-gray-900 mt-1" contenteditable="true">Calculate Your Rate</h2>
-            <p class="text-xs text-gray-500 mt-2" contenteditable="true">
+          <div class="builder-element p-8 rounded-3xl bg-slate-50 border border-gray-200 shadow-sm transition" data-element-id="el_del_calc_card">
+            <span class="builder-element text-[#F5C542] font-bold text-xs uppercase tracking-wider block" data-element-id="el_del_calc_tag" contenteditable="true">Live Distance Lookup</span>
+            <h2 class="builder-element font-heading font-extrabold text-2xl text-gray-900 mt-1" data-element-id="el_del_calc_title" contenteditable="true">Calculate Your Rate</h2>
+            <p class="builder-element text-xs text-gray-500 mt-2" data-element-id="el_del_calc_desc" contenteditable="true">
               Tiered rates: <strong>FREE &le; 2 km &bull; $5.00 Flat (2–5 km) &bull; $1.00/km (&gt; 5 km)</strong> from 3575 Lake Shore Blvd W, Etobicoke.
             </p>
             <div class="mt-6 space-y-3">
               <input type="text" placeholder="Enter Postal Code (e.g. M5V, M8W)" class="w-full py-3 px-4 rounded-xl border border-gray-300 text-sm font-bold uppercase" />
-              <button class="w-full py-3 bg-[#F5C542] hover:bg-[#E5B432] text-[#0C172E] font-black text-sm rounded-xl shadow">Calculate Delivery Fee</button>
+              <button class="builder-element w-full py-3 bg-[#F5C542] hover:bg-[#E5B432] text-[#0C172E] font-black text-sm rounded-xl shadow transition" data-element-id="el_del_calc_btn" contenteditable="true">Calculate Delivery Fee</button>
             </div>
           </div>
           <div class="space-y-4">
-            <div class="p-6 rounded-2xl bg-emerald-50 border border-emerald-200">
-              <h3 class="font-heading font-bold text-lg text-emerald-800" contenteditable="true">Free Kitchen Pickup</h3>
-              <p class="text-xs text-emerald-700 mt-1" contenteditable="true">3575 Lake Shore Blvd W, Etobicoke &bull; Pick up Sundays &amp; Wednesdays 2:00 PM – 6:00 PM with $0 delivery fee.</p>
+            <div class="builder-element p-6 rounded-2xl bg-emerald-50 border border-emerald-200 transition shadow-sm" data-element-id="el_del_pickup_card">
+              <h3 class="builder-element font-heading font-bold text-lg text-emerald-800" data-element-id="el_del_pickup_title" contenteditable="true">Free Kitchen Pickup</h3>
+              <p class="builder-element text-xs text-emerald-700 mt-1" data-element-id="el_del_pickup_desc" contenteditable="true">3575 Lake Shore Blvd W, Etobicoke &bull; Pick up Sundays &amp; Wednesdays 2:00 PM – 6:00 PM with $0 delivery fee.</p>
             </div>
-            <div class="p-6 rounded-2xl bg-blue-50 border border-blue-200">
-              <h3 class="font-heading font-bold text-lg text-blue-900" contenteditable="true">Insulated Thermal Packaging</h3>
-              <p class="text-xs text-blue-800 mt-1" contenteditable="true">Shipped with ice packs designed to keep entrees chilled below 4°C for up to 6 hours after drop-off.</p>
+            <div class="builder-element p-6 rounded-2xl bg-blue-50 border border-blue-200 transition shadow-sm" data-element-id="el_del_thermal_card">
+              <h3 class="builder-element font-heading font-bold text-lg text-blue-900" data-element-id="el_del_thermal_title" contenteditable="true">Insulated Thermal Packaging</h3>
+              <p class="builder-element text-xs text-blue-800 mt-1" data-element-id="el_del_thermal_desc" contenteditable="true">Shipped with ice packs designed to keep entrees chilled below 4°C for up to 6 hours after drop-off.</p>
             </div>
           </div>
         </div>
@@ -1437,26 +1437,26 @@
           <button onclick="deleteSection('sec_del_schedule')" class="p-1 hover:bg-red-900 rounded text-xs text-red-400" title="Delete">🗑</button>
         </div>
         <div class="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
-          <div class="p-8 rounded-3xl bg-white border border-gray-200 shadow-sm space-y-3">
-            <h3 class="font-heading font-bold text-xl text-[#101D3A] flex items-center gap-2">
+          <div class="builder-element p-8 rounded-3xl bg-white border border-gray-200 shadow-sm space-y-3 transition" data-element-id="el_del_sun_card">
+            <h3 class="builder-element font-heading font-bold text-xl text-[#101D3A] flex items-center gap-2" data-element-id="el_del_sun_title" contenteditable="true">
               <span class="w-3 h-3 rounded-full bg-[#F5C542]"></span> Sunday Batch Drop
             </h3>
             <ul class="space-y-2 text-xs text-gray-600">
-              <li><strong>Order Cutoff:</strong> Friday 11:59 PM EST</li>
-              <li><strong>Batch Cooking:</strong> Saturday night &amp; Sunday morning</li>
-              <li><strong>Delivery Window:</strong> Sunday 1:00 PM – 7:00 PM EST</li>
-              <li><strong>Ideal for:</strong> Monday–Thursday workout fueling</li>
+              <li class="builder-element" data-element-id="el_del_sun_item1" contenteditable="true"><strong>Order Cutoff:</strong> Friday 11:59 PM EST</li>
+              <li class="builder-element" data-element-id="el_del_sun_item2" contenteditable="true"><strong>Batch Cooking:</strong> Saturday night &amp; Sunday morning</li>
+              <li class="builder-element" data-element-id="el_del_sun_item3" contenteditable="true"><strong>Delivery Window:</strong> Sunday 1:00 PM – 7:00 PM EST</li>
+              <li class="builder-element" data-element-id="el_del_sun_item4" contenteditable="true"><strong>Ideal for:</strong> Monday–Thursday workout fueling</li>
             </ul>
           </div>
-          <div class="p-8 rounded-3xl bg-white border border-gray-200 shadow-sm space-y-3">
-            <h3 class="font-heading font-bold text-xl text-[#101D3A] flex items-center gap-2">
+          <div class="builder-element p-8 rounded-3xl bg-white border border-gray-200 shadow-sm space-y-3 transition" data-element-id="el_del_wed_card">
+            <h3 class="builder-element font-heading font-bold text-xl text-[#101D3A] flex items-center gap-2" data-element-id="el_del_wed_title" contenteditable="true">
               <span class="w-3 h-3 rounded-full bg-emerald-600"></span> Wednesday Batch Drop
             </h3>
             <ul class="space-y-2 text-xs text-gray-600">
-              <li><strong>Order Cutoff:</strong> Monday 11:59 PM EST</li>
-              <li><strong>Batch Cooking:</strong> Tuesday night &amp; Wednesday morning</li>
-              <li><strong>Delivery Window:</strong> Wednesday 1:00 PM – 7:00 PM EST</li>
-              <li><strong>Ideal for:</strong> Weekend training &amp; high volume splits</li>
+              <li class="builder-element" data-element-id="el_del_wed_item1" contenteditable="true"><strong>Order Cutoff:</strong> Monday 11:59 PM EST</li>
+              <li class="builder-element" data-element-id="el_del_wed_item2" contenteditable="true"><strong>Batch Cooking:</strong> Tuesday night &amp; Wednesday morning</li>
+              <li class="builder-element" data-element-id="el_del_wed_item3" contenteditable="true"><strong>Delivery Window:</strong> Wednesday 1:00 PM – 7:00 PM EST</li>
+              <li class="builder-element" data-element-id="el_del_wed_item4" contenteditable="true"><strong>Ideal for:</strong> Weekend training &amp; high volume splits</li>
             </ul>
           </div>
         </div>
@@ -1471,20 +1471,55 @@
           <button onclick="deleteSection('sec_del_table')" class="p-1 hover:bg-red-900 rounded text-xs text-red-400" title="Delete">🗑</button>
         </div>
         <div class="max-w-4xl mx-auto">
-          <h3 class="font-heading font-bold text-2xl text-gray-900 mb-1" contenteditable="true">Sample Delivery Estimates Across the GTA</h3>
-          <p class="text-xs text-gray-500 mb-6" contenteditable="true">Calculated from our commercial kitchen at 3575 Lake Shore Blvd W, Etobicoke.</p>
+          <h3 class="builder-element font-heading font-bold text-2xl text-gray-900 mb-1" data-element-id="el_del_tbl_title" contenteditable="true">Sample Delivery Estimates Across the GTA</h3>
+          <p class="builder-element text-xs text-gray-500 mb-6" data-element-id="el_del_tbl_sub" contenteditable="true">Calculated from our commercial kitchen at 3575 Lake Shore Blvd W, Etobicoke.</p>
           <div class="overflow-x-auto rounded-2xl border border-gray-200">
             <table class="w-full text-left text-xs">
               <thead class="bg-gray-50 border-b text-[10px] uppercase font-bold text-gray-500">
-                <tr><th class="p-3">GTA Region</th><th class="p-3">Sample Postal Code</th><th class="p-3">Avg Distance</th><th class="p-3">Estimated Rate</th></tr>
+                <tr>
+                  <th class="builder-element p-3" data-element-id="el_del_th1" contenteditable="true">GTA Region</th>
+                  <th class="builder-element p-3" data-element-id="el_del_th2" contenteditable="true">Sample Postal Code</th>
+                  <th class="builder-element p-3" data-element-id="el_del_th3" contenteditable="true">Avg Distance</th>
+                  <th class="builder-element p-3" data-element-id="el_del_th4" contenteditable="true">Estimated Rate</th>
+                </tr>
               </thead>
               <tbody class="divide-y divide-gray-100">
-                <tr><td class="p-3 font-bold text-gray-900">Etobicoke South (Near Kitchen)</td><td class="p-3 font-mono">M8W, M8V</td><td class="p-3">&le; 2.0 km</td><td class="p-3 font-bold text-emerald-600">FREE ($0.00 CAD)</td></tr>
-                <tr><td class="p-3 font-bold text-gray-900">Etobicoke South / Humber</td><td class="p-3 font-mono">M8X, M8Z</td><td class="p-3">2–5 km</td><td class="p-3 font-bold text-emerald-600">$5.00 CAD Flat</td></tr>
-                <tr><td class="p-3 font-bold text-gray-900">Mississauga East / Port Credit</td><td class="p-3 font-mono">L5E, L5G</td><td class="p-3">5–6 km</td><td class="p-3 font-bold text-emerald-600">$5.00 – $6.00 CAD</td></tr>
-                <tr><td class="p-3 font-bold text-gray-900">High Park / Bloor West</td><td class="p-3 font-mono">M6S, M6P</td><td class="p-3">7–9 km</td><td class="p-3 font-bold text-emerald-600">$7.00 – $9.00 CAD</td></tr>
-                <tr><td class="p-3 font-bold text-gray-900">Downtown Toronto / Waterfront</td><td class="p-3 font-mono">M5V, M5J</td><td class="p-3">13–15 km</td><td class="p-3 font-bold text-emerald-600">$13.00 – $15.00 CAD</td></tr>
-                <tr><td class="p-3 font-bold text-gray-900">North York / Scarborough</td><td class="p-3 font-mono">M2N, M1P</td><td class="p-3">20–30 km</td><td class="p-3 font-bold text-emerald-600">$20.00 – $30.00 CAD</td></tr>
+                <tr class="builder-element" data-element-id="el_del_tr1">
+                  <td class="p-3 font-bold text-gray-900" contenteditable="true">Etobicoke South (Near Kitchen)</td>
+                  <td class="p-3 font-mono" contenteditable="true">M8W, M8V</td>
+                  <td class="p-3" contenteditable="true">&le; 2.0 km</td>
+                  <td class="p-3 font-bold text-emerald-600" contenteditable="true">FREE ($0.00 CAD)</td>
+                </tr>
+                <tr class="builder-element" data-element-id="el_del_tr2">
+                  <td class="p-3 font-bold text-gray-900" contenteditable="true">Etobicoke South / Humber</td>
+                  <td class="p-3 font-mono" contenteditable="true">M8X, M8Z</td>
+                  <td class="p-3" contenteditable="true">2–5 km</td>
+                  <td class="p-3 font-bold text-emerald-600" contenteditable="true">$5.00 CAD Flat</td>
+                </tr>
+                <tr class="builder-element" data-element-id="el_del_tr3">
+                  <td class="p-3 font-bold text-gray-900" contenteditable="true">Mississauga East / Port Credit</td>
+                  <td class="p-3 font-mono" contenteditable="true">L5E, L5G</td>
+                  <td class="p-3" contenteditable="true">5–6 km</td>
+                  <td class="p-3 font-bold text-emerald-600" contenteditable="true">$5.00 – $6.00 CAD</td>
+                </tr>
+                <tr class="builder-element" data-element-id="el_del_tr4">
+                  <td class="p-3 font-bold text-gray-900" contenteditable="true">High Park / Bloor West</td>
+                  <td class="p-3 font-mono" contenteditable="true">M6S, M6P</td>
+                  <td class="p-3" contenteditable="true">7–9 km</td>
+                  <td class="p-3 font-bold text-emerald-600" contenteditable="true">$7.00 – $9.00 CAD</td>
+                </tr>
+                <tr class="builder-element" data-element-id="el_del_tr5">
+                  <td class="p-3 font-bold text-gray-900" contenteditable="true">Downtown Toronto / Waterfront</td>
+                  <td class="p-3 font-mono" contenteditable="true">M5V, M5J</td>
+                  <td class="p-3" contenteditable="true">13–15 km</td>
+                  <td class="p-3 font-bold text-emerald-600" contenteditable="true">$13.00 – $15.00 CAD</td>
+                </tr>
+                <tr class="builder-element" data-element-id="el_del_tr6">
+                  <td class="p-3 font-bold text-gray-900" contenteditable="true">North York / Scarborough</td>
+                  <td class="p-3 font-mono" contenteditable="true">M2N, M1P</td>
+                  <td class="p-3" contenteditable="true">20–30 km</td>
+                  <td class="p-3 font-bold text-emerald-600" contenteditable="true">$20.00 – $30.00 CAD</td>
+                </tr>
               </tbody>
             </table>
           </div>
@@ -1921,7 +1956,7 @@
     const isOldIncomplete = saved && (
       (pageKey === 'home' && (!saved.includes('featuredMeals') || !saved.includes('howItWorks') || !saved.includes('deliverySection') || !saved.includes('el_batch_card') || !saved.includes('el_rate_card'))) ||
       (pageKey === 'menu' && (!saved.includes('sec_menu_grid') || !saved.includes('el_m_pkg_card') || !saved.includes('el_m_cat_title'))) ||
-      (pageKey === 'delivery' && (!saved.includes('sec_del_calc') || !saved.includes('sec_del_batches'))) ||
+      (pageKey === 'delivery' && (!saved.includes('sec_del_calc') || !saved.includes('el_del_calc_card') || !saved.includes('el_del_sun_card') || !saved.includes('el_del_tbl_title'))) ||
       (pageKey === 'about' && (!saved.includes('sec_about_photo') || !saved.includes('el_ab_story_card') || !saved.includes('el_ab_stat1') || !saved.includes('el_ab_com1'))) ||
       (pageKey === 'howitworks' && (!saved.includes('sec_how_heating') || !saved.includes('el_how_step1') || !saved.includes('el_how_heating_card'))) ||
       (pageKey === 'blog' && !saved.includes('sec_b_pills'))
