@@ -473,13 +473,21 @@
 
     // Module 20: Settings
     if (cleanEndpoint === '/settings') {
+      if (method === 'PUT') {
+        if (body && body.settings && body.settings.header_footer && body.settings.header_footer.config) {
+          localStorage.setItem('gfk_header_footer_config', body.settings.header_footer.config);
+        }
+        return { success: true, message: 'Settings saved.' };
+      }
+      const hfSaved = localStorage.getItem('gfk_header_footer_config');
       return {
         success: true,
         settings: {
           general: {
             site_name: "Greek Fit Kitchen",
             tagline: "Big Greek Flavour. Zero Meal Prep."
-          }
+          },
+          header_footer: hfSaved ? { config: hfSaved } : null
         }
       };
     }
@@ -1347,35 +1355,1028 @@
     `;
   }
 
-  async function renderHeaderFooterView(c) {
-    c.innerHTML = `
-      <div class="p-6 bg-white rounded-xl border border-gray-200 space-y-4 text-xs">
-        <h2 class="font-heading font-extrabold text-2xl text-wp-navy">Header &amp; Footer Builder</h2>
-        <p class="text-gray-500">Edit global brand header and footer displayed across all pages.</p>
-        <div class="p-4 bg-gray-50 rounded-lg">
-          <strong class="block text-gray-800 mb-1">Header Configuration:</strong>
-          <p class="text-gray-600">Logo: images/brand/greek-fit-kitchen-logo.png • Sticky Header: Enabled • Cart Dynamic Badge: Active</p>
+  // =========================================================================
+  // 5. HEADER & FOOTER BUILDER (Module 5) & NAVIGATION MENUS (Module 6)
+  // =========================================================================
+
+  const DEFAULT_HEADER_FOOTER_CONFIG = {
+    header: {
+      announcement: {
+        enabled: true,
+        text: "🔥 10% OFF ORDERS OVER 7+ MEALS • FREE DELIVERY ACROSS SOUTH ETOBICOKE (≤ 2 KM)",
+        link: "menu.html",
+        bgColor: "#101D3A",
+        textColor: "#F5C542"
+      },
+      brand: {
+        logoLight: "images/brand/greek-fit-kitchen-logo-dark-text.png",
+        logoDark: "images/brand/greek-fit-kitchen-logo.png",
+        logoAlt: "Greek Fit Kitchen",
+        logoHeight: 52
+      },
+      navLinks: [
+        { id: "nav_1", label: "Home", url: "index.html", newTab: false },
+        { id: "nav_2", label: "Meal Plan", url: "menu.html", newTab: false },
+        { id: "nav_3", label: "Delivery Rates", url: "delivery-rates.html", newTab: false },
+        { id: "nav_4", label: "About Us", url: "about-us.html", newTab: false },
+        { id: "nav_5", label: "How It Works", url: "how-it-works.html", newTab: false },
+        { id: "nav_6", label: "Blog", url: "blog.html", newTab: false }
+      ],
+      ctaButton: {
+        enabled: true,
+        text: "My Plan",
+        showBadge: true
+      },
+      styling: {
+        sticky: true,
+        transparentGlass: true,
+        bgColor: "#ffffff"
+      }
+    },
+    footer: {
+      brand: {
+        logo: "images/brand/greek-fit-kitchen-logo.png",
+        description: "Authentic Greek fitness meal prep designed for high-protein athletic performance and busy Toronto lifestyles. Powered by Lean Meal culinary standards.",
+        manager: "George the Greek",
+        kitchenAddress: "3575 Lake Shore Blvd W, Etobicoke, ON M8W 1P5"
+      },
+      quickLinks: [
+        { id: "fl_1", label: "Our 21 Main Dishes", url: "menu.html" },
+        { id: "fl_2", label: "Meal Plan", url: "menu.html" },
+        { id: "fl_3", label: "Delivery Rates", url: "delivery-rates.html" },
+        { id: "fl_4", label: "About Us", url: "about-us.html" },
+        { id: "fl_5", label: "Heating & Storage Guide", url: "how-it-works.html" },
+        { id: "fl_6", label: "Nutrition Blog", url: "blog.html" }
+      ],
+      batchDrops: [
+        { id: "bd_1", title: "Sunday Batch Delivery:", cutoff: "Cutoff Friday 11:59 PM EST" },
+        { id: "bd_2", title: "Wednesday Batch Delivery:", cutoff: "Cutoff Monday 11:59 PM EST" },
+        { id: "bd_3", title: "Etobicoke Kitchen Pickup:", cutoff: "Sundays & Wednesdays 2:00 PM – 6:00 PM" }
+      ],
+      contact: {
+        supportEmail: "orders@greekfitkitchen.ca",
+        supportPhone: "(416) 555-GREEK",
+        hours: "Mon–Fri 9:00 AM – 6:00 PM EST",
+        subtext: "Questions regarding meal allergens, nutrition macros, or custom corporate catering?"
+      },
+      socialLinks: [
+        { id: "soc_1", platform: "Instagram", url: "https://instagram.com/greekfitkitchen", icon: "📸" },
+        { id: "soc_2", platform: "Facebook", url: "https://facebook.com/greekfitkitchen", icon: "👍" },
+        { id: "soc_3", platform: "TikTok", url: "https://tiktok.com/@greekfitkitchen", icon: "🎵" }
+      ],
+      bottomBar: {
+        copyright: "&copy; 2026 Greek Fit Kitchen. All rights reserved. Minimum 6 meals per order.",
+        centered: true
+      }
+    }
+  };
+
+  let activeHfSubTab = 'header'; // 'header' | 'footer' | 'preview'
+
+  function getHeaderFooterConfig() {
+    const raw = localStorage.getItem('gfk_header_footer_config');
+    if (raw) {
+      try {
+        const parsed = JSON.parse(raw);
+        if (parsed && parsed.header && parsed.footer) return parsed;
+      } catch (e) {}
+    }
+    const def = JSON.parse(JSON.stringify(DEFAULT_HEADER_FOOTER_CONFIG));
+    localStorage.setItem('gfk_header_footer_config', JSON.stringify(def));
+    return def;
+  }
+
+  function saveHfConfigLocally(cfg) {
+    localStorage.setItem('gfk_header_footer_config', JSON.stringify(cfg));
+  }
+
+  window.switchHeaderFooterTab = function (tab) {
+    activeHfSubTab = tab;
+    const root = document.getElementById('adminAppRoot');
+    if (root) renderHeaderFooterView(root);
+  };
+
+  window.saveHeaderFooterConfig = async function () {
+    const cfg = getHeaderFooterConfig();
+
+    // Announcement
+    const elAnnEn = document.getElementById('hfAnnEnabled');
+    if (elAnnEn) cfg.header.announcement.enabled = elAnnEn.checked;
+    const elAnnText = document.getElementById('hfAnnText');
+    if (elAnnText) cfg.header.announcement.text = elAnnText.value;
+    const elAnnLink = document.getElementById('hfAnnLink');
+    if (elAnnLink) cfg.header.announcement.link = elAnnLink.value;
+    const elAnnBg = document.getElementById('hfAnnBg');
+    if (elAnnBg) cfg.header.announcement.bgColor = elAnnBg.value;
+    const elAnnColor = document.getElementById('hfAnnColor');
+    if (elAnnColor) cfg.header.announcement.textColor = elAnnColor.value;
+
+    // Header Branding & Style
+    const elLogoLight = document.getElementById('hfLogoLight');
+    if (elLogoLight) cfg.header.brand.logoLight = elLogoLight.value;
+    const elLogoDark = document.getElementById('hfLogoDark');
+    if (elLogoDark) cfg.header.brand.logoDark = elLogoDark.value;
+    const elLogoHeight = document.getElementById('hfLogoHeight');
+    if (elLogoHeight) cfg.header.brand.logoHeight = parseInt(elLogoHeight.value || 52);
+    const elSticky = document.getElementById('hfStickyHeader');
+    if (elSticky) cfg.header.styling.sticky = elSticky.checked;
+    const elCtaText = document.getElementById('hfCtaText');
+    if (elCtaText) cfg.header.ctaButton.text = elCtaText.value;
+
+    // Footer Brand
+    const elDesc = document.getElementById('hfFooterDesc');
+    if (elDesc) cfg.footer.brand.description = elDesc.value;
+    const elManager = document.getElementById('hfFooterManager');
+    if (elManager) cfg.footer.brand.manager = elManager.value;
+    const elAddr = document.getElementById('hfFooterAddress');
+    if (elAddr) cfg.footer.brand.kitchenAddress = elAddr.value;
+
+    // Footer Support & Contact
+    const elEmail = document.getElementById('hfSupportEmail');
+    if (elEmail) cfg.footer.contact.supportEmail = elEmail.value;
+    const elPhone = document.getElementById('hfSupportPhone');
+    if (elPhone) cfg.footer.contact.supportPhone = elPhone.value;
+    const elHours = document.getElementById('hfSupportHours');
+    if (elHours) cfg.footer.contact.hours = elHours.value;
+    const elSubtext = document.getElementById('hfSupportSubtext');
+    if (elSubtext) cfg.footer.contact.subtext = elSubtext.value;
+
+    // Footer Copyright
+    const elCopy = document.getElementById('hfCopyright');
+    if (elCopy) cfg.footer.bottomBar.copyright = elCopy.value;
+
+    saveHfConfigLocally(cfg);
+
+    try {
+      await api('/settings', 'PUT', { settings: { header_footer: { config: JSON.stringify(cfg) } } });
+    } catch (e) {}
+
+    showToast('Header & Footer successfully saved and published to live website!');
+    const root = document.getElementById('adminAppRoot');
+    if (root) renderHeaderFooterView(root);
+  };
+
+  window.resetHeaderFooterConfig = function () {
+    if (!confirm('Are you sure you want to reset all Header & Footer settings to the original defaults?')) return;
+    const def = JSON.parse(JSON.stringify(DEFAULT_HEADER_FOOTER_CONFIG));
+    saveHfConfigLocally(def);
+    showToast('Header & Footer configuration reset to default.');
+    const root = document.getElementById('adminAppRoot');
+    if (root) renderHeaderFooterView(root);
+  };
+
+  // --- Header Navigation Links Management ---
+  window.openHeaderLinkModal = function (linkId = null) {
+    const cfg = getHeaderFooterConfig();
+    let currentLink = { id: '', label: '', url: '', newTab: false };
+    if (linkId) {
+      const found = cfg.header.navLinks.find(l => l.id === linkId);
+      if (found) currentLink = { ...found };
+    }
+
+    openModal(`
+      <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border border-gray-200">
+        <div class="flex justify-between items-center pb-3 border-b border-gray-100">
+          <h3 class="font-heading font-extrabold text-lg text-wp-navy">
+            ${linkId ? 'Edit Header Navigation Link' : 'Add New Navigation Link'}
+          </h3>
+          <button onclick="closeModal()" class="text-gray-400 hover:text-gray-600 text-lg">&times;</button>
         </div>
-        <div class="p-4 bg-gray-50 rounded-lg">
-          <strong class="block text-gray-800 mb-1">Footer Configuration:</strong>
-          <p class="text-gray-600">Copyright: &copy; 2026 Greek Fit Kitchen • Centered Text: Enabled • Kitchen HQ: 3575 Lake Shore Blvd W</p>
+        <form onsubmit="handleSaveHeaderLink(event, '${currentLink.id || ''}')" class="space-y-4 mt-4 text-xs">
+          <div>
+            <label class="block font-bold text-gray-700 mb-1">Navigation Label *</label>
+            <input type="text" id="modalNavLinkLabel" required value="${currentLink.label}" placeholder="e.g. Specials, Contact" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-wp-blue" />
+          </div>
+          <div>
+            <label class="block font-bold text-gray-700 mb-1">Target URL *</label>
+            <input type="text" id="modalNavLinkUrl" required value="${currentLink.url}" placeholder="e.g. menu.html or https://..." class="w-full px-3 py-2 border border-gray-300 rounded-lg font-mono focus:outline-none focus:border-wp-blue" />
+            <div class="flex flex-wrap gap-1 mt-2">
+              <span class="text-[10px] text-gray-400 self-center mr-1">Quick Presets:</span>
+              <button type="button" onclick="document.getElementById('modalNavLinkUrl').value='index.html'" class="px-2 py-0.5 bg-gray-100 hover:bg-gray-200 rounded text-[10px] font-mono">index.html</button>
+              <button type="button" onclick="document.getElementById('modalNavLinkUrl').value='menu.html'" class="px-2 py-0.5 bg-gray-100 hover:bg-gray-200 rounded text-[10px] font-mono">menu.html</button>
+              <button type="button" onclick="document.getElementById('modalNavLinkUrl').value='delivery-rates.html'" class="px-2 py-0.5 bg-gray-100 hover:bg-gray-200 rounded text-[10px] font-mono">delivery-rates.html</button>
+              <button type="button" onclick="document.getElementById('modalNavLinkUrl').value='about-us.html'" class="px-2 py-0.5 bg-gray-100 hover:bg-gray-200 rounded text-[10px] font-mono">about-us.html</button>
+              <button type="button" onclick="document.getElementById('modalNavLinkUrl').value='how-it-works.html'" class="px-2 py-0.5 bg-gray-100 hover:bg-gray-200 rounded text-[10px] font-mono">how-it-works.html</button>
+              <button type="button" onclick="document.getElementById('modalNavLinkUrl').value='blog.html'" class="px-2 py-0.5 bg-gray-100 hover:bg-gray-200 rounded text-[10px] font-mono">blog.html</button>
+            </div>
+          </div>
+          <div class="flex items-center gap-2 pt-1">
+            <input type="checkbox" id="modalNavLinkNewTab" ${currentLink.newTab ? 'checked' : ''} class="w-4 h-4 text-wp-blue rounded border-gray-300" />
+            <label for="modalNavLinkNewTab" class="font-semibold text-gray-700">Open in new browser tab (_blank)</label>
+          </div>
+          <div class="flex justify-end gap-2 pt-3 border-t border-gray-100">
+            <button type="button" onclick="closeModal()" class="px-4 py-2 border border-gray-300 rounded-lg font-bold text-gray-600 hover:bg-gray-50">Cancel</button>
+            <button type="submit" class="px-5 py-2 bg-wp-navy hover:bg-wp-navyDark text-wp-gold font-bold rounded-lg shadow">Save Link</button>
+          </div>
+        </form>
+      </div>
+    `);
+  };
+
+  window.handleSaveHeaderLink = function (e, linkId) {
+    e.preventDefault();
+    const label = document.getElementById('modalNavLinkLabel').value.trim();
+    const url = document.getElementById('modalNavLinkUrl').value.trim();
+    const newTab = document.getElementById('modalNavLinkNewTab').checked;
+    if (!label || !url) return;
+
+    const cfg = getHeaderFooterConfig();
+    if (linkId) {
+      const idx = cfg.header.navLinks.findIndex(l => l.id === linkId);
+      if (idx !== -1) {
+        cfg.header.navLinks[idx] = { id: linkId, label, url, newTab };
+      }
+    } else {
+      const newId = 'nav_' + Date.now();
+      cfg.header.navLinks.push({ id: newId, label, url, newTab });
+    }
+
+    saveHfConfigLocally(cfg);
+    closeModal();
+    showToast(linkId ? `Link "${label}" updated.` : `New link "${label}" added to Header.`);
+    if (currentTab === 'header-footer') {
+      renderHeaderFooterView(document.getElementById('adminAppRoot'));
+    } else if (currentTab === 'menus') {
+      renderMenusView(document.getElementById('adminAppRoot'));
+    }
+  };
+
+  window.deleteHeaderLink = function (linkId) {
+    const cfg = getHeaderFooterConfig();
+    const link = cfg.header.navLinks.find(l => l.id === linkId);
+    if (!link) return;
+    if (!confirm(`Delete header navigation link "${link.label}"?`)) return;
+
+    cfg.header.navLinks = cfg.header.navLinks.filter(l => l.id !== linkId);
+    saveHfConfigLocally(cfg);
+    showToast(`Link "${link.label}" deleted.`);
+    if (currentTab === 'header-footer') {
+      renderHeaderFooterView(document.getElementById('adminAppRoot'));
+    } else if (currentTab === 'menus') {
+      renderMenusView(document.getElementById('adminAppRoot'));
+    }
+  };
+
+  window.moveHeaderLink = function (linkId, direction) {
+    const cfg = getHeaderFooterConfig();
+    const idx = cfg.header.navLinks.findIndex(l => l.id === linkId);
+    if (idx === -1) return;
+    const targetIdx = idx + direction;
+    if (targetIdx < 0 || targetIdx >= cfg.header.navLinks.length) return;
+
+    const temp = cfg.header.navLinks[idx];
+    cfg.header.navLinks[idx] = cfg.header.navLinks[targetIdx];
+    cfg.header.navLinks[targetIdx] = temp;
+
+    saveHfConfigLocally(cfg);
+    if (currentTab === 'header-footer') {
+      renderHeaderFooterView(document.getElementById('adminAppRoot'));
+    } else if (currentTab === 'menus') {
+      renderMenusView(document.getElementById('adminAppRoot'));
+    }
+  };
+
+  // --- Footer Quick Links Management ---
+  window.openFooterLinkModal = function (linkId = null) {
+    const cfg = getHeaderFooterConfig();
+    let currentLink = { id: '', label: '', url: '' };
+    if (linkId) {
+      const found = cfg.footer.quickLinks.find(l => l.id === linkId);
+      if (found) currentLink = { ...found };
+    }
+
+    openModal(`
+      <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border border-gray-200">
+        <div class="flex justify-between items-center pb-3 border-b border-gray-100">
+          <h3 class="font-heading font-extrabold text-lg text-wp-navy">
+            ${linkId ? 'Edit Footer Quick Link' : 'Add New Footer Quick Link'}
+          </h3>
+          <button onclick="closeModal()" class="text-gray-400 hover:text-gray-600 text-lg">&times;</button>
+        </div>
+        <form onsubmit="handleSaveFooterLink(event, '${currentLink.id || ''}')" class="space-y-4 mt-4 text-xs">
+          <div>
+            <label class="block font-bold text-gray-700 mb-1">Quick Link Title *</label>
+            <input type="text" id="modalFootLinkLabel" required value="${currentLink.label}" placeholder="e.g. Catering Packages" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-wp-blue" />
+          </div>
+          <div>
+            <label class="block font-bold text-gray-700 mb-1">Target URL *</label>
+            <input type="text" id="modalFootLinkUrl" required value="${currentLink.url}" placeholder="e.g. menu.html" class="w-full px-3 py-2 border border-gray-300 rounded-lg font-mono focus:outline-none focus:border-wp-blue" />
+          </div>
+          <div class="flex justify-end gap-2 pt-3 border-t border-gray-100">
+            <button type="button" onclick="closeModal()" class="px-4 py-2 border border-gray-300 rounded-lg font-bold text-gray-600 hover:bg-gray-50">Cancel</button>
+            <button type="submit" class="px-5 py-2 bg-wp-navy hover:bg-wp-navyDark text-wp-gold font-bold rounded-lg shadow">Save Link</button>
+          </div>
+        </form>
+      </div>
+    `);
+  };
+
+  window.handleSaveFooterLink = function (e, linkId) {
+    e.preventDefault();
+    const label = document.getElementById('modalFootLinkLabel').value.trim();
+    const url = document.getElementById('modalFootLinkUrl').value.trim();
+    if (!label || !url) return;
+
+    const cfg = getHeaderFooterConfig();
+    if (linkId) {
+      const idx = cfg.footer.quickLinks.findIndex(l => l.id === linkId);
+      if (idx !== -1) {
+        cfg.footer.quickLinks[idx] = { id: linkId, label, url };
+      }
+    } else {
+      const newId = 'fl_' + Date.now();
+      cfg.footer.quickLinks.push({ id: newId, label, url });
+    }
+
+    saveHfConfigLocally(cfg);
+    closeModal();
+    showToast(linkId ? `Footer link "${label}" updated.` : `New footer link "${label}" added.`);
+    renderHeaderFooterView(document.getElementById('adminAppRoot'));
+  };
+
+  window.deleteFooterLink = function (linkId) {
+    const cfg = getHeaderFooterConfig();
+    const link = cfg.footer.quickLinks.find(l => l.id === linkId);
+    if (!link) return;
+    if (!confirm(`Delete footer quick link "${link.label}"?`)) return;
+
+    cfg.footer.quickLinks = cfg.footer.quickLinks.filter(l => l.id !== linkId);
+    saveHfConfigLocally(cfg);
+    showToast(`Footer link "${link.label}" deleted.`);
+    renderHeaderFooterView(document.getElementById('adminAppRoot'));
+  };
+
+  window.moveFooterLink = function (linkId, direction) {
+    const cfg = getHeaderFooterConfig();
+    const idx = cfg.footer.quickLinks.findIndex(l => l.id === linkId);
+    if (idx === -1) return;
+    const targetIdx = idx + direction;
+    if (targetIdx < 0 || targetIdx >= cfg.footer.quickLinks.length) return;
+
+    const temp = cfg.footer.quickLinks[idx];
+    cfg.footer.quickLinks[idx] = cfg.footer.quickLinks[targetIdx];
+    cfg.footer.quickLinks[targetIdx] = temp;
+
+    saveHfConfigLocally(cfg);
+    renderHeaderFooterView(document.getElementById('adminAppRoot'));
+  };
+
+  // --- Batch Drop Schedules Management ---
+  window.openBatchDropModal = function (dropId = null) {
+    const cfg = getHeaderFooterConfig();
+    let currentDrop = { id: '', title: '', cutoff: '' };
+    if (dropId) {
+      const found = cfg.footer.batchDrops.find(b => b.id === dropId);
+      if (found) currentDrop = { ...found };
+    }
+
+    openModal(`
+      <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border border-gray-200">
+        <div class="flex justify-between items-center pb-3 border-b border-gray-100">
+          <h3 class="font-heading font-extrabold text-lg text-wp-navy">
+            ${dropId ? 'Edit Batch Drop Schedule' : 'Add New Batch Drop Schedule'}
+          </h3>
+          <button onclick="closeModal()" class="text-gray-400 hover:text-gray-600 text-lg">&times;</button>
+        </div>
+        <form onsubmit="handleSaveBatchDrop(event, '${currentDrop.id || ''}')" class="space-y-4 mt-4 text-xs">
+          <div>
+            <label class="block font-bold text-gray-700 mb-1">Batch Title *</label>
+            <input type="text" id="modalBatchTitle" required value="${currentDrop.title}" placeholder="e.g. Sunday Batch Delivery:" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-wp-blue" />
+          </div>
+          <div>
+            <label class="block font-bold text-gray-700 mb-1">Cutoff Time &amp; Delivery Window *</label>
+            <input type="text" id="modalBatchCutoff" required value="${currentDrop.cutoff}" placeholder="e.g. Cutoff Friday 11:59 PM EST • Delivery Sunday 1-7 PM" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-wp-blue" />
+          </div>
+          <div class="flex justify-end gap-2 pt-3 border-t border-gray-100">
+            <button type="button" onclick="closeModal()" class="px-4 py-2 border border-gray-300 rounded-lg font-bold text-gray-600 hover:bg-gray-50">Cancel</button>
+            <button type="submit" class="px-5 py-2 bg-wp-navy hover:bg-wp-navyDark text-wp-gold font-bold rounded-lg shadow">Save Schedule</button>
+          </div>
+        </form>
+      </div>
+    `);
+  };
+
+  window.handleSaveBatchDrop = function (e, dropId) {
+    e.preventDefault();
+    const title = document.getElementById('modalBatchTitle').value.trim();
+    const cutoff = document.getElementById('modalBatchCutoff').value.trim();
+    if (!title || !cutoff) return;
+
+    const cfg = getHeaderFooterConfig();
+    if (dropId) {
+      const idx = cfg.footer.batchDrops.findIndex(b => b.id === dropId);
+      if (idx !== -1) {
+        cfg.footer.batchDrops[idx] = { id: dropId, title, cutoff };
+      }
+    } else {
+      const newId = 'bd_' + Date.now();
+      cfg.footer.batchDrops.push({ id: newId, title, cutoff });
+    }
+
+    saveHfConfigLocally(cfg);
+    closeModal();
+    showToast(dropId ? 'Batch drop schedule updated.' : 'New batch drop schedule added.');
+    renderHeaderFooterView(document.getElementById('adminAppRoot'));
+  };
+
+  window.deleteBatchDrop = function (dropId) {
+    const cfg = getHeaderFooterConfig();
+    const drop = cfg.footer.batchDrops.find(b => b.id === dropId);
+    if (!drop) return;
+    if (!confirm(`Delete batch schedule "${drop.title}"?`)) return;
+
+    cfg.footer.batchDrops = cfg.footer.batchDrops.filter(b => b.id !== dropId);
+    saveHfConfigLocally(cfg);
+    showToast('Batch drop schedule deleted.');
+    renderHeaderFooterView(document.getElementById('adminAppRoot'));
+  };
+
+  // --- Footer Social Links Management ---
+  window.openSocialLinkModal = function (socId = null) {
+    const cfg = getHeaderFooterConfig();
+    let currentSoc = { id: '', platform: '', url: '', icon: '📸' };
+    if (socId) {
+      const found = cfg.footer.socialLinks.find(s => s.id === socId);
+      if (found) currentSoc = { ...found };
+    }
+
+    openModal(`
+      <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border border-gray-200">
+        <div class="flex justify-between items-center pb-3 border-b border-gray-100">
+          <h3 class="font-heading font-extrabold text-lg text-wp-navy">
+            ${socId ? 'Edit Social Channel' : 'Add Social Channel'}
+          </h3>
+          <button onclick="closeModal()" class="text-gray-400 hover:text-gray-600 text-lg">&times;</button>
+        </div>
+        <form onsubmit="handleSaveSocialLink(event, '${currentSoc.id || ''}')" class="space-y-4 mt-4 text-xs">
+          <div class="grid grid-cols-3 gap-2">
+            <div class="col-span-1">
+              <label class="block font-bold text-gray-700 mb-1">Icon</label>
+              <input type="text" id="modalSocIcon" value="${currentSoc.icon || '🔗'}" class="w-full text-center px-3 py-2 border border-gray-300 rounded-lg text-base" />
+            </div>
+            <div class="col-span-2">
+              <label class="block font-bold text-gray-700 mb-1">Platform Name *</label>
+              <input type="text" id="modalSocPlatform" required value="${currentSoc.platform}" placeholder="Instagram, TikTok, etc." class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-wp-blue" />
+            </div>
+          </div>
+          <div>
+            <label class="block font-bold text-gray-700 mb-1">Profile / Channel URL *</label>
+            <input type="text" id="modalSocUrl" required value="${currentSoc.url}" placeholder="https://instagram.com/..." class="w-full px-3 py-2 border border-gray-300 rounded-lg font-mono focus:outline-none focus:border-wp-blue" />
+          </div>
+          <div class="flex justify-end gap-2 pt-3 border-t border-gray-100">
+            <button type="button" onclick="closeModal()" class="px-4 py-2 border border-gray-300 rounded-lg font-bold text-gray-600 hover:bg-gray-50">Cancel</button>
+            <button type="submit" class="px-5 py-2 bg-wp-navy hover:bg-wp-navyDark text-wp-gold font-bold rounded-lg shadow">Save Channel</button>
+          </div>
+        </form>
+      </div>
+    `);
+  };
+
+  window.handleSaveSocialLink = function (e, socId) {
+    e.preventDefault();
+    const platform = document.getElementById('modalSocPlatform').value.trim();
+    const url = document.getElementById('modalSocUrl').value.trim();
+    const icon = document.getElementById('modalSocIcon').value.trim() || '🔗';
+    if (!platform || !url) return;
+
+    const cfg = getHeaderFooterConfig();
+    if (socId) {
+      const idx = cfg.footer.socialLinks.findIndex(s => s.id === socId);
+      if (idx !== -1) {
+        cfg.footer.socialLinks[idx] = { id: socId, platform, url, icon };
+      }
+    } else {
+      const newId = 'soc_' + Date.now();
+      cfg.footer.socialLinks.push({ id: newId, platform, url, icon });
+    }
+
+    saveHfConfigLocally(cfg);
+    closeModal();
+    showToast(socId ? `Social channel "${platform}" updated.` : `Social channel "${platform}" added.`);
+    renderHeaderFooterView(document.getElementById('adminAppRoot'));
+  };
+
+  window.deleteSocialLink = function (socId) {
+    const cfg = getHeaderFooterConfig();
+    const soc = cfg.footer.socialLinks.find(s => s.id === socId);
+    if (!soc) return;
+    if (!confirm(`Delete social channel "${soc.platform}"?`)) return;
+
+    cfg.footer.socialLinks = cfg.footer.socialLinks.filter(s => s.id !== socId);
+    saveHfConfigLocally(cfg);
+    showToast(`Social channel "${soc.platform}" deleted.`);
+    renderHeaderFooterView(document.getElementById('adminAppRoot'));
+  };
+
+  // --- Main Header & Footer Builder Render Function ---
+  async function renderHeaderFooterView(c) {
+    const cfg = getHeaderFooterConfig();
+
+    c.innerHTML = `
+      <div class="space-y-6 max-w-6xl pb-16">
+        <!-- Module Header Bar -->
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-4 border-b border-gray-200">
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="px-2.5 py-0.5 rounded-full bg-wp-navy text-wp-gold text-[10px] font-black uppercase tracking-wider">Module 5</span>
+              <h2 class="font-heading font-extrabold text-2xl text-wp-navy">Header &amp; Footer Builder</h2>
+            </div>
+            <p class="text-xs text-gray-500 mt-1">
+              Add, remove, and customize site-wide navigation links, top announcement banners, brand identities, and footer columns.
+            </p>
+          </div>
+          <div class="flex flex-wrap items-center gap-2">
+            <button onclick="resetHeaderFooterConfig()" class="px-3.5 py-2 bg-white hover:bg-gray-50 border border-gray-300 text-gray-700 font-bold text-xs rounded-lg transition flex items-center gap-1.5 shadow-sm">
+              <span>🔄</span>
+              <span>Reset Defaults</span>
+            </button>
+            <a href="../index.html" target="_blank" class="px-3.5 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold text-xs rounded-lg transition flex items-center gap-1.5 shadow-sm">
+              <span>👁</span>
+              <span>View Website</span>
+            </a>
+            <button onclick="saveHeaderFooterConfig()" class="px-4 py-2 bg-wp-gold hover:bg-wp-goldHover text-wp-navyDark font-black text-xs rounded-lg shadow transition flex items-center gap-1.5">
+              <span>💾</span>
+              <span>Save &amp; Publish to Live Website</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Sub-Navigation Switcher Tabs -->
+        <div class="flex items-center gap-2 border-b border-gray-200">
+          <button onclick="switchHeaderFooterTab('header')" class="px-4 py-2.5 font-bold text-xs border-b-2 transition flex items-center gap-2 ${activeHfSubTab === 'header' ? 'border-wp-blue text-wp-blue bg-blue-50/50' : 'border-transparent text-gray-600 hover:text-gray-900'}">
+            <span>📌</span>
+            <span>Header &amp; Navigation (${cfg.header.navLinks.length} links)</span>
+          </button>
+          <button onclick="switchHeaderFooterTab('footer')" class="px-4 py-2.5 font-bold text-xs border-b-2 transition flex items-center gap-2 ${activeHfSubTab === 'footer' ? 'border-wp-blue text-wp-blue bg-blue-50/50' : 'border-transparent text-gray-600 hover:text-gray-900'}">
+            <span>🦶</span>
+            <span>Footer, Batch Drops &amp; Contact</span>
+          </button>
+          <button onclick="switchHeaderFooterTab('preview')" class="px-4 py-2.5 font-bold text-xs border-b-2 transition flex items-center gap-2 ${activeHfSubTab === 'preview' ? 'border-wp-blue text-wp-blue bg-blue-50/50' : 'border-transparent text-gray-600 hover:text-gray-900'}">
+            <span>👁</span>
+            <span>Live Visual Studio Preview</span>
+          </button>
+        </div>
+
+        <!-- TAB 1: HEADER & NAVIGATION -->
+        ${activeHfSubTab === 'header' ? `
+          <div class="space-y-6">
+            <!-- 1. Top Announcement Bar -->
+            <div class="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm space-y-4 text-xs">
+              <div class="flex justify-between items-center pb-2 border-b border-gray-100">
+                <div>
+                  <h3 class="font-heading font-extrabold text-base text-wp-navy">Top Announcement Bar</h3>
+                  <p class="text-gray-500 text-[11px]">Highlights promotions, discounts, or delivery cutoffs above the header.</p>
+                </div>
+                <label class="flex items-center gap-2 cursor-pointer">
+                  <input type="checkbox" id="hfAnnEnabled" ${cfg.header.announcement.enabled ? 'checked' : ''} class="w-4 h-4 text-wp-blue rounded border-gray-300" />
+                  <span class="font-bold text-gray-700">Enable Announcement Bar</span>
+                </label>
+              </div>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="md:col-span-2">
+                  <label class="block font-bold text-gray-700 mb-1">Announcement Message *</label>
+                  <input type="text" id="hfAnnText" value="${cfg.header.announcement.text || ''}" placeholder="e.g. 10% OFF ORDERS OVER 7+ MEALS • FREE DELIVERY ACROSS SOUTH ETOBICOKE" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs" />
+                </div>
+                <div>
+                  <label class="block font-bold text-gray-700 mb-1">Target Link (Optional)</label>
+                  <input type="text" id="hfAnnLink" value="${cfg.header.announcement.link || ''}" placeholder="menu.html" class="w-full px-3 py-2 border border-gray-300 rounded-lg font-mono text-xs" />
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                  <div>
+                    <label class="block font-bold text-gray-700 mb-1">Background Color</label>
+                    <div class="flex items-center gap-2">
+                      <input type="color" id="hfAnnBg" value="${cfg.header.announcement.bgColor || '#101D3A'}" class="w-8 h-8 rounded border border-gray-300 cursor-pointer p-0.5" />
+                      <input type="text" value="${cfg.header.announcement.bgColor || '#101D3A'}" oninput="document.getElementById('hfAnnBg').value=this.value" class="w-full px-2 py-1.5 border border-gray-300 rounded text-xs font-mono" />
+                    </div>
+                  </div>
+                  <div>
+                    <label class="block font-bold text-gray-700 mb-1">Text Color</label>
+                    <div class="flex items-center gap-2">
+                      <input type="color" id="hfAnnColor" value="${cfg.header.announcement.textColor || '#F5C542'}" class="w-8 h-8 rounded border border-gray-300 cursor-pointer p-0.5" />
+                      <input type="text" value="${cfg.header.announcement.textColor || '#F5C542'}" oninput="document.getElementById('hfAnnColor').value=this.value" class="w-full px-2 py-1.5 border border-gray-300 rounded text-xs font-mono" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 2. Header Branding & Navigation Menu Links -->
+            <div class="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm space-y-4 text-xs">
+              <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 pb-2 border-b border-gray-100">
+                <div>
+                  <h3 class="font-heading font-extrabold text-base text-wp-navy">Header Navigation Menu Links</h3>
+                  <p class="text-gray-500 text-[11px]">Add, edit, rearrange, or delete menu links displayed across desktop navbar and mobile drawer.</p>
+                </div>
+                <button onclick="openHeaderLinkModal()" class="px-3.5 py-2 bg-wp-navy hover:bg-wp-navyDark text-wp-gold font-bold text-xs rounded-lg shadow transition flex items-center gap-1.5 self-start">
+                  <span>+ Add Navigation Link</span>
+                </button>
+              </div>
+
+              <!-- Links Table -->
+              <div class="overflow-x-auto border border-gray-200 rounded-xl">
+                <table class="w-full text-left border-collapse text-xs">
+                  <thead class="bg-gray-50 border-b border-gray-200 text-gray-600 font-bold uppercase tracking-wider text-[11px]">
+                    <tr>
+                      <th class="py-2.5 px-3 w-12 text-center">#</th>
+                      <th class="py-2.5 px-3">Link Label</th>
+                      <th class="py-2.5 px-3">Target URL</th>
+                      <th class="py-2.5 px-3 w-28">Target Window</th>
+                      <th class="py-2.5 px-3 w-36 text-center">Reorder</th>
+                      <th class="py-2.5 px-3 w-28 text-right">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody class="divide-y divide-gray-100">
+                    ${cfg.header.navLinks.map((link, index) => `
+                      <tr class="hover:bg-gray-50/80 transition">
+                        <td class="py-2.5 px-3 text-center text-gray-400 font-mono font-bold">${index + 1}</td>
+                        <td class="py-2.5 px-3 font-bold text-gray-900">${link.label}</td>
+                        <td class="py-2.5 px-3 font-mono text-gray-600">${link.url}</td>
+                        <td class="py-2.5 px-3">
+                          <span class="px-2 py-0.5 rounded text-[10px] font-bold ${link.newTab ? 'bg-purple-100 text-purple-700' : 'bg-gray-100 text-gray-600'}">
+                            ${link.newTab ? 'New Tab ↗' : 'Same Window'}
+                          </span>
+                        </td>
+                        <td class="py-2.5 px-3 text-center space-x-1">
+                          <button onclick="moveHeaderLink('${link.id}', -1)" title="Move Up" class="p-1 hover:bg-gray-200 rounded text-gray-600 disabled:opacity-30" ${index === 0 ? 'disabled' : ''}>⬆️</button>
+                          <button onclick="moveHeaderLink('${link.id}', 1)" title="Move Down" class="p-1 hover:bg-gray-200 rounded text-gray-600 disabled:opacity-30" ${index === cfg.header.navLinks.length - 1 ? 'disabled' : ''}>⬇️</button>
+                        </td>
+                        <td class="py-2.5 px-3 text-right space-x-1">
+                          <button onclick="openHeaderLinkModal('${link.id}')" class="px-2 py-1 text-wp-blue hover:bg-blue-50 rounded font-bold">Edit</button>
+                          <button onclick="deleteHeaderLink('${link.id}')" class="px-2 py-1 text-red-600 hover:bg-red-50 rounded font-bold">Delete</button>
+                        </td>
+                      </tr>
+                    `).join('')}
+                    ${cfg.header.navLinks.length === 0 ? `
+                      <tr>
+                        <td colspan="6" class="py-8 text-center text-gray-400 italic">No navigation links added yet. Click "+ Add Navigation Link" above.</td>
+                      </tr>
+                    ` : ''}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- 3. Header Styling & Action Trigger -->
+            <div class="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm space-y-4 text-xs">
+              <h3 class="font-heading font-extrabold text-base text-wp-navy pb-2 border-b border-gray-100">Header Branding &amp; Behavior</h3>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label class="block font-bold text-gray-700 mb-1">Light Theme Logo File / URL</label>
+                  <input type="text" id="hfLogoLight" value="${cfg.header.brand.logoLight || ''}" class="w-full px-3 py-2 border border-gray-300 rounded-lg font-mono text-xs" />
+                </div>
+                <div>
+                  <label class="block font-bold text-gray-700 mb-1">Dark Theme Logo File / URL</label>
+                  <input type="text" id="hfLogoDark" value="${cfg.header.brand.logoDark || ''}" class="w-full px-3 py-2 border border-gray-300 rounded-lg font-mono text-xs" />
+                </div>
+                <div>
+                  <label class="block font-bold text-gray-700 mb-1">Logo Height (px)</label>
+                  <input type="number" id="hfLogoHeight" value="${cfg.header.brand.logoHeight || 52}" min="32" max="100" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs" />
+                </div>
+                <div>
+                  <label class="block font-bold text-gray-700 mb-1">Action Button Text</label>
+                  <input type="text" id="hfCtaText" value="${cfg.header.ctaButton.text || 'My Plan'}" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs" />
+                </div>
+              </div>
+              <div class="pt-2 flex items-center gap-4">
+                <label class="flex items-center gap-2 cursor-pointer">
+                  <input type="checkbox" id="hfStickyHeader" ${cfg.header.styling.sticky ? 'checked' : ''} class="w-4 h-4 text-wp-blue rounded border-gray-300" />
+                  <span class="font-bold text-gray-700">Sticky Header (Fixes navbar to the top while scrolling)</span>
+                </label>
+              </div>
+            </div>
+          </div>
+        ` : ''}
+
+        <!-- TAB 2: FOOTER, BATCH DROPS & CONTACT -->
+        ${activeHfSubTab === 'footer' ? `
+          <div class="space-y-6">
+            <!-- 1. Footer Brand Column -->
+            <div class="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm space-y-4 text-xs">
+              <h3 class="font-heading font-extrabold text-base text-wp-navy pb-2 border-b border-gray-100">Column 1: Brand &amp; Commercial Kitchen</h3>
+              <div class="space-y-3">
+                <div>
+                  <label class="block font-bold text-gray-700 mb-1">Company Description &amp; Tagline *</label>
+                  <textarea id="hfFooterDesc" rows="3" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs leading-relaxed">${cfg.footer.brand.description || ''}</textarea>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label class="block font-bold text-gray-700 mb-1">Kitchen Manager Name</label>
+                    <input type="text" id="hfFooterManager" value="${cfg.footer.brand.manager || ''}" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs" />
+                  </div>
+                  <div>
+                    <label class="block font-bold text-gray-700 mb-1">Commercial Kitchen Address</label>
+                    <input type="text" id="hfFooterAddress" value="${cfg.footer.brand.kitchenAddress || ''}" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs" />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 2. Footer Quick Links -->
+            <div class="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm space-y-4 text-xs">
+              <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 pb-2 border-b border-gray-100">
+                <div>
+                  <h3 class="font-heading font-extrabold text-base text-wp-navy">Column 2: Quick Navigation Links (${cfg.footer.quickLinks.length})</h3>
+                  <p class="text-gray-500 text-[11px]">Links appearing in the second footer column.</p>
+                </div>
+                <button onclick="openFooterLinkModal()" class="px-3.5 py-2 bg-wp-navy hover:bg-wp-navyDark text-wp-gold font-bold text-xs rounded-lg shadow transition flex items-center gap-1.5 self-start">
+                  <span>+ Add Quick Link</span>
+                </button>
+              </div>
+
+              <div class="overflow-x-auto border border-gray-200 rounded-xl">
+                <table class="w-full text-left border-collapse text-xs">
+                  <thead class="bg-gray-50 border-b border-gray-200 text-gray-600 font-bold uppercase tracking-wider text-[11px]">
+                    <tr>
+                      <th class="py-2.5 px-3 w-12 text-center">#</th>
+                      <th class="py-2.5 px-3">Title</th>
+                      <th class="py-2.5 px-3">URL</th>
+                      <th class="py-2.5 px-3 w-36 text-center">Reorder</th>
+                      <th class="py-2.5 px-3 w-28 text-right">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody class="divide-y divide-gray-100">
+                    ${cfg.footer.quickLinks.map((link, index) => `
+                      <tr class="hover:bg-gray-50/80 transition">
+                        <td class="py-2.5 px-3 text-center text-gray-400 font-mono font-bold">${index + 1}</td>
+                        <td class="py-2.5 px-3 font-bold text-gray-900">${link.label}</td>
+                        <td class="py-2.5 px-3 font-mono text-gray-600">${link.url}</td>
+                        <td class="py-2.5 px-3 text-center space-x-1">
+                          <button onclick="moveFooterLink('${link.id}', -1)" title="Move Up" class="p-1 hover:bg-gray-200 rounded text-gray-600 disabled:opacity-30" ${index === 0 ? 'disabled' : ''}>⬆️</button>
+                          <button onclick="moveFooterLink('${link.id}', 1)" title="Move Down" class="p-1 hover:bg-gray-200 rounded text-gray-600 disabled:opacity-30" ${index === cfg.footer.quickLinks.length - 1 ? 'disabled' : ''}>⬇️</button>
+                        </td>
+                        <td class="py-2.5 px-3 text-right space-x-1">
+                          <button onclick="openFooterLinkModal('${link.id}')" class="px-2 py-1 text-wp-blue hover:bg-blue-50 rounded font-bold">Edit</button>
+                          <button onclick="deleteFooterLink('${link.id}')" class="px-2 py-1 text-red-600 hover:bg-red-50 rounded font-bold">Delete</button>
+                        </td>
+                      </tr>
+                    `).join('')}
+                    ${cfg.footer.quickLinks.length === 0 ? `
+                      <tr><td colspan="5" class="py-8 text-center text-gray-400 italic">No footer links yet.</td></tr>
+                    ` : ''}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- 3. Footer Batch Drops Column -->
+            <div class="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm space-y-4 text-xs">
+              <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 pb-2 border-b border-gray-100">
+                <div>
+                  <h3 class="font-heading font-extrabold text-base text-wp-navy">Column 3: Batch Drop Schedules (${cfg.footer.batchDrops.length})</h3>
+                  <p class="text-gray-500 text-[11px]">Sunday and Wednesday cooking schedules and kitchen pickup hours.</p>
+                </div>
+                <button onclick="openBatchDropModal()" class="px-3.5 py-2 bg-wp-navy hover:bg-wp-navyDark text-wp-gold font-bold text-xs rounded-lg shadow transition flex items-center gap-1.5 self-start">
+                  <span>+ Add Batch Drop Schedule</span>
+                </button>
+              </div>
+
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                ${cfg.footer.batchDrops.map(b => `
+                  <div class="p-4 bg-gray-50 rounded-xl border border-gray-200 flex justify-between items-start">
+                    <div>
+                      <strong class="block text-wp-navy text-xs">${b.title}</strong>
+                      <p class="text-gray-600 text-[11px] mt-0.5">${b.cutoff}</p>
+                    </div>
+                    <div class="flex items-center gap-1">
+                      <button onclick="openBatchDropModal('${b.id}')" class="px-2 py-1 text-wp-blue hover:bg-blue-50 rounded font-bold text-[11px]">Edit</button>
+                      <button onclick="deleteBatchDrop('${b.id}')" class="px-2 py-1 text-red-600 hover:bg-red-50 rounded font-bold text-[11px]">Delete</button>
+                    </div>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+
+            <!-- 4. Footer Support & Contact -->
+            <div class="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm space-y-4 text-xs">
+              <h3 class="font-heading font-extrabold text-base text-wp-navy pb-2 border-b border-gray-100">Column 4: Customer Support &amp; Hours</h3>
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div>
+                  <label class="block font-bold text-gray-700 mb-1">Support Email</label>
+                  <input type="email" id="hfSupportEmail" value="${cfg.footer.contact.supportEmail || ''}" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs" />
+                </div>
+                <div>
+                  <label class="block font-bold text-gray-700 mb-1">Support Phone</label>
+                  <input type="text" id="hfSupportPhone" value="${cfg.footer.contact.supportPhone || ''}" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs" />
+                </div>
+                <div>
+                  <label class="block font-bold text-gray-700 mb-1">Operating Hours</label>
+                  <input type="text" id="hfSupportHours" value="${cfg.footer.contact.hours || ''}" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs" />
+                </div>
+                <div class="sm:col-span-3">
+                  <label class="block font-bold text-gray-700 mb-1">Support Subtext</label>
+                  <input type="text" id="hfSupportSubtext" value="${cfg.footer.contact.subtext || ''}" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs" />
+                </div>
+              </div>
+            </div>
+
+            <!-- 5. Social Media Channels -->
+            <div class="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm space-y-4 text-xs">
+              <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 pb-2 border-b border-gray-100">
+                <div>
+                  <h3 class="font-heading font-extrabold text-base text-wp-navy">Social Media Links (${cfg.footer.socialLinks.length})</h3>
+                  <p class="text-gray-500 text-[11px]">Instagram, TikTok, Facebook profiles linked in the footer.</p>
+                </div>
+                <button onclick="openSocialLinkModal()" class="px-3.5 py-2 bg-wp-navy hover:bg-wp-navyDark text-wp-gold font-bold text-xs rounded-lg shadow transition flex items-center gap-1.5 self-start">
+                  <span>+ Add Social Channel</span>
+                </button>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                ${cfg.footer.socialLinks.map(s => `
+                  <div class="p-3 bg-gray-50 rounded-xl border border-gray-200 flex items-center justify-between">
+                    <div class="flex items-center gap-2 min-w-0">
+                      <span class="text-base">${s.icon || '🔗'}</span>
+                      <div class="truncate">
+                        <strong class="block text-wp-navy truncate text-xs">${s.platform}</strong>
+                        <span class="text-[10px] text-gray-400 font-mono truncate block">${s.url}</span>
+                      </div>
+                    </div>
+                    <div class="flex items-center gap-1 shrink-0 ml-2">
+                      <button onclick="openSocialLinkModal('${s.id}')" class="px-1.5 py-1 text-wp-blue hover:bg-blue-50 rounded font-bold text-[11px]">Edit</button>
+                      <button onclick="deleteSocialLink('${s.id}')" class="px-1.5 py-1 text-red-600 hover:bg-red-50 rounded font-bold text-[11px]">Delete</button>
+                    </div>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+
+            <!-- 6. Bottom Copyright Bar -->
+            <div class="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm space-y-4 text-xs">
+              <h3 class="font-heading font-extrabold text-base text-wp-navy pb-2 border-b border-gray-100">Bottom Copyright Bar</h3>
+              <div>
+                <label class="block font-bold text-gray-700 mb-1">Copyright Text &amp; Disclaimer *</label>
+                <input type="text" id="hfCopyright" value="${cfg.footer.bottomBar.copyright || ''}" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs font-mono" />
+              </div>
+            </div>
+          </div>
+        ` : ''}
+
+        <!-- TAB 3: LIVE VISUAL PREVIEW -->
+        ${activeHfSubTab === 'preview' ? `
+          <div class="space-y-6">
+            <div class="bg-gray-100 p-4 sm:p-6 rounded-2xl border border-gray-300 space-y-4">
+              <div class="flex justify-between items-center text-xs">
+                <span class="font-bold text-gray-600 uppercase tracking-wider text-[11px]">Desktop &amp; Mobile Responsive Simulation</span>
+                <span class="px-2.5 py-1 bg-emerald-100 text-emerald-800 font-bold rounded-full text-[10px]">Real-Time Layout</span>
+              </div>
+
+              <!-- Top Announcement Simulation -->
+              ${cfg.header.announcement.enabled ? `
+                <div class="py-2 px-4 text-center text-xs font-bold rounded-t-xl" style="background-color: ${cfg.header.announcement.bgColor || '#101D3A'}; color: ${cfg.header.announcement.textColor || '#F5C542'}">
+                  ${cfg.header.announcement.text}
+                </div>
+              ` : ''}
+
+              <!-- Header Simulation -->
+              <div class="bg-white p-4 ${cfg.header.announcement.enabled ? '' : 'rounded-t-xl'} border-b border-gray-200 flex items-center justify-between shadow-sm">
+                <div class="flex items-center gap-3">
+                  <img src="../${cfg.header.brand.logoLight}" alt="Logo" class="h-10 w-auto object-contain" onerror="this.src='../images/brand/greek-fit-kitchen-logo.png'" />
+                </div>
+                <div class="hidden md:flex items-center gap-5 text-xs font-semibold text-gray-700">
+                  ${cfg.header.navLinks.map(l => `
+                    <span class="hover:text-wp-gold cursor-pointer">${l.label}</span>
+                  `).join('')}
+                </div>
+                <div class="flex items-center gap-2">
+                  <button class="px-3.5 py-1.5 bg-wp-gold text-wp-navyDark font-black text-xs rounded-xl shadow-sm">
+                    ${cfg.header.ctaButton.text || 'My Plan'}
+                  </button>
+                </div>
+              </div>
+
+              <!-- Middle Content Filler -->
+              <div class="py-16 text-center bg-white/70 border-y border-dashed border-gray-300">
+                <p class="font-heading font-extrabold text-xl text-gray-400">Page Content Canvas</p>
+                <p class="text-xs text-gray-400 mt-1">This represents the main body of any customer page (Home, Menu, Delivery, etc.)</p>
+              </div>
+
+              <!-- Footer Simulation -->
+              <div class="bg-wp-navyDark text-white p-8 rounded-b-xl space-y-8">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-6 text-xs">
+                  <div>
+                    <img src="../${cfg.footer.brand.logo}" alt="Logo" class="h-10 w-auto mb-3" onerror="this.src='../images/brand/greek-fit-kitchen-logo.png'" />
+                    <p class="text-white/60 text-[11px] leading-relaxed">${cfg.footer.brand.description}</p>
+                    <div class="mt-3 text-[11px] text-white/70">
+                      <p><strong>Manager:</strong> ${cfg.footer.brand.manager}</p>
+                      <p><strong>Kitchen:</strong> ${cfg.footer.brand.kitchenAddress}</p>
+                    </div>
+                  </div>
+                  <div>
+                    <h4 class="font-bold text-wp-gold uppercase text-[11px] tracking-wider mb-3">Quick Navigation</h4>
+                    <ul class="space-y-1.5 text-white/70 text-[11px]">
+                      ${cfg.footer.quickLinks.map(l => `<li>${l.label}</li>`).join('')}
+                    </ul>
+                  </div>
+                  <div>
+                    <h4 class="font-bold text-wp-gold uppercase text-[11px] tracking-wider mb-3">Batch Drops</h4>
+                    <div class="space-y-2 text-[11px] text-white/70">
+                      ${cfg.footer.batchDrops.map(b => `
+                        <div>
+                          <strong class="text-white block">${b.title}</strong>
+                          <span>${b.cutoff}</span>
+                        </div>
+                      `).join('')}
+                    </div>
+                  </div>
+                  <div>
+                    <h4 class="font-bold text-wp-gold uppercase text-[11px] tracking-wider mb-3">Customer Support</h4>
+                    <div class="space-y-1.5 text-[11px] text-white/80">
+                      <p>📧 ${cfg.footer.contact.supportEmail}</p>
+                      <p>📞 ${cfg.footer.contact.supportPhone}</p>
+                      <p>🕒 ${cfg.footer.contact.hours}</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="pt-4 border-t border-white/10 text-center text-[10px] text-white/40">
+                  <p>${cfg.footer.bottomBar.copyright}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        ` : ''}
+
+        <!-- Bottom Actions Floating / Save Bar -->
+        <div class="pt-4 flex flex-wrap items-center justify-between gap-3 border-t border-gray-200">
+          <span class="text-xs text-gray-500">
+            Click <strong>Save &amp; Publish</strong> to synchronize changes across all public pages immediately.
+          </span>
+          <div class="flex items-center gap-2">
+            <button onclick="saveHeaderFooterConfig()" class="px-6 py-2.5 bg-wp-gold hover:bg-wp-goldHover text-wp-navyDark font-black text-xs rounded-xl shadow-lg transition flex items-center gap-2">
+              <span>💾</span>
+              <span>Save &amp; Publish to Live Website</span>
+            </button>
+          </div>
         </div>
       </div>
     `;
   }
 
+  // --- Module 6: Navigation Menus View ---
   async function renderMenusView(c) {
+    const cfg = getHeaderFooterConfig();
+
     c.innerHTML = `
-      <div class="p-6 bg-white rounded-xl border border-gray-200 space-y-4 text-xs">
-        <h2 class="font-heading font-extrabold text-2xl text-wp-navy">Navigation Menus</h2>
-        <p class="text-gray-500">Configure desktop navbar items and mobile drawer links.</p>
-        <div class="border rounded-lg p-3 space-y-1">
-          <div class="p-2 bg-gray-50 rounded font-bold">1. Home (index.html)</div>
-          <div class="p-2 bg-gray-50 rounded font-bold">2. Meal Plan (menu.html)</div>
-          <div class="p-2 bg-gray-50 rounded font-bold">3. Delivery Rates (delivery-rates.html)</div>
-          <div class="p-2 bg-gray-50 rounded font-bold">4. About Us (about-us.html)</div>
-          <div class="p-2 bg-gray-50 rounded font-bold">5. How It Works (how-it-works.html)</div>
-          <div class="p-2 bg-gray-50 rounded font-bold">6. Blog Journal (blog.html)</div>
+      <div class="space-y-6 max-w-5xl pb-16">
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-4 border-b border-gray-200">
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="px-2.5 py-0.5 rounded-full bg-wp-navy text-wp-gold text-[10px] font-black uppercase tracking-wider">Module 6</span>
+              <h2 class="font-heading font-extrabold text-2xl text-wp-navy">Navigation Menus Manager</h2>
+            </div>
+            <p class="text-xs text-gray-500 mt-1">Configure desktop navbar items and mobile drawer links with real-time website sync.</p>
+          </div>
+          <div class="flex items-center gap-2">
+            <button onclick="navigateToTab('header-footer')" class="px-3.5 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold text-xs rounded-lg transition shadow-sm">
+              Open Full Header Studio →
+            </button>
+            <button onclick="openHeaderLinkModal()" class="px-3.5 py-2 bg-wp-navy hover:bg-wp-navyDark text-wp-gold font-bold text-xs rounded-lg shadow transition">
+              + Add Navigation Link
+            </button>
+          </div>
+        </div>
+
+        <div class="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm space-y-4 text-xs">
+          <div class="flex justify-between items-center pb-2 border-b border-gray-100">
+            <span class="font-bold text-gray-800">Primary Navigation Menu (${cfg.header.navLinks.length} Items)</span>
+            <span class="text-[11px] text-gray-400">Position: Header Navbar &amp; Mobile Drawer</span>
+          </div>
+
+          <div class="overflow-x-auto border border-gray-200 rounded-xl">
+            <table class="w-full text-left border-collapse text-xs">
+              <thead class="bg-gray-50 border-b border-gray-200 text-gray-600 font-bold uppercase tracking-wider text-[11px]">
+                <tr>
+                  <th class="py-2.5 px-3 w-12 text-center">#</th>
+                  <th class="py-2.5 px-3">Menu Label</th>
+                  <th class="py-2.5 px-3">Target Destination URL</th>
+                  <th class="py-2.5 px-3 w-28">Target Window</th>
+                  <th class="py-2.5 px-3 w-36 text-center">Reorder</th>
+                  <th class="py-2.5 px-3 w-28 text-right">Actions</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-gray-100">
+                ${cfg.header.navLinks.map((link, index) => `
+                  <tr class="hover:bg-gray-50/80 transition">
+                    <td class="py-2.5 px-3 text-center text-gray-400 font-mono font-bold">${index + 1}</td>
+                    <td class="py-2.5 px-3 font-bold text-gray-900">${link.label}</td>
+                    <td class="py-2.5 px-3 font-mono text-gray-600">${link.url}</td>
+                    <td class="py-2.5 px-3">
+                      <span class="px-2 py-0.5 rounded text-[10px] font-bold ${link.newTab ? 'bg-purple-100 text-purple-700' : 'bg-gray-100 text-gray-600'}">
+                        ${link.newTab ? 'New Tab ↗' : 'Same Window'}
+                      </span>
+                    </td>
+                    <td class="py-2.5 px-3 text-center space-x-1">
+                      <button onclick="moveHeaderLink('${link.id}', -1)" title="Move Up" class="p-1 hover:bg-gray-200 rounded text-gray-600 disabled:opacity-30" ${index === 0 ? 'disabled' : ''}>⬆️</button>
+                      <button onclick="moveHeaderLink('${link.id}', 1)" title="Move Down" class="p-1 hover:bg-gray-200 rounded text-gray-600 disabled:opacity-30" ${index === cfg.header.navLinks.length - 1 ? 'disabled' : ''}>⬇️</button>
+                    </td>
+                    <td class="py-2.5 px-3 text-right space-x-1">
+                      <button onclick="openHeaderLinkModal('${link.id}')" class="px-2 py-1 text-wp-blue hover:bg-blue-50 rounded font-bold">Edit</button>
+                      <button onclick="deleteHeaderLink('${link.id}')" class="px-2 py-1 text-red-600 hover:bg-red-50 rounded font-bold">Delete</button>
+                    </td>
+                  </tr>
+                `).join('')}
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     `;
